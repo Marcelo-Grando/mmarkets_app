@@ -1,24 +1,5 @@
 import { pool } from "../db.js";
 
-export const createEmployee = async (req, res) => {
-  const { market_id } = req.params;
-  const { employee_id, name, lastname, dni, email, position } = req.body;
-
-
-  console.log(market_id)
-
-  try {
-    const response = await pool.query(
-      "INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [employee_id, name, lastname, dni, email, position, market_id]
-    );
-
-    res.status(201).json({ message: "Created Employee" });
-  } catch (error) {
-    res.json(error);
-  }
-};
-
 export const getEmployees = async (req, res) => {
   const { market_id } = req.params;
 
@@ -37,3 +18,31 @@ export const getEmployees = async (req, res) => {
     res.json(error);
   }
 };
+
+export const createEmployee = async (req, res) => {
+  const { market_id } = req.params;
+  const { employee_id, name, lastname, dni, email, position } = req.body;
+
+  try {
+    const response = await pool.query(
+      "INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [employee_id, name, lastname, dni, email, position, market_id]
+    );
+
+    res.status(201).json({ message: "Created Employee" });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+export const deleteEmployee = async (req, res) => {
+  const {market_id, employee_id} = req.params
+
+  try {
+    const response = pool.query("DELETE FROM employees WHERE market_id = ? AND employee_id = ?", [market_id, employee_id])
+
+    res.status(204)
+  } catch (error) {
+    res.json(error)
+  }
+}

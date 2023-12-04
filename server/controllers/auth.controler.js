@@ -16,9 +16,9 @@ export const login = async (req, res) => {
             return res.status(401).json({message: "Incorrect Password"})
         }
 
-        req.session.user_id = user_id
+        req.session.auth = true
 
-        res.json({user_id: user_id})
+        res.json({auth: true})
     } catch (error) {
         res.json(error)
     }
