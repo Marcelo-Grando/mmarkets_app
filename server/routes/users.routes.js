@@ -4,7 +4,7 @@ import { getUsers, createUser, createMainUser, deleteUser } from "../controllers
 
 const router = Router()
 
-router.get("/users", getUsers)
+router.get("/users/:market_id", getUsers)
 
 router.post("/users", createUser)
 

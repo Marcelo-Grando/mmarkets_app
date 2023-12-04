@@ -10,10 +10,12 @@ export const getUsers = async (req, res) => {
   const { market_id } = req.params;
 
   try {
-    const [[users]] = await pool.query(
+    const [users] = await pool.query(
       "SELECT * FROM users WHERE market_id = ?",
       [market_id]
     );
+
+    console.log(users)
 
     res.json(users);
   } catch (error) {
