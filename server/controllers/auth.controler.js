@@ -43,7 +43,7 @@ export const logout = async (req, res) => {
       [session_id]
     );
 
-    res.status(204);
+    res.sendStatus(204);
   } catch (error) {
     res.json(error);
   }

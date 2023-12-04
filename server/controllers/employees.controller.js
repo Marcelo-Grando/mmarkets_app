@@ -39,9 +39,9 @@ export const deleteEmployee = async (req, res) => {
   const {market_id, employee_id} = req.params
 
   try {
-    const response = pool.query("DELETE FROM employees WHERE market_id = ? AND employee_id = ?", [market_id, employee_id])
+    const response = await pool.query("DELETE FROM employees WHERE market_id = ? AND employee_id = ?", [market_id, employee_id])
 
-    res.status(204)
+    res.sendStatus(204)
   } catch (error) {
     res.json(error)
   }
