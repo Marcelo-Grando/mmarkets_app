@@ -37,7 +37,7 @@ export const deleteMarket = async (req, res) => {
   const { market_id } = req.params
 
   try {
-    const response = pool.query("DELETE FROM markets WHERE market_id = ?", [
+    const response = await pool.query("DELETE FROM markets WHERE market_id = ?", [
       market_id,
     ]);
 

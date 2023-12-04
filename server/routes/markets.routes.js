@@ -1,11 +1,13 @@
 import { Router } from "express";
 
-import { createMarket, getMarkets } from "../controllers/markets.controller.js";
+import { getMarkets, createMarket, deleteMarket } from "../controllers/markets.controller.js";
 
 const router = Router()
 
+router.get("/markets", getMarkets)
+
 router.post("/markets", createMarket)
 
-router.get("/markets", getMarkets)
+router.delete("/markets/:market_id", deleteMarket)
 
 export default router
