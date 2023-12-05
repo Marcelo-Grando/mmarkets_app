@@ -23,7 +23,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
   const { email, roles, password, market_id } = req.body;
 
   const user_id = randomId(12);
@@ -35,6 +35,7 @@ export const createUser = async (req, res) => {
     );
 
     res.status(201).json({ message: "Created user" });
+    next()
   } catch (error) {
     res.json(error);
   }
@@ -43,8 +44,9 @@ export const createUser = async (req, res) => {
 export const createMainUser = async (req, res) => {
   const SECRET = process.env.SECRET;
 
-  const { user_id } = req.params;
   const { email, roles, password } = req.body;
+
+  const user_id = randomId(12)
 
   try {
     const response = await pool.query(

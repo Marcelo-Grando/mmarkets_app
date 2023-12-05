@@ -28,6 +28,7 @@ export const createMarket = async (req, res) => {
     );
 
     res.status(201).json({ message: "Created Market" });
+
   } catch (error) {
     res.json(error);
   }

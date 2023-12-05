@@ -9,6 +9,7 @@ import marketsRoutes from "./routes/markets.routes.js"
 import employeesRoutes from "./routes/employees.routes.js"
 import usersRoutes from "./routes/users.routes.js"
 import authRoutes from "./routes/auth.routes.js"
+import accountsRoutes from "./routes/accounts.routes.js"
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use("/api", marketsRoutes)
 app.use("/api", authRoutes)
 app.use("/api", usersRoutes)
 app.use("/api", employeesRoutes)
+app.use("/api", accountsRoutes)
 
 app.use((req, res) => {
     res.status(404).json({
