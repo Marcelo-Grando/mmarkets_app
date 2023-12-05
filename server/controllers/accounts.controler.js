@@ -1,10 +1,10 @@
 import { pool } from "../db.js";
 
 const randomId = function (length = 6) {
-    return Math.random()
-      .toString(36)
-      .substring(2, length + 2);
-  };
+  return Math.random()
+    .toString(36)
+    .substring(2, length + 2);
+};
 
 export const createMainAccount = async (req, res) => {
   const { name, adress, state, email, roles, password } = req.body;
@@ -17,17 +17,34 @@ export const createMainAccount = async (req, res) => {
       [market_id, name, adress, state, email]
     );
 
-    console.log("create market", create_market);
-
     const [create_user] = await pool.query(
       "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
       [market_id, email, roles, password, market_id]
     );
 
-    
-    console.log("create user", create_user);
-
     res.json({ message: "Created Account" });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+export const createEmployeeAccount = async (req, res) => {
+  const { market_id } = req.params;
+  const { email, roles, password, name, lastname, dni } = req.body;
+  const user_id = randomId(12);
+
+  try {
+    const [createUser] = await pool.query(
+      "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
+      [user_id, email, roles, password, market_id]
+    );
+
+    const [createEmploye] = await pool.query(
+      "INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [user_id, name, lastname, dni, email, roles, market_id]
+    );
+
+    res.json({ message: "Account created" });
   } catch (error) {
     res.json(error);
   }

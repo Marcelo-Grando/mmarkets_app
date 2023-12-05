@@ -15,8 +15,6 @@ export const getUsers = async (req, res) => {
       [market_id]
     );
 
-    console.log(users)
-
     res.json(users);
   } catch (error) {
     res.json(error);
