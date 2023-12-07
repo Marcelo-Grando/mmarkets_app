@@ -3,6 +3,8 @@ import { pool } from "../db.js";
 export const getEmployees = async (req, res) => {
   const { market_id } = req.params;
 
+  console.log(req.session.id)
+
   try {
     const [employees] = await pool.query(
       "SELECT * FROM employees WHERE market_id = ?",
