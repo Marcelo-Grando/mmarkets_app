@@ -15,6 +15,42 @@ const encryptPassword = async (password) => {
   return encryptedPassword;
 };
 
+export const getSellersAccounts = async (req, res) => {
+  const {market_id} = req.params
+
+  try {
+    const [sellers] = await pool.query(
+      "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
+      [market_id, 'seller']
+    );
+
+    if (!sellers.length)
+      return res.status(404).json({ message: "Employees not found" });
+
+    res.json(sellers);
+  } catch (error) {
+    res.send(error)
+  }
+}
+
+export const getAdminsAccounts = async (req, res) => {
+  const {market_id} = req.params
+
+  try {
+    const [admins] = await pool.query(
+      "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
+      [market_id, 'seller']
+    );
+
+    if (!admins.length)
+      return res.status(404).json({ message: "Employees not found" });
+
+    res.json(admins);
+  } catch (error) {
+    res.send(error)
+  }
+}
+
 export const getEmployeesAccounts = async (req, res) => {
   const { market_id } = req.params;
 
@@ -28,7 +64,9 @@ export const getEmployeesAccounts = async (req, res) => {
       return res.status(404).json({ message: "Employees not found" });
 
     res.json(employees);
-  } catch (error) {}
+  } catch (error) {
+    res.send(error)
+  }
 };
 
 export const createMainAccount = async (req, res) => {
