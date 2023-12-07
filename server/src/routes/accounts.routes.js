@@ -1,8 +1,10 @@
 import { Router } from "express";
 
-import { createMainAccount, createEmployeeAccount } from "../controllers/accounts.controler.js";
+import { createMainAccount, createEmployeeAccount, getEmployeesAccounts } from "../controllers/accounts.controler.js";
 
 const router = Router()
+
+router.get("/accounts/:market_id", getEmployeesAccounts)
 
 router.post("/accounts", createMainAccount)
 

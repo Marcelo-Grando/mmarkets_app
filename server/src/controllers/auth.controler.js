@@ -1,4 +1,3 @@
-import { compare } from "bcrypt";
 import { pool } from "../db.js";
 
 const comparePassword = async (user_id, password) => {

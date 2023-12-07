@@ -7,10 +7,29 @@ const randomId = function (length = 6) {
 };
 
 const encryptPassword = async (password) => {
-  const [[{encryptedPassword}]] = await pool.query("SELECT AES_ENCRYPT(?, 'clave') AS encryptedPassword", [password])
+  const [[{ encryptedPassword }]] = await pool.query(
+    "SELECT AES_ENCRYPT(?, 'clave') AS encryptedPassword",
+    [password]
+  );
 
-  return encryptedPassword
-}
+  return encryptedPassword;
+};
+
+export const getEmployeesAccounts = async (req, res) => {
+  const { market_id } = req.params;
+
+  try {
+    const [employees] = await pool.query(
+      "SELECT * FROM accounts_employees_view WHERE market_id = ?",
+      [market_id]
+    );
+
+    if (!employees.length)
+      return res.status(404).json({ message: "Employees not found" });
+
+    res.json(employees);
+  } catch (error) {}
+};
 
 export const createMainAccount = async (req, res) => {
   const { name, adress, state, email, roles, password } = req.body;
@@ -23,7 +42,7 @@ export const createMainAccount = async (req, res) => {
       [market_id, name, adress, state, email]
     );
 
-    const passwordEncrypted = await encryptPassword(password)
+    const passwordEncrypted = await encryptPassword(password);
 
     const [createUser] = await pool.query(
       "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
