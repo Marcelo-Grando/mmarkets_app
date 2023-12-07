@@ -16,12 +16,12 @@ const encryptPassword = async (password) => {
 };
 
 export const getSellersAccounts = async (req, res) => {
-  const {market_id} = req.params
+  const { market_id } = req.params;
 
   try {
     const [sellers] = await pool.query(
       "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
-      [market_id, 'seller']
+      [market_id, "seller"]
     );
 
     if (!sellers.length)
@@ -29,17 +29,17 @@ export const getSellersAccounts = async (req, res) => {
 
     res.json(sellers);
   } catch (error) {
-    res.send(error)
+    res.send(error);
   }
-}
+};
 
 export const getAdminsAccounts = async (req, res) => {
-  const {market_id} = req.params
+  const { market_id } = req.params;
 
   try {
     const [admins] = await pool.query(
       "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
-      [market_id, 'seller']
+      [market_id, "admin"]
     );
 
     if (!admins.length)
@@ -47,9 +47,9 @@ export const getAdminsAccounts = async (req, res) => {
 
     res.json(admins);
   } catch (error) {
-    res.send(error)
+    res.send(error);
   }
-}
+};
 
 export const getEmployeesAccounts = async (req, res) => {
   const { market_id } = req.params;
@@ -65,7 +65,7 @@ export const getEmployeesAccounts = async (req, res) => {
 
     res.json(employees);
   } catch (error) {
-    res.send(error)
+    res.send(error);
   }
 };
 
@@ -110,6 +110,26 @@ export const createEmployeeAccount = async (req, res) => {
     );
 
     res.json({ message: "Account created" });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const deleteEmployeeAccount = async (req, res) => {
+  const { market_id, employee_id } = req.params;
+
+  try {
+    const [deleteEmployee] = await pool.query(
+      "DELETE FROM employees WHERE market_id = ? AND employee_id = ?",
+      [market_id, employee_id]
+    );
+
+    const [deleteUser] = await pool.query(
+      "DELETE FROM users WHERE market_id = ? AND user_id = ?",
+      [market_id, employee_id]
+    );
+
+    res.sendStatus(204);
   } catch (error) {
     res.send(error);
   }
