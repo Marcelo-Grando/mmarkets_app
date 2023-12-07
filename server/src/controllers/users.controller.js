@@ -11,7 +11,7 @@ export const getUsers = async (req, res) => {
 
   try {
     const [users] = await pool.query(
-      "SELECT * FROM users WHERE market_id = ?",
+      "SELECT user_id, email, roles FROM users WHERE market_id = ?",
       [market_id]
     );
 

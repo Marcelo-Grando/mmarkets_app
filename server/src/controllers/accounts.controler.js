@@ -99,14 +99,17 @@ export const createEmployeeAccount = async (req, res) => {
   const user_id = randomId(12);
 
   try {
+
+    const passwordEncrypted = await encryptPassword(password);
+
     const [createUser] = await pool.query(
       "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
-      [user_id, email, roles, password, market_id]
+      [user_id, email, roles, passwordEncrypted, market_id]
     );
 
     const [createEmploye] = await pool.query(
-      "INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [user_id, name, lastname, dni, email, roles, market_id]
+      "INSERT INTO employees (employee_id, name, lastname, dni, position, market_id) VALUES (?, ?, ?, ?, ?, ?)",
+      [user_id, name, lastname, dni, roles, market_id]
     );
 
     res.json({ message: "Account created" });

@@ -3,8 +3,6 @@ import { pool } from "../db.js";
 export const getEmployees = async (req, res) => {
   const { market_id } = req.params;
 
-  console.log(req.session.id)
-
   try {
     const [employees] = await pool.query(
       "SELECT * FROM employees WHERE market_id = ?",
@@ -23,12 +21,12 @@ export const getEmployees = async (req, res) => {
 
 export const createEmployee = async (req, res) => {
   const { market_id } = req.params;
-  const { employee_id, name, lastname, dni, email, position } = req.body;
+  const { employee_id, name, lastname, dni, position } = req.body;
 
   try {
     const response = await pool.query(
-      "INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [employee_id, name, lastname, dni, email, position, market_id]
+      "INSERT INTO employees (employee_id, name, lastname, dni, position, market_id) VALUES (?, ?, ?, ?, ?, ?)",
+      [employee_id, name, lastname, dni, position, market_id]
     );
 
     res.status(201).json({ message: "Created Employee" });

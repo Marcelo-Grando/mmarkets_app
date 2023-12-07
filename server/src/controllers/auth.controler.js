@@ -1,17 +1,21 @@
 import { pool } from "../db.js";
 
 const comparePassword = async (user_id, password) => {
-  const [[{ blobPassword }]] = await pool.query(
-    "SELECT password AS blobPassword FROM users WHERE user_id = ?",
-    [user_id]
-  );
-
-  const [[{ decryptPassword }]] = await pool.query(
-    "SELECT AES_DECRYPT(?, 'clave') AS decryptPassword",
-    [blobPassword]
-  );
-
-  return decryptPassword.toString() === password;
+    const [[{ blobPassword }]] = await pool.query(
+      "SELECT password AS blobPassword FROM users WHERE user_id = ?",
+      [user_id]
+    );
+  
+    console.log(blobPassword);
+  
+    const [[{ decryptBlobPassword }]] = await pool.query(
+      "SELECT AES_DECRYPT(?, 'clave') AS decryptBlobPassword",
+      [blobPassword]
+    );
+  
+    const decryptPassword = decryptBlobPassword.toString()
+  
+    return decryptPassword === password;
 };
 
 const findUserIdByEmail = async (email) => {
@@ -31,6 +35,8 @@ export const login = async (req, res) => {
   try {
     const user_id = await findUserIdByEmail(email);
 
+    console.log(user_id, password);
+
     if (!user_id)
       return res.status(401).json({ message: "User dont not exist" });
 
@@ -40,8 +46,6 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Incorrect Password" });
 
     req.session.user_id = user_id;
-
-    req.user_id = user_id;
 
     res.json({ auth: true });
   } catch (error) {
