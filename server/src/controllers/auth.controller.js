@@ -57,7 +57,7 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     req.session.destroy();
-    console.log(req.session.id)
+  
     res.json({ message: "Session ended successfully" });
   } catch (error) {
     res.send(error);

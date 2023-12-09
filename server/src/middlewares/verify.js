@@ -14,8 +14,7 @@ export const verifySession = async (req, res, next) => {
 
     const {user} = JSON.parse(data)
 
-    console.log(user)
-
+    req.user = user
 
     next()
     } catch (error) {

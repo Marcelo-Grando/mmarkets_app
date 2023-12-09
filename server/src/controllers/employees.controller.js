@@ -1,6 +1,8 @@
 import { pool } from "../db.js";
 
 export const getEmployees = async (req, res) => {
+  console.log('req.user en getEmployees',req.user)
+  console.log(req.pro)
   const { market_id } = req.params;
 
   try {
