@@ -11,6 +11,8 @@ import usersRoutes from "./routes/users.routes.js"
 import authRoutes from "./routes/auth.routes.js"
 import accountsRoutes from "./routes/accounts.routes.js"
 
+import { verifySession } from "./middlewares/verify.js";
+
 const app = express();
 
 app.use(express.json());
@@ -43,16 +45,17 @@ app.use(
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-      expires: 1000 * 60 * 60 * 8,
+      maxAge: 6000 * 60 * 8,
     },
   })
 );
 
-app.use("/api", marketsRoutes)
 app.use("/api", authRoutes)
-app.use("/api", usersRoutes)
-app.use("/api", employeesRoutes)
-app.use("/api", accountsRoutes)
+app.use("/api", verifySession, accountsRoutes)
+app.use("/api", verifySession, marketsRoutes)
+app.use("/api", verifySession, usersRoutes)
+app.use("/api", verifySession, employeesRoutes)
+
 
 app.use((req, res) => {
     res.status(404).json({

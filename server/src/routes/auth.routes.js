@@ -6,6 +6,6 @@ const router = Router()
 
 router.post("/auth", login)
 
-router.delete("/auth/:session_id", logout)
+router.delete("/auth", logout)
 
 export default router

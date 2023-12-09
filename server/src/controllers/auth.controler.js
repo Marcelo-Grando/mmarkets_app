@@ -6,8 +6,6 @@ const comparePassword = async (user_id, password) => {
       [user_id]
     );
   
-    console.log(blobPassword);
-  
     const [[{ decryptBlobPassword }]] = await pool.query(
       "SELECT AES_DECRYPT(?, 'clave') AS decryptBlobPassword",
       [blobPassword]
@@ -18,36 +16,38 @@ const comparePassword = async (user_id, password) => {
     return decryptPassword === password;
 };
 
-const findUserIdByEmail = async (email) => {
-  const [[user]] = await pool.query(
-    "SELECT user_id FROM users WHERE email = ?",
-    [email]
-  );
-
-  const { user_id } = user;
-
-  return user_id;
+const findUserByEmail = async (email) => {
+  try {
+    const [[user]] = await pool.query(
+      "SELECT user_id, email, roles, market_id FROM users WHERE email = ?",
+      [email]
+    );
+  
+    if(!user) return
+  
+    return user;
+  } catch (error) {
+   res.send(error) 
+  }
 };
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user_id = await findUserIdByEmail(email);
+    const user = await findUserByEmail(email);
 
-    console.log(user_id, password);
-
-    if (!user_id)
+    if (!user)
       return res.status(401).json({ message: "User dont not exist" });
 
-    const passwordCompared = await comparePassword(user_id, password);
+    const passwordCompared = await comparePassword(user.user_id, password);
 
     if (!passwordCompared)
       return res.status(401).json({ message: "Incorrect Password" });
 
-    req.session.user_id = user_id;
+    req.session.user = user;
 
-    res.json({ auth: true });
+    res.json(user);
   } catch (error) {
     console.log(error);
     res.send(error);
@@ -57,6 +57,7 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     req.session.destroy();
+    console.log(req.session.id)
     res.json({ message: "Session ended successfully" });
   } catch (error) {
     res.send(error);
