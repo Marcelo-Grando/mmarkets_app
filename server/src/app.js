@@ -11,6 +11,7 @@ import usersRoutes from "./routes/users.routes.js"
 import authRoutes from "./routes/auth.routes.js"
 import accountsRoutes from "./routes/accounts.routes.js"
 import categoriesRoutes from "./routes/categories.routes.js"
+import productsRotes from "./routes/products.routes.js"
 
 import { verifySession } from "./middlewares/verify.js";
 
@@ -56,8 +57,8 @@ app.use("/api", verifySession, accountsRoutes)
 app.use("/api", verifySession, marketsRoutes)
 app.use("/api", verifySession, usersRoutes)
 app.use("/api", verifySession, employeesRoutes)
+app.use("/api", verifySession, productsRotes)
 app.use("/api", verifySession, categoriesRoutes)
-
 
 app.use((req, res) => {
     res.status(404).json({
