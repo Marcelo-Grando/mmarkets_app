@@ -32,14 +32,10 @@ const findUserByEmail = async (email) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const user = req.user
 
   try {
-    const user = await findUserByEmail(email);
-
-    if (!user)
-      return res.status(401).json({ message: "User dont not exist" });
-
     const passwordCompared = await comparePassword(user.user_id, password);
 
     if (!passwordCompared)
