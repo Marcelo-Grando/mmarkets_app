@@ -16,21 +16,6 @@ const comparePassword = async (user_id, password) => {
     return decryptPassword === password;
 };
 
-const findUserByEmail = async (email) => {
-  try {
-    const [[user]] = await pool.query(
-      "SELECT user_id, email, roles, market_id FROM users WHERE email = ?",
-      [email]
-    );
-  
-    if(!user) return
-  
-    return user;
-  } catch (error) {
-   res.send(error) 
-  }
-};
-
 export const login = async (req, res) => {
   const { password } = req.body;
   const user = req.user
