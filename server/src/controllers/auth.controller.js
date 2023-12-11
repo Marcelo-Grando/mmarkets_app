@@ -43,7 +43,7 @@ export const login = async (req, res) => {
 
     req.session.user = user;
 
-    res.json(user);
+    res.json({auth: true});
   } catch (error) {
     console.log(error);
     res.send(error);
