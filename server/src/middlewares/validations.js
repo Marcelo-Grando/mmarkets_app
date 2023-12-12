@@ -8,6 +8,14 @@ export const validateMainAccountData = async (req, res, next) => {
     next()
 }
 
+export const validateEmployeAccountData = async (req, res) => {
+    const { email, roles, password, name, lastname, dni } = req.body;
+
+    if (!email|| !roles|| !password|| !name|| !lastname || !dni) return res.status(400).json({message: `Incomplete fields`})
+
+    next()
+}
+
 export const validateProduct = async (req, res, next) => {
     const {name, description, price, category_id} = req.body 
 
@@ -15,4 +23,3 @@ export const validateProduct = async (req, res, next) => {
 
     next()
 }
-

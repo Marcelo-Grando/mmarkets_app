@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { validateMainAccountData } from "../middlewares/validations.js";
+import { validateMainAccountData, validateEmployeAccountData } from "../middlewares/validations.js";
 
 import { createMainAccount, createEmployeeAccount, getEmployeesAccounts, getAdminsAccounts, getSellersAccounts, deleteEmployeeAccount } from "../controllers/accounts.controller.js";
 
@@ -14,7 +14,7 @@ router.get("/accounts/:market_id/admins", getAdminsAccounts)
 
 router.post("/accounts", validateMainAccountData, createMainAccount)
 
-router.post("/accounts/:market_id", createEmployeeAccount)
+router.post("/accounts/:market_id", validateEmployeAccountData, createEmployeeAccount)
 
 router.delete("/accounts/:market_id/:employee_id", deleteEmployeeAccount)
 
