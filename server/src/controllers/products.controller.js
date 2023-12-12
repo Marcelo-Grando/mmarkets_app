@@ -59,11 +59,11 @@ export const updateProduct = async (req, res) => {
         "UPDATE products SET name = IFNULL(?, name), description = IFNULL(?, description), price = IFNULL(?, price), expiration = IFNULL(?, expiration), category_id = IFNULL(?, category_id) WHERE product_id = ? AND market_id = ?",
         [name, description, price, expiration, category_id, product_id, market_id]
       );
-      const [[products]] = await pool.query(
+      const [[product]] = await pool.query(
         "SELECT * FROM products WHERE product_id = ? AND market_id = ?",
         [product_id, market_id]
       );
-      res.json(products);
+      res.json(product);
     } catch (error) {
       console.log(error);
     }

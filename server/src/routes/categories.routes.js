@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/categories/:market_id", getCategories);
 
-router.get("/categories", getCategory);
+router.get("/categories/:market_id/:category_id", getCategory);
 
 router.post("/categories/:market_id", validateCategoryData, createCategory);
 
