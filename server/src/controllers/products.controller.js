@@ -10,7 +10,6 @@ export const getProducts = async (req, res) => {
     const {market_id} = req.params
 
     try {
-
         const [products] = await pool.query("SELECT * FROM products WHERE market_id = ?",[market_id])
 
         if(!products.length) return res.status(404).json({message: "Products not found"})
@@ -21,7 +20,6 @@ export const getProducts = async (req, res) => {
         res.send(error)
     }
 }
-
 export const getProduct = async (req, res) => {
     const {market_id, product_id} = req.params
 
