@@ -55,8 +55,8 @@ CREATE TABLE sales (
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 CREATE TABLE items_for_sales (
-    item_id VARCHAR(12) PRIMARY KEY,
-    quatify INT UNSIGNED NOT NULL,
+    item_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    quantify INT UNSIGNED NOT NULL,
     sale_id VARCHAR(12) NOT NULL,
     product_id VARCHAR(12) NOT NULL,
     market_id VARCHAR(12) NOT NULL,
@@ -78,11 +78,13 @@ CREATE TABLE tickets (
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 CREATE TABLE sold_products (
-    product_id VARCHAR(12) PRIMARY KEY,
+    sold_product_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id VARCHAR(12),
     name VARCHAR(100) NOT NULL,
     description VARCHAR(100) NOT NULL,
     category_name VARCHAR(100) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
+    quantify INT UNSIGNED NOT NULL,
     ticket_id VARCHAR(12) NOT NULL,
     employee_id VARCHAR(12) NOT NULL,
     market_id VARCHAR(12) NOT NULL,
