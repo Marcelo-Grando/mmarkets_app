@@ -55,7 +55,7 @@ app.use(
 );
 
 app.use("/api", authRoutes)
-app.use("/api", verifySession, accountsRoutes)
+app.use("/api", accountsRoutes)
 app.use("/api", verifySession, marketsRoutes)
 app.use("/api", verifySession, usersRoutes)
 app.use("/api", verifySession, employeesRoutes)
