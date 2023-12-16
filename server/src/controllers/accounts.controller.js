@@ -65,7 +65,8 @@ export const getEmployeesAccounts = async (req, res) => {
 
     res.json(employees);
   } catch (error) {
-    res.send(error);
+    console.log(error.status)
+    res.send(error)
   }
 };
 

@@ -12,7 +12,8 @@ export const getMarkets = async (req, res) => {
 
     res.json(markets);
   } catch (error) {
-    res.json(error);
+    console.log(error.status)
+    res.send(error)
   }
 };
 

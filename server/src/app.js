@@ -16,6 +16,7 @@ import salesRoutes from "./routes/sales.routes.js"
 import reportsRoutes from "./routes/reports.routes.js"
 
 import { verifySession } from "./middlewares/verify.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 
@@ -63,6 +64,8 @@ app.use("/api", verifySession, productsRotes)
 app.use("/api", verifySession, categoriesRoutes)
 app.use("/api", salesRoutes)
 app.use("/api", reportsRoutes)
+
+app.use(errorHandler);
 
 app.use((req, res) => {
     res.status(404).json({
