@@ -4,11 +4,10 @@ import { validateMainAccountData, validateEmployeAccountData } from "../middlewa
 import { verifySession } from "../middlewares/verify.js";
 
 import { createMainAccount, createEmployeeAccount, getEmployeesAccounts, getAdminsAccounts, getSellersAccounts, deleteEmployeeAccount } from "../controllers/accounts.controller.js";
-import { tryCatch } from "../utils/tryCatch.js";
 
 const router = Router()
 
-router.post("/accounts", tryCatch(validateMainAccountData), createMainAccount)
+router.post("/accounts", validateMainAccountData, createMainAccount)
 
 router.get("/accounts/:market_id", verifySession, getEmployeesAccounts)
 

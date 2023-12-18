@@ -1,11 +1,6 @@
 import { pool } from "../db.js";
 import { tryCatch } from "../utils/tryCatch.js";
-
-const randomId = function (length = 6) {
-  return Math.random()
-    .toString(36)
-    .substring(2, length + 2);
-};
+import { generateId } from "../utils/generateId.js";
 
 const findProductsAndAmountForSale = async (products) => {
   let found_products = [];
@@ -33,7 +28,7 @@ const getEmployeeData = async (employee_id, market_id) => {
 };
 
 const createSale = async (employee_id, market_id, products, amount) => {
-  const sale_id = randomId(10);
+  const sale_id = generateId(10);
 
   const [[{ date, time }]] = await pool.query(
     "SELECT DATE(NOW()) AS date, TIME(NOW()) AS time"

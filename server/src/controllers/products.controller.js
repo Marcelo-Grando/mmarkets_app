@@ -1,12 +1,7 @@
 import { pool } from "../db.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import { ClientError } from "../errors/Errors.js";
-
-const randomId = function (length = 6) {
-  return Math.random()
-    .toString(36)
-    .substring(2, length + 2);
-};
+import { generateId } from "../utils/generateId.js";
 
 export const getProducts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
@@ -38,7 +33,7 @@ export const createProduct = tryCatch(async (req, res) => {
   const { market_id } = req.params;
   const { name, description, price, expiration, category_id } = req.body;
 
-  const product_id = randomId(12);
+  const product_id = generateId(12);
 
   const [response] = await pool.query(
     "INSERT INTO products (product_id, name, description, price, expiration, category_id, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
