@@ -1,13 +1,7 @@
 import { pool } from "../db.js";
-
 import { ClientError } from "../errors/Errors.js";
 import { tryCatch } from "../utils/tryCatch.js";
-
-const randomId = function (length = 6) {
-  return Math.random()
-    .toString(36)
-    .substring(2, length + 2);
-};
+import { generateId } from "../utils/generateId.js";
 
 export const getUsers = tryCatch(
   async (req, res) => {
@@ -27,7 +21,7 @@ export const getUsers = tryCatch(
 export const createUser = async (req, res, next) => {
   const { email, roles, password, market_id } = req.body;
 
-  const user_id = randomId(12);
+  const user_id = generateId(12);
 
   try {
     const response = await pool.query(

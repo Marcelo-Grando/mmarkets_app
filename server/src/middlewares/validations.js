@@ -1,5 +1,4 @@
 import { tryCatch } from "../utils/tryCatch.js";
-
 import { ClientError } from "../errors/Errors.js";
 
 export const validateMainAccountData = tryCatch(async (req, res, next) => {
@@ -14,8 +13,7 @@ export const validateMainAccountData = tryCatch(async (req, res, next) => {
 export const validateEmployeAccountData = tryCatch(async (req, res, next) => {
   const { email, roles, password, name, lastname, dni } = req.body;
 
-  if (!email || !roles || !password || !name || !lastname || !dni)
-    throw new ClientError("Incomplete Fiels");
+  if (!email || !roles || !password || !name || !lastname || !dni) throw new ClientError("Incomplete Fiels");
 
   next();
 });

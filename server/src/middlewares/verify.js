@@ -21,6 +21,8 @@ export const verifySession = tryCatch(async (req, res, next) => {
   const { user } = JSON.parse(data);
 
   req.user = user;
+
+  next()
 })
 
 const findUserByEmail = async (email) => {

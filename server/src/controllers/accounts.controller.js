@@ -1,21 +1,8 @@
 import { pool } from "../db.js";
 import { tryCatch } from "../utils/tryCatch.js";
+import { encryptPassword } from "../utils/encryptPassword.js";
 import { ClientError } from "../errors/Errors.js";
-
-const randomId = function (length = 6) {
-  return Math.random()
-    .toString(36)
-    .substring(2, length + 2);
-};
-
-const encryptPassword = async (password) => {
-  const [[{ encryptedPassword }]] = await pool.query(
-    "SELECT AES_ENCRYPT(?, 'clave') AS encryptedPassword",
-    [password]
-  );
-
-  return encryptedPassword;
-};
+import { generateId } from "../utils/generateId.js";
 
 export const getSellersAccounts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
@@ -57,10 +44,11 @@ export const getEmployeesAccounts = tryCatch(async (req, res) => {
 
   res.json(employees);
 });
+
 export const createMainAccount = tryCatch(async (req, res) => {
   const { name, adress, state, email, roles, password } = req.body;
 
-  const market_id = randomId(12);
+  const market_id = generateId(12)
 
   const [createMarket] = await pool.query(
     "INSERT INTO markets (market_id, name, adress, state, email) VALUES (?, ?, ?, ?, ?)",
@@ -80,7 +68,8 @@ export const createMainAccount = tryCatch(async (req, res) => {
 export const createEmployeeAccount = tryCatch(async (req, res) => {
   const { market_id } = req.params;
   const { email, roles, password, name, lastname, dni } = req.body;
-  const user_id = randomId(12);
+
+  const user_id = generateId(12);
 
   const passwordEncrypted = await encryptPassword(password);
 
@@ -94,7 +83,7 @@ export const createEmployeeAccount = tryCatch(async (req, res) => {
     [user_id, name, lastname, dni, roles, market_id]
   );
 
-  res.json({ message: `Successfully created ${roles} account` });
+  res.json({ message: "Successfully created account" });
 });
 
 export const deleteEmployeeAccount = tryCatch(async (req, res) => {
