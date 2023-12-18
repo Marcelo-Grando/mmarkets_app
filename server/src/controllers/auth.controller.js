@@ -1,46 +1,38 @@
 import { pool } from "../db.js";
+import { tryCatch } from "../utils/tryCatch.js";
+import { ClientError } from "../errors/Errors.js";
 
 const comparePassword = async (user_id, password) => {
-    const [[{ blobPassword }]] = await pool.query(
-      "SELECT password AS blobPassword FROM users WHERE user_id = ?",
-      [user_id]
-    );
-  
-    const [[{ decryptBlobPassword }]] = await pool.query(
-      "SELECT AES_DECRYPT(?, 'clave') AS decryptBlobPassword",
-      [blobPassword]
-    );
-  
-    const decryptPassword = decryptBlobPassword.toString()
-  
-    return decryptPassword === password;
+  const [[{ blobPassword }]] = await pool.query(
+    "SELECT password AS blobPassword FROM users WHERE user_id = ?",
+    [user_id]
+  );
+
+  const [[{ decryptBlobPassword }]] = await pool.query(
+    "SELECT AES_DECRYPT(?, 'clave') AS decryptBlobPassword",
+    [blobPassword]
+  );
+
+  const decryptPassword = decryptBlobPassword.toString();
+
+  return decryptPassword === password;
 };
 
-export const login = async (req, res) => {
+export const login = tryCatch(async (req, res) => {
   const { password } = req.body;
-  const user = req.user
+  const user = req.user;
 
-  try {
-    const passwordCompared = await comparePassword(user.user_id, password);
+  const passwordCompared = await comparePassword(user.user_id, password);
 
-    if (!passwordCompared)
-      return res.status(401).json({ message: "Incorrect Password" });
+  if (!passwordCompared) throw new ClientError("Incorrect Password", 401);
 
-    req.session.user = user;
+  req.session.user = user;
 
-    res.json({auth: true});
-  } catch (error) {
-    console.log(error);
-    res.send(error);
-  }
-};
+  res.json({ auth: true });
+});
 
-export const logout = async (req, res) => {
-  try {
-    req.session.destroy();
-  
-    res.json({ message: "Session ended successfully" });
-  } catch (error) {
-    res.send(error);
-  }
-};
+export const logout = tryCatch(async (req, res) => {
+  req.session.destroy();
+
+  res.json({ message: "Session ended successfully" });
+});

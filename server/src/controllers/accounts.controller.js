@@ -1,4 +1,6 @@
 import { pool } from "../db.js";
+import { tryCatch } from "../utils/tryCatch.js";
+import { ClientError } from "../errors/Errors.js";
 
 const randomId = function (length = 6) {
   return Math.random()
@@ -15,126 +17,98 @@ const encryptPassword = async (password) => {
   return encryptedPassword;
 };
 
-export const getSellersAccounts = async (req, res) => {
+export const getSellersAccounts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
-  try {
-    const [sellers] = await pool.query(
-      "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
-      [market_id, "seller"]
-    );
+  const [sellers] = await pool.query(
+    "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
+    [market_id, "seller"]
+  );
 
-    if (!sellers.length)
-      return res.status(404).json({ message: "Employees not found" });
+  if (!sellers.length) throw new ClientError("There are no seller accounts");
 
-    res.json(sellers);
-  } catch (error) {
-    res.send(error);
-  }
-};
+  res.json(sellers);
+});
 
-export const getAdminsAccounts = async (req, res) => {
+export const getAdminsAccounts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
-  try {
-    const [admins] = await pool.query(
-      "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
-      [market_id, "admin"]
-    );
+  const [admins] = await pool.query(
+    "SELECT * FROM accounts_employees_view WHERE market_id = ? AND roles = ?",
+    [market_id, "admin"]
+  );
 
-    if (!admins.length)
-      return res.status(404).json({ message: "Employees not found" });
+  if (!admins.length)
+    throw new ClientError("There are no admin accounts")
 
-    res.json(admins);
-  } catch (error) {
-    res.send(error);
-  }
-};
+  res.json(admins);
+});
 
-export const getEmployeesAccounts = async (req, res) => {
+export const getEmployeesAccounts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
-  try {
-    const [employees] = await pool.query(
-      "SELECT * FROM accounts_employees_view WHERE market_id = ?",
-      [market_id]
-    );
+  const [employees] = await pool.query(
+    "SELECT * FROM accounts_employees_view WHERE market_id = ?",
+    [market_id]
+  );
 
-    if (!employees.length)
-      return res.status(404).json({ message: "Employees not found" });
+  if (!employees.length)
+    throw new ClientError("There are no employee accounts");
 
-    res.json(employees);
-  } catch (error) {
-    console.log(error.status)
-    res.send(error)
-  }
-};
-
-export const createMainAccount = async (req, res) => {
+  res.json(employees);
+});
+export const createMainAccount = tryCatch(async (req, res) => {
   const { name, adress, state, email, roles, password } = req.body;
 
-  try {
-    const market_id = randomId(12);
+  const market_id = randomId(12);
 
-    const [createMarket] = await pool.query(
-      "INSERT INTO markets (market_id, name, adress, state, email) VALUES (?, ?, ?, ?, ?)",
-      [market_id, name, adress, state, email]
-    );
+  const [createMarket] = await pool.query(
+    "INSERT INTO markets (market_id, name, adress, state, email) VALUES (?, ?, ?, ?, ?)",
+    [market_id, name, adress, state, email]
+  );
 
-    const passwordEncrypted = await encryptPassword(password);
+  const passwordEncrypted = await encryptPassword(password);
 
-    const [createUser] = await pool.query(
-      "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
-      [market_id, email, roles, passwordEncrypted, market_id]
-    );
+  const [createUser] = await pool.query(
+    "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
+    [market_id, email, roles, passwordEncrypted, market_id]
+  );
 
-    res.json({ message: "Created Account" });
-  } catch (error) {
-    res.json(error);
-  }
-};
+  res.json({ message: "Created Account" });
+});
 
-export const createEmployeeAccount = async (req, res) => {
+export const createEmployeeAccount = tryCatch(async (req, res) => {
   const { market_id } = req.params;
   const { email, roles, password, name, lastname, dni } = req.body;
   const user_id = randomId(12);
 
-  try {
+  const passwordEncrypted = await encryptPassword(password);
 
-    const passwordEncrypted = await encryptPassword(password);
+  const [createUser] = await pool.query(
+    "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
+    [user_id, email, roles, passwordEncrypted, market_id]
+  );
 
-    const [createUser] = await pool.query(
-      "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
-      [user_id, email, roles, passwordEncrypted, market_id]
-    );
+  const [createEmploye] = await pool.query(
+    "INSERT INTO employees (employee_id, name, lastname, dni, position, market_id) VALUES (?, ?, ?, ?, ?, ?)",
+    [user_id, name, lastname, dni, roles, market_id]
+  );
 
-    const [createEmploye] = await pool.query(
-      "INSERT INTO employees (employee_id, name, lastname, dni, position, market_id) VALUES (?, ?, ?, ?, ?, ?)",
-      [user_id, name, lastname, dni, roles, market_id]
-    );
+  res.json({ message: `Successfully created ${roles} account` });
+});
 
-    res.json({ message: "Account created" });
-  } catch (error) {
-    res.send(error);
-  }
-};
-
-export const deleteEmployeeAccount = async (req, res) => {
+export const deleteEmployeeAccount = tryCatch(async (req, res) => {
   const { market_id, employee_id } = req.params;
 
-  try {
-    const [deleteEmployee] = await pool.query(
-      "DELETE FROM employees WHERE market_id = ? AND employee_id = ?",
-      [market_id, employee_id]
-    );
+  const [deleteEmployee] = await pool.query(
+    "DELETE FROM employees WHERE market_id = ? AND employee_id = ?",
+    [market_id, employee_id]
+  );
 
-    const [deleteUser] = await pool.query(
-      "DELETE FROM users WHERE market_id = ? AND user_id = ?",
-      [market_id, employee_id]
-    );
+  const [deleteUser] = await pool.query(
+    "DELETE FROM users WHERE market_id = ? AND user_id = ?",
+    [market_id, employee_id]
+  );
 
-    res.sendStatus(204);
-  } catch (error) {
-    res.send(error);
-  }
-};
+  res.sendStatus(204);
+});

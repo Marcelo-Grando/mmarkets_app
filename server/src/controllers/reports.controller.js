@@ -1,9 +1,9 @@
 import {pool} from "../db.js"
+import { tryCatch } from "../utils/tryCatch.js"
 
-export const getSoldProducts = async (req, res) => {
+export const getSoldProducts = tryCatch(async (req, res) => {
     const {market_id} = req.params
 
-    try {
         const [sold_products] = await pool.query("SELECT * FROM sold_products WHERE market_id = ?", [market_id])
         const [tickets] = await pool.query("SELECT * FROM tickets WHERE market_id = ?", [market_id])
 
@@ -13,10 +13,5 @@ export const getSoldProducts = async (req, res) => {
 
         const [salesBySellers] = await pool.query("SELECT employee_id, employee_name, sum(price * quantify) AS amount FROM sold_products WHERE market_id = ? GROUP BY employee_id, employee_name", [market_id])
 
-        console.log(sold_products)
-
         res.json({salesByProducts, salesByCategories, salesBySellers})
-    } catch (error) {
-        res.send(error)
-    }
-}
+})

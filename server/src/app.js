@@ -15,6 +15,8 @@ import productsRotes from "./routes/products.routes.js"
 import salesRoutes from "./routes/sales.routes.js"
 import reportsRoutes from "./routes/reports.routes.js"
 
+import { tryCatch } from "./utils/tryCatch.js";
+
 import { verifySession } from "./middlewares/verify.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 

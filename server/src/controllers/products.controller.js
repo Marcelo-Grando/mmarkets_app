@@ -1,83 +1,77 @@
-import {pool} from "../db.js"
+import { pool } from "../db.js";
+import { tryCatch } from "../utils/tryCatch.js";
+import { ClientError } from "../errors/Errors.js";
 
 const randomId = function (length = 6) {
-    return Math.random()
-      .toString(36)
-      .substring(2, length + 2);
-  };
+  return Math.random()
+    .toString(36)
+    .substring(2, length + 2);
+};
 
-export const getProducts = async (req, res) => {
-    const {market_id} = req.params
+export const getProducts = tryCatch(async (req, res) => {
+  const { market_id } = req.params;
 
-    try {
-        const [products] = await pool.query("SELECT * FROM products WHERE market_id = ?",[market_id])
+  const [products] = await pool.query(
+    "SELECT * FROM products WHERE market_id = ?",
+    [market_id]
+  );
 
-        if(!products.length) return res.status(404).json({message: "Products not found"})
+  if (!products.length) throw new ClientError("There are no products", 404);
 
-        res.json(products)
-    } catch (error) {
-        console.log(error)
-        res.send(error)
-    }
-}
+  res.json(products);
+});
+
 export const getProduct = async (req, res) => {
-    const {market_id, product_id} = req.params
+  const { market_id, product_id } = req.params;
 
-    try {
-        const [[product]] = await pool.query("SELECT * FROM products WHERE market_id = ? AND product_id = ?",[market_id, product_id])
+  const [[product]] = await pool.query(
+    "SELECT * FROM products WHERE market_id = ? AND product_id = ?",
+    [market_id, product_id]
+  );
 
-        if(!product) return res.status(404).json({message: "Product not found"})
+  if (!product) throw new ClientError("Product not found", 404);
 
-        res.json(product)
-    } catch (error) {
-        console.log(error)
-        res.send(error)
-    }
-}
+  res.json(product);
+};
 
-export const createProduct = async (req, res) => {
-    const {market_id} = req.params
-    const {name, description, price, expiration, category_id} = req.body
+export const createProduct = tryCatch(async (req, res) => {
+  const { market_id } = req.params;
+  const { name, description, price, expiration, category_id } = req.body;
 
-    try {
-        const product_id = randomId(12)
+  const product_id = randomId(12);
 
-        const [response] = await pool.query("INSERT INTO products (product_id, name, description, price, expiration, category_id, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [product_id, name, description, price, expiration, category_id, market_id])
+  const [response] = await pool.query(
+    "INSERT INTO products (product_id, name, description, price, expiration, category_id, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [product_id, name, description, price, expiration, category_id, market_id]
+  );
 
-        res.status(201).json({message: "Created product"})
-    } catch (error) {
-        console.log(error)
-        res.send(error)
-    }
-}
+  res.status(201).json({ message: "Created product" });
+});
 
-export const updateProduct = async (req, res) => {
-    try {
-      const { market_id, product_id } = req.params;
-      const { name, description, price, expiration, category_id } = req.body;
-      const [result] = await pool.query(
-        "UPDATE products SET name = IFNULL(?, name), description = IFNULL(?, description), price = IFNULL(?, price), expiration = IFNULL(?, expiration), category_id = IFNULL(?, category_id) WHERE product_id = ? AND market_id = ?",
-        [name, description, price, expiration, category_id, product_id, market_id]
-      );
-      const [[product]] = await pool.query(
-        "SELECT * FROM products WHERE product_id = ? AND market_id = ?",
-        [product_id, market_id]
-      );
-      res.json(product);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export const updateProduct = tryCatch(async (req, res) => {
+  const { market_id, product_id } = req.params;
+  const { name, description, price, expiration, category_id } = req.body;
 
-export const deleteProduct = async (req, res) => {
-    const {market_id, product_id} = req.params
+  const [result] = await pool.query(
+    "UPDATE products SET name = IFNULL(?, name), description = IFNULL(?, description), price = IFNULL(?, price), expiration = IFNULL(?, expiration), category_id = IFNULL(?, category_id) WHERE product_id = ? AND market_id = ?",
+    [name, description, price, expiration, category_id, product_id, market_id]
+  );
 
-    try {
-        const [response] = await pool.query("DELETE FROM products WHERE market_id = ? AND product_id = ?", [market_id, product_id])
+  const [[product]] = await pool.query(
+    "SELECT * FROM products WHERE product_id = ? AND market_id = ?",
+    [product_id, market_id]
+  );
 
-        res.sendStatus(204)
-    } catch (error) {
-        console.log(error)
-        res.send(error)
-    }
-}
+  res.json(product);
+});
+
+export const deleteProduct = tryCatch(async (req, res) => {
+  const { market_id, product_id } = req.params;
+
+  const [response] = await pool.query(
+    "DELETE FROM products WHERE market_id = ? AND product_id = ?",
+    [market_id, product_id]
+  );
+
+  res.sendStatus(204);
+});

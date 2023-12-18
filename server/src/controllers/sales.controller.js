@@ -1,4 +1,5 @@
 import { pool } from "../db.js";
+import { tryCatch } from "../utils/tryCatch.js";
 
 const randomId = function (length = 6) {
   return Math.random()
@@ -95,16 +96,13 @@ const createTicket = async (sale, products, amount, employeeData) => {
   return {ticket_id: sale.sale_id}
 };
 
-export const makeSale = async (req, res) => {
+export const makeSale = tryCatch(async (req, res) => {
   const { market_id, employee_id } = req.params;
   const { products } = req.body;
 
-  try {
     const employeeData = await getEmployeeData(employee_id, market_id);
 
-    const { found_products, amount } = await findProductsAndAmountForSale(
-      products
-    );
+    const { found_products, amount } = await findProductsAndAmountForSale(products);
 
     const sale = await createSale(
       employee_id,
@@ -128,8 +126,4 @@ export const makeSale = async (req, res) => {
       products: found_products,
       amount,
     });
-  } catch (error) {
-    console.error(error);
-    res.send(error);
-  }
-};
+})

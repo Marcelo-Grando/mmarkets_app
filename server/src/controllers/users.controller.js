@@ -1,25 +1,28 @@
 import { pool } from "../db.js";
 
+import { ClientError } from "../errors/Errors.js";
+import { tryCatch } from "../utils/tryCatch.js";
+
 const randomId = function (length = 6) {
   return Math.random()
     .toString(36)
     .substring(2, length + 2);
 };
 
-export const getUsers = async (req, res) => {
-  const { market_id } = req.params;
-
-  try {
-    const [users] = await pool.query(
-      "SELECT user_id, email, roles FROM users WHERE market_id = ?",
-      [market_id]
-    );
-
-    res.json(users);
-  } catch (error) {
-    res.json(error);
+export const getUsers = tryCatch(
+  async (req, res) => {
+    const { market_id } = req.params;
+  
+      const [users] = await pool.query(
+        "SELECT user_id, email, roles FROM users WHERE market_id = ?",
+        [market_id]
+      );
+  
+      if (!users.length) throw new ClientError("Users not found", 404);
+  
+      res.json(users);
   }
-};
+);
 
 export const createUser = async (req, res, next) => {
   const { email, roles, password, market_id } = req.body;
@@ -33,7 +36,7 @@ export const createUser = async (req, res, next) => {
     );
 
     res.status(201).json({ message: "Created user" });
-    next()
+    next();
   } catch (error) {
     res.json(error);
   }
@@ -44,7 +47,7 @@ export const createMainUser = async (req, res) => {
 
   const { email, roles, password } = req.body;
 
-  const user_id = randomId(12)
+  const user_id = randomId(12);
 
   try {
     const response = await pool.query(
@@ -59,10 +62,10 @@ export const createMainUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const {market_id, user_id} = req.params
+  const { market_id, user_id } = req.params;
 
-  res.json({message: 'UPDATE USER'})
-}
+  res.json({ message: "UPDATE USER" });
+};
 
 export const deleteUser = async (req, res) => {
   const { market_id, user_id } = req.params;
