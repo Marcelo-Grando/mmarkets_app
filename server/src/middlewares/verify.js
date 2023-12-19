@@ -5,14 +5,10 @@ import { ClientError } from "../errors/Errors.js";
 export const verifySession = tryCatch(async (req, res, next) => {
   const session_id = req.session.id;
 
-  console.log(req.cookies)
-
   const [[activeSession]] = await pool.query(
     "SELECT * from sessions WHERE session_id = ?",
     [session_id]
   );
-
-  console.log(activeSession)
 
   if (!activeSession)
     throw new ClientError("The user doesn't have an active session", 401)

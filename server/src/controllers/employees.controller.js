@@ -1,25 +1,16 @@
 import { pool } from "../db.js";
-import { AppError, ClientError } from "../errors/Errors.js";
+import { ClientError } from "../errors/Errors.js";
 import { tryCatch } from "../utils/tryCatch.js";
 
 export const getEmployees = tryCatch(async (req, res) => {
   const { market_id } = req.params;
-
-  const [[market]] = await pool.query(
-    "SELECT * FROM markets WHERE market_id = ?",
-    [market_id]
-  );
-
-  if (!market)
-   throw new ClientError("Market not Found");
 
   const [employees] = await pool.query(
     "SELECT * FROM employees WHERE market_id = ?",
     [market_id]
   );
 
-  if (!employees.length)
-    return res.status(404).json({ message: "Employees not found" });
+  if (!employees.length) throw new ClientError("Employees not found", 404);
 
   res.json(employees);
 });
