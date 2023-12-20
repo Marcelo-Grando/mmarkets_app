@@ -44,6 +44,11 @@ CREATE TABLE products (
     FOREIGN KEY (category_id) REFERENCES categories(category_id),
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
+CREATE TABLE payment_type (
+    payment_type_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    tax_rate INT UNSIGNED
+);
 CREATE TABLE sales (
     sale_id VARCHAR(12) PRIMARY KEY,
     amount DECIMAL(10, 2) NOT NULL,
@@ -51,8 +56,10 @@ CREATE TABLE sales (
     time TIME NOT NULL,
     market_id VARCHAR(12) NOT NULL,
     employee_id VARCHAR(12) NOT NULL,
+    payment_type INT UNSIGNED,
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
-    FOREIGN KEY (market_id) REFERENCES markets(market_id)
+    FOREIGN KEY (market_id) REFERENCES markets(market_id),
+    FOREIGN KEY (payment_type) REFERENCES payment_type(payment_type_id)
 );
 CREATE TABLE items_for_sales (
     item_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
