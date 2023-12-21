@@ -1,3 +1,4 @@
+import {pool} from "../db.js"
 import { tryCatch } from "../utils/tryCatch.js";
 import { ClientError } from "../errors/Errors.js";
 
@@ -27,10 +28,15 @@ export const validateCategoryData = tryCatch(async (req, res, next) => {
 });
 
 export const validateProductData = tryCatch(async (req, res, next) => {
+  const {market_id} = req.params
   const { name, description, price, category_id } = req.body;
 
   if (!name || !description || !price || !category_id)
     throw new ClientError("Incomplete Fiels");
+
+  const [[product]] = await pool.query("SELECT * FROM products WHERE market_id = ? AND name = ? AND description = ?", [market_id, name, description])
+
+  if(product) throw new ClientError(`The product ${name + ' ' + description} already exists`)
 
   next();
 });
