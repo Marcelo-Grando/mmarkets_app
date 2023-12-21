@@ -47,7 +47,9 @@ CREATE TABLE products (
 CREATE TABLE payment_type (
     payment_type_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
-    tax_rate INT UNSIGNED
+    tax_rate INT UNSIGNED,
+    market_id VARCHAR(12),
+    FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 CREATE TABLE sales (
     sale_id VARCHAR(12) PRIMARY KEY,

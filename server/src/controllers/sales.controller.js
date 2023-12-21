@@ -27,7 +27,7 @@ const getEmployeeData = async (employee_id, market_id) => {
   return employee_data;
 };
 
-const createSale = async (employee_id, market_id, products, amount) => {
+const createSale = async (employee_id, market_id, products, amount, payment_type) => {
   const sale_id = generateId(10);
 
   const [[{ date, time }]] = await pool.query(
@@ -35,8 +35,8 @@ const createSale = async (employee_id, market_id, products, amount) => {
   );
 
   const [insert_sale] = await pool.query(
-    "INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id) VALUES (?, ?, ?, ?, ?, ?)",
-    [sale_id, amount, date, time, market_id, employee_id]
+    "INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [sale_id, amount, date, time, market_id, employee_id, payment_type]
   );
 
   const [insert_items] = products.map(
@@ -93,7 +93,7 @@ const createTicket = async (sale, products, amount, employeeData) => {
 
 export const makeSale = tryCatch(async (req, res) => {
   const { market_id, employee_id } = req.params;
-  const { products } = req.body;
+  const { products, payment_type } = req.body;
 
     const employeeData = await getEmployeeData(employee_id, market_id);
 
@@ -103,7 +103,7 @@ export const makeSale = tryCatch(async (req, res) => {
       employee_id,
       market_id,
       found_products,
-      amount
+      amount, payment_type
     );
 
     const ticket = await createTicket(

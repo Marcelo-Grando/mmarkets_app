@@ -52,12 +52,12 @@ export const updateProduct = tryCatch(async (req, res) => {
     [name, description, price, expiration, category_id, product_id, market_id]
   );
 
-  const [[product]] = await pool.query(
+  const [[modifyProduct]] = await pool.query(
     "SELECT * FROM products WHERE product_id = ? AND market_id = ?",
     [product_id, market_id]
   );
 
-  res.json(product);
+  res.json(modifyProduct);
 });
 
 export const deleteProduct = tryCatch(async (req, res) => {

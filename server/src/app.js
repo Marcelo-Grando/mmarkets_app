@@ -14,6 +14,7 @@ import categoriesRoutes from "./routes/categories.routes.js"
 import productsRotes from "./routes/products.routes.js"
 import salesRoutes from "./routes/sales.routes.js"
 import reportsRoutes from "./routes/reports.routes.js"
+import paymentTypesRoutes from "./routes/payment_types.routes.js"
 
 import { verifySession } from "./middlewares/verify.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -64,6 +65,7 @@ app.use("/api", verifySession, productsRotes)
 app.use("/api", verifySession, categoriesRoutes)
 app.use("/api", salesRoutes)
 app.use("/api", reportsRoutes)
+app.use("/api", paymentTypesRoutes)
 
 app.use(errorHandler);
 
