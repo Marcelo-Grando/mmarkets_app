@@ -18,9 +18,13 @@ export const verifySession = tryCatch(async (req, res, next) => {
     [session_id]
   );
 
-  const { user } = JSON.parse(data);
+  console.log(req.user_id)
 
-  req.user = user;
+  console.log(data)
+
+  const { user_id } = JSON.parse(data);
+
+  console.log(user_id)
 
   next()
 })
