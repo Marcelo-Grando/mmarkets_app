@@ -15,6 +15,7 @@ import productsRotes from "./routes/products.routes.js"
 import salesRoutes from "./routes/sales.routes.js"
 import reportsRoutes from "./routes/reports.routes.js"
 import paymentTypesRoutes from "./routes/payment_types.routes.js"
+import profileRotes from "./routes/profile.routes.js"
 
 import { verifySession } from "./middlewares/verify.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -57,6 +58,7 @@ app.use(
 );
 
 app.use("/api", authRoutes)
+app.use("/api", profileRotes)
 app.use("/api", accountsRoutes)
 app.use("/api", verifySession, marketsRoutes)
 app.use("/api", verifySession, usersRoutes)

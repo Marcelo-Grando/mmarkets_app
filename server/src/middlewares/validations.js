@@ -2,7 +2,7 @@ import {pool} from "../db.js"
 import { tryCatch } from "../utils/tryCatch.js";
 import { ClientError } from "../errors/Errors.js";
 import { comparePassword } from "../utils/encryptPassword.js";
-import { findUserByEmail } from "../utils/searchEngines.js";
+import { findUserByEmail } from "../helpers/searchEngines.js";
 
 export const validateUser = tryCatch(async (req, res, next) => {
   const { email, password } = req.body;
