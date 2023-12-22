@@ -22,5 +22,7 @@ export const comparePassword = async (user_id, password) => {
 
   const decryptPassword = decryptBlobPassword.toString();
 
+  console.log(decryptPassword, password)
+
   return decryptPassword === password;
 };

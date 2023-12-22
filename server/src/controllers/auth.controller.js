@@ -1,16 +1,11 @@
 import { tryCatch } from "../utils/tryCatch.js";
-import { ClientError } from "../errors/Errors.js";
-import { comparePassword } from "../utils/encryptPassword.js";
 
 export const login = tryCatch(async (req, res) => {
-  const { password } = req.body;
-  const user = req.user;
+  const {user_id} = req
 
-  const passwordCompared = await comparePassword(user.user_id, password);
+  console.log(user_id)
 
-  if (!passwordCompared) throw new ClientError("Incorrect Password", 401);
-
-  req.session.user = user;
+  req.session.user_id = user_id;
 
   res.json({ auth: true });
 });

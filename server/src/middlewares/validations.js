@@ -1,6 +1,26 @@
 import {pool} from "../db.js"
 import { tryCatch } from "../utils/tryCatch.js";
 import { ClientError } from "../errors/Errors.js";
+import { comparePassword } from "../utils/encryptPassword.js";
+import { findUserByEmail } from "../utils/searchEngines.js";
+
+export const validateUser = tryCatch(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const userFound = await findUserByEmail(email);
+
+  if (!userFound) throw new ClientError("The email doesn't belong to an existing user")
+
+  const {user_id} = userFound
+
+  const passwordCompared = await comparePassword(user_id, password);
+
+  if (!passwordCompared) throw new ClientError("Incorrect Password", 401);
+
+  req.user_id = user_id
+
+  next()
+})
 
 export const validateMainAccountData = tryCatch(async (req, res, next) => {
   const { name, adress, state, email, roles, password } = req.body;
