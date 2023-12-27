@@ -110,3 +110,4 @@ SELECT u.user_id,
     e.market_id
 FROM users u
     INNER JOIN employees e ON u.user_id = e.employee_id;
+
