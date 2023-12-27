@@ -1,10 +1,8 @@
 import { Router } from "express";
 
-import { getSoldProducts, salesByProducts, salesByCategories, salesBySellers, salesByDay, reportsByDate } from "../controllers/reports.controller.js";
+import { salesByProducts, salesByCategories, salesBySellers, salesByDay, reportsByDate, productsSoldByMonth } from "../controllers/reports.controller.js";
 
 const router = Router()
-
-router.get("/reports/:market_id", getSoldProducts)
 
 router.get("/reports/:market_id/products", salesByProducts)
 
@@ -15,5 +13,7 @@ router.get("/reports/:market_id/sellers", salesBySellers)
 router.get("/reports/:market_id/date/:date", salesByDay)
 
 router.get("/reports/:market_id/date", reportsByDate)
+
+router.get("/reports/:market_id/month/:month", productsSoldByMonth)
 
 export default router

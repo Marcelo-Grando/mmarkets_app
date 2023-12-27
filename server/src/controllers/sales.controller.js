@@ -36,7 +36,7 @@ const createSale = async (employee_id, market_id, products, amount, payment_type
 
   const [insert_sale] = await pool.query(
     "INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id, payment_type) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [sale_id, amount, date, time, market_id, employee_id, payment_type]
+    [sale_id, amount, "2023-06-02", time, market_id, employee_id, payment_type]
   );
 
   const [insert_items] = products.map(
@@ -59,7 +59,7 @@ const createTicket = async (sale, products, amount, employeeData) => {
       sale.sale_id,
       sold_products,
       amount,
-      sale.date,
+      "2023-06-02",
       sale.time,
       sale.sale_id,
       employeeData.employee_id,

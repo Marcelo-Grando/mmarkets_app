@@ -57,6 +57,8 @@ app.use(
   })
 );
 
+app.use("/api", reportsRoutes)
+
 app.use("/api", authRoutes)
 app.use("/api", profileRotes)
 app.use("/api", accountsRoutes)
@@ -67,7 +69,7 @@ app.use("/api", employeesRoutes)
 app.use("/api", productsRotes)
 app.use("/api", categoriesRoutes)
 app.use("/api", salesRoutes)
-app.use("/api", reportsRoutes)
+
 app.use("/api", paymentTypesRoutes)
 
 app.use(errorHandler);

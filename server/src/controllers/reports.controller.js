@@ -1,36 +1,6 @@
 import { pool } from "../db.js";
 import { tryCatch } from "../utils/tryCatch.js";
 
-export const getSoldProducts = tryCatch(async (req, res) => {
-  const { market_id } = req.params;
-
-  const [sold_products] = await pool.query(
-    "SELECT * FROM sold_products WHERE market_id = ?",
-    [market_id]
-  );
-  const [tickets] = await pool.query(
-    "SELECT * FROM tickets WHERE market_id = ?",
-    [market_id]
-  );
-
-  const [salesByProducts] = await pool.query(
-    "SELECT product_id, name, description, category_name, sum(price * quantify) AS amount FROM sold_products WHERE market_id = ? GROUP BY product_id, name, description, category_name",
-    [market_id]
-  );
-
-  const [salesByCategories] = await pool.query(
-    "SELECT category_name, sum(price * quantify) AS amount FROM sold_products WHERE market_id = ? GROUP BY category_name",
-    [market_id]
-  );
-
-  const [salesBySellers] = await pool.query(
-    "SELECT employee_id, employee_name, sum(price * quantify) AS amount FROM sold_products WHERE market_id = ? GROUP BY employee_id, employee_name",
-    [market_id]
-  );
-
-  res.json({ salesByProducts, salesByCategories, salesBySellers });
-});
-
 export const salesByProducts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
@@ -90,11 +60,31 @@ export const salesByDay = tryCatch(async (req, res) => {
   res.json({ dailySalesCumulative, dailySalesByProduct, dailySalesByCategory });
 });
 
-
 export const reportsByDate = tryCatch(async (req, res) => {
-  const {market_id} = req.params
+  const { market_id } = req.params;
 
-  const [salesByMounth] = await pool.query("SELECT SUM(s.price * s.quantify) AS amount, SUM(s.quantify) AS quantify, MONTHNAME(t.date) AS month FROM sold_products s INNER JOIN tickets t ON s.ticket_id = t.ticket_id WHERE s.market_id = ? GROUP BY MONTHNAME(t.date)", [market_id])
+  const [monthlySales] = await pool.query(
+    "SELECT MONTHNAME(t.date) AS month, SUM(s.price * s.quantify) AS total_sales FROM sold_products s INNER JOIN tickets t ON s.ticket_id = t.ticket_id WHERE s.market_id = ? GROUP BY MONTHNAME(t.date)",
+    [market_id]
+  );
 
-  res.json(salesByMounth)
-})
+  res.json(monthlySales);
+});
+
+export const productsSoldByMonth = tryCatch(async (req, res) => {
+  const { market_id, month } = req.params;
+
+  const [[{ month_name }]] = await pool.query(
+    "SELECT MONTHNAME(?) AS month_name",
+    [`${month}-${month}-${month}`]
+  );
+
+  const [productsSoldByMonth] = await pool.query(
+    "SELECT p.product_id, p.name, p.description, p.category_name, p.price, SUM(p.quantify) AS quantify, SUM(p.price * p.quantify) AS amount FROM sold_products p INNER JOIN tickets t ON p.ticket_id = t.ticket_id WHERE p.market_id = ? AND MONTH(t.date) = ? GROUP BY p.product_id, p.name, p.description, p.category_name, p.price, MONTHNAME(t.date), MONTH(t.date)",
+    [market_id, month]
+  );
+
+  res.json({
+    productsSoldByMonth: { month: month_name, products: productsSoldByMonth },
+  });
+});
