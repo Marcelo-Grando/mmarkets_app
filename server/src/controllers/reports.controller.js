@@ -91,3 +91,10 @@ export const salesByDay = tryCatch(async (req, res) => {
 });
 
 
+export const reportsByDate = tryCatch(async (req, res) => {
+  const {market_id} = req.params
+
+  const [salesByMounth] = await pool.query("SELECT SUM(s.price * s.quantify) AS amount, SUM(s.quantify) AS quantify, MONTHNAME(t.date) AS month FROM sold_products s INNER JOIN tickets t ON s.ticket_id = t.ticket_id WHERE s.market_id = ? GROUP BY MONTHNAME(t.date)", [market_id])
+
+  res.json(salesByMounth)
+})
