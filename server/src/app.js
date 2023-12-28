@@ -18,6 +18,7 @@ import paymentTypesRoutes from "./routes/payment_types.routes.js"
 import profileRotes from "./routes/profile.routes.js"
 
 import { verifySession } from "./middlewares/verify.js";
+import { validateSession } from "./middlewares/validations.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
@@ -62,7 +63,7 @@ app.use("/api", reportsRoutes)
 app.use("/api", authRoutes)
 app.use("/api", profileRotes)
 app.use("/api", accountsRoutes)
-app.use(verifySession)
+app.use(validateSession)
 app.use("/api", marketsRoutes)
 app.use("/api", usersRoutes)
 app.use("/api", employeesRoutes)

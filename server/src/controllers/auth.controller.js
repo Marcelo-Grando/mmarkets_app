@@ -5,6 +5,8 @@ export const login = tryCatch(async (req, res) => {
 
   req.session.user_id = user_id;
 
+  req.user_id = user_id
+
   res.json({ auth: true });
 });
 
