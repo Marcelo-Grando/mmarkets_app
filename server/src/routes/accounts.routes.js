@@ -1,7 +1,6 @@
 import { Router } from "express";
 
-import { validateMainAccountData, validateEmployeAccountData } from "../middlewares/validations.js";
-import { verifySession } from "../middlewares/verify.js";
+import { validateMainAccountData, validateEmployeAccountData, validateSession } from "../middlewares/validations.js";
 
 import { createMainAccount, createEmployeeAccount, getEmployeesAccounts, getAdminsAccounts, getSellersAccounts, deleteEmployeeAccount } from "../controllers/accounts.controller.js";
 
@@ -9,14 +8,14 @@ const router = Router()
 
 router.post("/accounts", validateMainAccountData, createMainAccount)
 
-router.get("/accounts/:market_id", verifySession, getEmployeesAccounts)
+router.get("/accounts/:market_id",  validateSession, getEmployeesAccounts)
 
-router.get("/accounts/:market_id/sellers", verifySession, getSellersAccounts)
+router.get("/accounts/:market_id/sellers",  validateSession, getSellersAccounts)
 
-router.get("/accounts/:market_id/admins", verifySession, getAdminsAccounts)
+router.get("/accounts/:market_id/admins",  validateSession, getAdminsAccounts)
 
-router.post("/accounts/:market_id", verifySession, validateEmployeAccountData, createEmployeeAccount)
+router.post("/accounts/:market_id",  validateEmployeAccountData, createEmployeeAccount)
 
-router.delete("/accounts/:market_id/:employee_id", verifySession, deleteEmployeeAccount)
+router.delete("/accounts/:market_id/:employee_id",  validateSession, deleteEmployeeAccount)
 
 export default router

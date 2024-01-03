@@ -17,7 +17,6 @@ import reportsRoutes from "./routes/reports.routes.js"
 import paymentTypesRoutes from "./routes/payment_types.routes.js"
 import profileRotes from "./routes/profile.routes.js"
 
-import { verifySession } from "./middlewares/verify.js";
 import { validateSession } from "./middlewares/validations.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 
