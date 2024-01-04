@@ -2,15 +2,21 @@ import './App.css'
 
 import { Router} from 'react-router-dom'
 
-import routes from "./routes/routes.jsx"
 
+
+
+import { useState } from 'react'
+import './App.css'
+
+import HomePage from './pages/HomePage'
 
 function App() {
+  const [count, setCount] = useState(0)
 
   return (
-      <Router>
-        {routes}
-      </Router>
+    <>
+      <HomePage/>
+    </>
   )
 }
 
