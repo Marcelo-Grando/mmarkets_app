@@ -6,28 +6,104 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.container {
+  padding: 10px;
+  display:flex;
+  justify-content: space-around;
+}
+
+.text {
+  width: 500px;
+} 
+
+.nav {
+  padding: 10px;
+  margin: 0;
+
+  display: flexbox;
+}
+
+.logo {
+  display: inline;
+}
+
+.nav-seller ul {
+  display: inline
+}
+
+.nav-seller ul li {
+  display:inline-block;
+    width:10%;
+    padding:5px 10px;
+    background-color:#000;
+    border:1px solid #433f3f;
+    text-align:center;
+    color:#fff;
+  list-style: none;
+}
+
+.nav-seller ul button {
+  margin-left: 15%;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.buttons {
+  display: inline;
+  margin-left: 60%;
+}
+
+button {
+  margin-right: 20px;
+}
+
+h3 {
+  display: inline;
+  color: #b7d4c6;
+}
+
+.form {
+  text-align: center;
+  width:300px;
+	padding:16px;
+  border: 1px solid rgb(82, 79, 79);
+	border-radius:10px;
+	margin:auto;
+}
+
+.form input {
+  width:180px;
+	padding:3px 10px;
+	border:1px solid #f6f6f6;
+	border-radius:3px;
+	background-color:#e4d3e8;
+	margin:8px 0;
+	display:inline-block;
+  color: #000;
+}
+
+.form button {
+  width:100%;
+	padding:8px 16px;
+	margin-top:32px;
+	border:1px solid #000;
+	border-radius:5px;
+	display:block;
+	color:#fff;
+	background-color:#000;
 }
 
 a {
   font-weight: 500;
   color: #646cff;
-  text-decoration: inherit;
+
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -54,15 +130,41 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.user-card {
+  border: 1px solid white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.drop-content {
+  display: none;
+  position: absolute;
+  width: 7rem;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown:hover .drop-content {
+  display: block;
+}
+
+.drop-content .nav-link {
+  display: block;
+  color: #535bf2;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.drop-content .nav-link:hover {
+  color: #b7d4c6;
+  background-color: #646cff;
+}
+
+.btn-des {
+  width:min-content
 }

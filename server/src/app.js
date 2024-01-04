@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors"
 import session from "express-session";
 import MySQLStoreClassFactory from "express-mysql-session";
 import { pool } from "./db.js";
@@ -23,6 +24,13 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 const app = express();
 
 app.use(express.json());
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173" 
+  }),
+);
 
 app.use(cookieParser());
 
@@ -57,8 +65,6 @@ app.use(
   })
 );
 
-app.use("/api", reportsRoutes)
-
 app.use("/api", authRoutes)
 app.use("/api", profileRotes)
 app.use("/api", accountsRoutes)
@@ -67,6 +73,7 @@ app.use("/api", marketsRoutes)
 app.use("/api", usersRoutes)
 app.use("/api", employeesRoutes)
 app.use("/api", productsRotes)
+app.use("/api", reportsRoutes)
 app.use("/api", categoriesRoutes)
 app.use("/api", salesRoutes)
 

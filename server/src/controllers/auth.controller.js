@@ -5,9 +5,7 @@ export const login = tryCatch(async (req, res) => {
 
   req.session.user_id = user_id;
 
-  req.user_id = user_id
-
-  res.json({ auth: true });
+  res.json({user_id});
 });
 
 export const logout = tryCatch(async (req, res) => {
