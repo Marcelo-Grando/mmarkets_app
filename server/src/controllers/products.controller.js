@@ -3,11 +3,24 @@ import { tryCatch } from "../utils/tryCatch.js";
 import { ClientError } from "../errors/Errors.js";
 import { generateId } from "../utils/generateId.js";
 
+// export const getProducts = tryCatch(async (req, res) => {
+//   const { market_id } = req.params;
+
+//   const [products] = await pool.query(
+//     "SELECT * FROM products WHERE market_id = ?",
+//     [market_id]
+//   );
+
+//   if (!products.length) throw new ClientError("There are no products", 404);
+
+//   res.json(products);
+// });
+
 export const getProducts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
-
+  
   const [products] = await pool.query(
-    "SELECT * FROM products WHERE market_id = ?",
+    "SELECT p.product_id, p.name, p.description, p.category_id, c.name AS category_name, p.price, p.expiration, p.market_id  FROM products p INNER JOIN categories c ON p.category_id = c.category_id WHERE p.market_id = ?",
     [market_id]
   );
 

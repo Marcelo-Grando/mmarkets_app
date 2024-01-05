@@ -7,7 +7,5 @@ export const errorHandler = (error, req, res, next) => {
     });
   }
 
-  console.log('erorHandler',error)
-
   return res.status(500).send("Something went wrong");
 };

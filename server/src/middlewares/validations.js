@@ -108,7 +108,7 @@ export const validateSession = tryCatch(async (req, res, next) => {
   if (!user_id)
     throw new ClientError("The user doesn't have an active session", 401);
 
-  if (!user_id === req.session.user_id)
+  if (user_id !== req.session.user_id)
     throw new ClientError("The user doesn't have an active session", 401);
 
   next();

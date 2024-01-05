@@ -1,6 +1,7 @@
 import { pool } from "../db.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import { generateId } from "../utils/generateId.js";
+import {ClientError} from "../errors/Errors.js"
 
 const findProductsAndAmountForSale = async (products) => {
   let found_products = [];
@@ -94,6 +95,8 @@ const createTicket = async (sale, products, amount, employeeData) => {
 export const makeSale = tryCatch(async (req, res) => {
   const { market_id, employee_id } = req.params;
   const { products, payment_type } = req.body;
+
+  if(!products.length) throw new ClientError("Add products to make a sale")
 
     const employeeData = await getEmployeeData(employee_id, market_id);
 
