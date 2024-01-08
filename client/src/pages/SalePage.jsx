@@ -11,6 +11,7 @@ export default function SalePage() {
   const [selectedProductsView, setSelectedProductsView] = useState([]);
   const [selectedProductsIds, setSelectedProductsIds] = useState([]);
   const [amountSale, setAmountSale] = useState([0]);
+  const [error, setError] = useState();
 
   const { state } = useLocation();
 
@@ -98,14 +99,20 @@ export default function SalePage() {
   };
 
   const sendSale = async (market_id, user_id, sale) => {
-    const response = await makeSale(market_id, user_id, sale);
-    setSelectedProducts([]);
-    setSelectedProductsIds([]);
-    setSelectedProductsView([]);
-    setAmountSale([0]);
+    try {
+      const response = await makeSale(market_id, user_id, sale);
+      setSelectedProducts([]);
+      setSelectedProductsIds([]);
+      setSelectedProductsView([]);
+      setAmountSale([0]);
+      setError();
+    } catch (error) {
+      setError({
+        status: error.response.status,
+        message: error.response.data.message,
+      });
+    }
   };
-
-  console.log(amountSale);
 
   return (
     <section>
@@ -152,7 +159,10 @@ export default function SalePage() {
           </tbody>
           <tfoot>
             <div className="amount-row">
-              <h4>amount: $ <span>{amountSale?.reduce((acc, curr) => acc + curr)}</span></h4>
+              <h4>
+                amount: ${" "}
+                <span>{amountSale?.reduce((acc, curr) => acc + curr)}</span>
+              </h4>
             </div>
             <div>
               <button
@@ -169,6 +179,7 @@ export default function SalePage() {
             </div>
           </tfoot>
         </table>
+        {error && <span>{`${error.message}`}</span>}
       </div>
     </section>
   );

@@ -76,7 +76,6 @@ app.use("/api", productsRotes)
 app.use("/api", reportsRoutes)
 app.use("/api", categoriesRoutes)
 app.use("/api", salesRoutes)
-
 app.use("/api", paymentTypesRoutes)
 
 app.use(errorHandler);
