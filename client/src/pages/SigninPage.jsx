@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { login } from "../api/Auth";
 import { getProfile } from "../api/Profiles";
+import { loadUser } from "../features/userSlice";
 
 export default function SigninPage() {
   const navigate = useNavigate();
@@ -25,9 +28,7 @@ export default function SigninPage() {
 
     const { data } = await login(user);
 
-    const profileData = await getProfile(data.user_id);
-
-    navigate("/user", { state: { userData: profileData.data } });
+    navigate("/user", { state: { userData: data } });
   };
 
   return (

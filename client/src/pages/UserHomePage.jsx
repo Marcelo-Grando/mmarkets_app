@@ -7,23 +7,19 @@ import MainHomePage from "./MainHomePage";
 import AdminHomePage from "./AdminHomePage";
 
 export default function UserHomePage() {
-  const [userData, setUserData] = useState();
-
   const { state } = useLocation();
-
-  const userLocation = useLocation()
-
-  console.log("use location", userLocation)
-
-  console.log(" state userHomePage", state)
-
-  useEffect(() => {
-    setUserData(state.userData);
-  }, [userData]);
 
   const { roles } = state.userData;
 
-  if (roles === "seller") {
-    return <SellerHomePage userData={userData} />;
+  console.log(state.userData)
+
+
+  switch (roles) {
+    case "seller":
+      return <SellerHomePage userData={state.userData} />
+
+    default:
+      return <p>404 NOT FOUND</p>
+      break;
   }
 }

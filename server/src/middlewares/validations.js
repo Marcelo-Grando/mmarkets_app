@@ -12,13 +12,15 @@ export const validateUser = tryCatch(async (req, res, next) => {
   if (!userFound)
     throw new ClientError("The email doesn't belong to an existing user");
 
-  const { user_id } = userFound;
+  const { user_id, market_id, roles } = userFound;
 
   const passwordCompared = await comparePassword(user_id, password);
 
   if (!passwordCompared) throw new ClientError("Incorrect Password", 401);
 
-  req.user_id = user_id;
+  console.log("first")
+
+  req.userQuerysData = {user_id, market_id, roles}
 
   next();
 });
@@ -103,12 +105,12 @@ export const validateSession = tryCatch(async (req, res, next) => {
 
   const { data } = activeSession;
 
-  const { user_id } = JSON.parse(data);
-
-  if (!user_id)
+  if (!data)
     throw new ClientError("The user doesn't have an active session", 401);
 
-  if (user_id !== req.session.user_id)
+  const {userData: {user_id}} = JSON.parse(data);
+
+  if (user_id !== req.session.userData.user_id)
     throw new ClientError("The user doesn't have an active session", 401);
 
   next();

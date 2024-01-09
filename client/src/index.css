@@ -1,8 +1,6 @@
 :root {
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 500;
 
   color-scheme: light dark;
   color: rgba(30, 37, 34, 0.87);
@@ -229,6 +227,7 @@ button:focus-visible {
 }
 
 .products-card {
+  color: rgb(250, 247, 247);
   background-color: #1a1a1a;
   padding: 0.5rem;
   height: 12rem;
@@ -249,46 +248,68 @@ td {
 
 .sale-card {
   display: flex;
-  background-color: #050b08;
-  color: #143b18;
-  padding: 0.2rem;
+  background-color: #fcfffe;
 }
 
 .sale-card td {
   border: 1px solid rgb(4, 57, 6);
-  background-color: white;
+  color: #000000;
   padding-inline: 1rem;
 }
 
 .products-ctn {
   height: 12rem;
-  width: 34rem;
+  width: 100%;
   border: 10x solod white;
   background-color: white;
-  padding: 1rem;
+  padding: .5rem;
+  color: #f6f3f3;
+}
+
+.products-ctn table {
+  width: 100%;
 }
 
 .sale-card .amount-row {
   padding: 0.5rem;
-  background-color:#050b08;
+  background-color:#2d2e2d;
 }
 
 .amount-row {
-  margin-top: 0.3rem;
+  width: 16rem;
+  background-color: #2d2e2d;
 }
 
 .amount-row h4 {
+  color: #08bd45;
   margin: 0.1rem;
+  font-size: small;
 }
 
 .amount-row h4 span {
-  padding-inline: 1rem;
-  border: 1px solid rgb(94, 254, 148);
-  font-weight: 380;
+  color: #000;
   background-color: white;
+  padding-inline: 0.3rem;
 }
 
 .btn-container {
-  border: 1px solid white;
-  padding-top: 10rem;
+  padding: .3rem;
+  text-align: center;
+  margin-top: 7.7rem;
+  background-color: #2d2e2d;
+}
+
+.btn-container button {
+  display: inline;
+  width: 4rem;
+  padding: .2rem .3rem;
+  margin-right: 1rem;
+}
+
+.btn-sell {
+  background-color: #099c44;
+}
+
+.btn-cancel {
+  background-color: rgb(207, 60, 60);
 }

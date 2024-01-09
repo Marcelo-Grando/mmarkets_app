@@ -18,6 +18,8 @@ import { generateId } from "../utils/generateId.js";
 
 export const getProducts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
+
+  console.log(req.user_id)
   
   const [products] = await pool.query(
     "SELECT p.product_id, p.name, p.description, p.category_id, c.name AS category_name, p.price, p.expiration, p.market_id  FROM products p INNER JOIN categories c ON p.category_id = c.category_id WHERE p.market_id = ?",

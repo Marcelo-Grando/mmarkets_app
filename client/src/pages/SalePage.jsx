@@ -118,8 +118,8 @@ export default function SalePage() {
     <div className="sale-container">
       <section>
         <div className="sale-card">
-          <table>
-            <div className="products-ctn">
+          <div className="products-ctn">
+            <table>
               <tbody>
                 {selectedProductsView?.map((product, index) => {
                   return (
@@ -134,30 +134,32 @@ export default function SalePage() {
                   );
                 })}
               </tbody>
-            </div>
-          </table>
+            </table>
+          </div>
+
           {error && <span>{`${error.message}`}</span>}
           <div className="amount-row">
             <h4>
               amount: ${" "}
               <span>{amountSale?.reduce((acc, curr) => acc + curr)}</span>
             </h4>
-            <h4>date: <span>2024-01-08</span></h4>
-          </div>
-          <div className="btn-container">
-          <button
-              onClick={() => {
-                sendSale(userData.market_id, userData.user_id, {
-                  products: selectedProducts,
-                  payment_type: 1,
-                });
-              }}
-            >
-              sell
-            </button>
-            <button>cancel</button>
-          </div>
-          <div>
+            <h4>
+              date: <span>2024-01-08</span>
+            </h4>
+            <div className="btn-container">
+              <button className="btn-sell"
+                onClick={() => {
+                  sendSale(userData.market_id, userData.user_id, {
+                    products: selectedProducts,
+                    payment_type: 1,
+                  });
+                }}
+              >
+                sell
+              </button>
+              <button className="btn-cancel">cancel</button>
+            </div>
+            <div></div>
           </div>
         </div>
         <div className="products-card">

@@ -1,11 +1,10 @@
 import { tryCatch } from "../utils/tryCatch.js";
 
 export const login = tryCatch(async (req, res) => {
-  const {user_id} = req
 
-  req.session.user_id = user_id;
+  req.session.userData = req.userQuerysData;
 
-  res.json({user_id});
+  res.json(req.userQuerysData);
 });
 
 export const logout = tryCatch(async (req, res) => {
