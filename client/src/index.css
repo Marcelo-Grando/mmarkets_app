@@ -1,11 +1,12 @@
 :root {
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 500;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgba(30, 37, 34, 0.87);
+  background-color: #f0f4ef;
 }
 
 .container {
@@ -15,18 +16,54 @@
 }
 
 .text {
+  padding: 1rem;
   width: 500px;
-} 
+  color: #e0ffe9;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style:italic;
+  font-weight: bold;
+  border-radius: 2rem;
+}
+
+.text:hover {
+  color: #1a1a1a;
+  box-shadow: 3px 5px 3px 1px #b3b4b38a;
+}
+
+.text h4 {
+  text-shadow: 1px 1px 1px rgb(0, 9, 2);
+  .text h4 {
+    text-shadow: 2px 12px 1px rgb(0, 9, 2);
+  }
+}
+
+.text p {
+  text-shadow: 1px 1px 1px rgb(0, 9, 2);
+}
 
 .nav {
   padding: 10px;
   margin: 0;
+}
 
-  display: flexbox;
+.nav-bar {
+  background-color: #045022;
+  color: #202221;
+  padding-block: 0;
+  padding-inline: 0.5rem;
+  border: 1px solid white;
+  display: flex;
+  justify-content: start;
+  align-items:center;
+}
+
+.logo-container {
+  display: inline;
 }
 
 .logo {
-  display: inline;
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .nav-seller ul {
@@ -54,56 +91,61 @@
 
 .buttons {
   display: inline;
-  margin-left: 60%;
+  margin-left: 55%;
 }
 
 button {
   margin-right: 20px;
 }
 
-h3 {
+h2 {
   display: inline;
-  color: #b7d4c6;
+  color: #12251c;
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .form {
   text-align: center;
   width:300px;
-	padding:16px;
+	padding:1.5rem;
   border: 1px solid rgb(82, 79, 79);
 	border-radius:10px;
 	margin:auto;
+  box-shadow: 2px 2px 2px 2px #b3b4b38a;
 }
 
 .form input {
-  width:180px;
-	padding:3px 10px;
-	border:1px solid #f6f6f6;
-	border-radius:3px;
-	background-color:#e4d3e8;
+  width:15rem;
+  padding: .5rem;
+  height: 1rem;
+	border:1px solid #082905;
+	border-radius:0.3rem;
+	background-color:#ffffff;
 	margin:8px 0;
 	display:inline-block;
   color: #000;
 }
 
 .form button {
-  width:100%;
-	padding:8px 16px;
-	margin-top:32px;
+  margin-top: 18px;
+  text-align: center;
+  margin-left: 1.2rem;
+  width: 16.3rem;
+  height: 2.5rem;
 	border:1px solid #000;
-	border-radius:5px;
-	display:block;
+	border-radius:.3rem;
+	display:inline-block;
 	color:#fff;
-	background-color:#000;
+	background-color:#03160a;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-
+.form a {
+  color: #0c5135;
 }
-a:hover {
-  color: #535bf2;
+.form a:hover {
+  color: #305638;
+  font-style: italic;
 }
 
 h1 {
@@ -118,12 +160,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #031c09;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #2efb8a;
+  box-shadow: 1px 2px 2px 1px #17f1799c;
 }
 button:focus,
 button:focus-visible {
@@ -146,7 +189,8 @@ button:focus-visible {
   position: absolute;
   width: 7rem;
   overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  background-color: #bee4b1;
+  box-shadow: 0px 8px 16px 0px rgba(4, 4, 4, 0.442);
 }
 
 .dropdown:hover .drop-content {
@@ -155,18 +199,21 @@ button:focus-visible {
 
 .drop-content .nav-link {
   display: block;
-  color: #535bf2;
+  color: #0a4d1c;
   padding: 5px;
   text-decoration: none;
 }
 
 .drop-content .nav-link:hover {
-  color: #b7d4c6;
-  background-color: #646cff;
+  color: #edf7f2;
+  background-color: #045022;
 }
 
 .btn-des {
-  width:min-content
+  border-radius: 0.2rem;
+  border: 1px solid white;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .products-container {
@@ -183,7 +230,8 @@ button:focus-visible {
 
 .products-card {
   background-color: #1a1a1a;
-  padding: 2%;
+  padding: 0.5rem;
+  height: 12rem;
 }
 
 table {
@@ -200,30 +248,47 @@ td {
 }
 
 .sale-card {
-  margin-top: 50px;
-  background-color: #b7d4c6;
-  color: #1a1a1a;
-  padding: 1rem;
+  display: flex;
+  background-color: #050b08;
+  color: #143b18;
+  padding: 0.2rem;
 }
 
 .sale-card td {
-  border: 1px solid grey;
+  border: 1px solid rgb(4, 57, 6);
+  background-color: white;
   padding-inline: 1rem;
 }
 
-.amount-row {
-  display: inline;
-  background-color: #535bf2;
+.products-ctn {
+  height: 12rem;
+  width: 34rem;
+  border: 10x solod white;
+  background-color: white;
+  padding: 1rem;
+}
+
+.sale-card .amount-row {
+  padding: 0.5rem;
+  background-color:#050b08;
 }
 
 .amount-row {
-  display: inline;
-  background-color: #535bf2;
+  margin-top: 0.3rem;
 }
 
-span {
+.amount-row h4 {
+  margin: 0.1rem;
+}
+
+.amount-row h4 span {
   padding-inline: 1rem;
-  border: 1px solid black;
+  border: 1px solid rgb(94, 254, 148);
   font-weight: 380;
+  background-color: white;
 }
 
+.btn-container {
+  border: 1px solid white;
+  padding-top: 10rem;
+}

@@ -34,7 +34,7 @@ export default function SigninPage() {
     <>
       <div className="nav">
         <nav>
-          <h3>Mmarket'S</h3>
+          <h2>Mmarket'S</h2>
           <div className="buttons">
             <button>registrarse</button>
             <button onClick={() => navigate("/signin")}>iniciar sesion</button>
