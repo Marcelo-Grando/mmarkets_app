@@ -112,6 +112,27 @@ FROM users u
     INNER JOIN employees e ON u.user_id = e.employee_id;
 
 DELIMITER $
+CREATE PROCEDURE createMainAccount (
+    _market_id VARCHAR(12),
+    _name VARCHAR(150),
+    _adress VARCHAR(250),
+    _state BOOLEAN,
+    _email VARCHAR(250),
+    _password BLOB
+)
+    BEGIN 
+        INSERT INTO markets (market_id, name, adress, state, email)
+        VALUES
+        (_market_id, _name, _adress, _state, _email);
+        INSERT INTO users (user_id, email, roles, password, market_id)
+        VALUES
+        (_market_id, _email, 'main', _password, _market_id);
+    SELECT 'Account created successfully' AS message;
+    COMMIT;
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE make_sale (
      _market_id VARCHAR(12),
      _employee_id VARCHAR(12),

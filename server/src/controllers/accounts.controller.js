@@ -25,8 +25,7 @@ export const getAdminsAccounts = tryCatch(async (req, res) => {
     [market_id, "admin"]
   );
 
-  if (!admins.length)
-    throw new ClientError("There are no admin accounts")
+  if (!admins.length) throw new ClientError("There are no admin accounts");
 
   res.json(admins);
 });
@@ -46,23 +45,17 @@ export const getEmployeesAccounts = tryCatch(async (req, res) => {
 });
 
 export const createMainAccount = tryCatch(async (req, res) => {
-  const { name, adress, state, email, roles, password } = req.body;
+  const { name, adress, state, email, password } = req.body;
 
-  const market_id = generateId(12)
-
-  const [createMarket] = await pool.query(
-    "INSERT INTO markets (market_id, name, adress, state, email) VALUES (?, ?, ?, ?, ?)",
-    [market_id, name, adress, state, email]
-  );
-
+  const market_id = generateId(12);
   const passwordEncrypted = await encryptPassword(password);
 
-  const [createUser] = await pool.query(
-    "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
-    [market_id, email, roles, passwordEncrypted, market_id]
+  const [response] = await pool.query(
+    "CALL createMainAccount(?, ?, ?, ?, ?, ?)",
+    [market_id, name, adress, state, email, passwordEncrypted]
   );
 
-  res.json({ message: "Created Account" });
+  res.json(response);
 });
 
 export const createEmployeeAccount = tryCatch(async (req, res) => {
