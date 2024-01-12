@@ -106,6 +106,7 @@ export default function SalePage() {
       setSelectedProductsView([]);
       setAmountSale([0]);
       setError();
+      console.log(response.data)
     } catch (error) {
       setError({
         status: error.response.status,
