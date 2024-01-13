@@ -100,4 +100,27 @@ CREATE PROCEDURE createMainAccount (
 END $
 DELIMITER ;
 
+DELIMITER $
+CREATE PROCEDURE createEmployeeAccount (
+    _employee_id VARCHAR(12),
+    _market_id VARCHAR(12),
+    _email VARCHAR(250),
+    _name VARCHAR(100),
+    _lastname VARCHAR(100),
+    _dni INT UNSIGNED,
+    _position VARCHAR(20),
+    _password BLOB
+)
+    BEGIN
+        INSERT INTO users (user_id, email, roles, password, market_id)
+        VALUES
+        (_employee_id, _email, _position, _password, _market_id);
+        INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id)
+        VALUES
+        (_employee_id, _name, _lastname, _dni, _email, _position, _market_id);
+    SELECT 'Account created successfully' AS message;
+    COMMIT;
+END $
+DELIMITER ;
 
+    

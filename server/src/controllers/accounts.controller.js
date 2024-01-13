@@ -60,23 +60,16 @@ export const createMainAccount = tryCatch(async (req, res) => {
 
 export const createEmployeeAccount = tryCatch(async (req, res) => {
   const { market_id } = req.params;
-  const { email, roles, password, name, lastname, dni } = req.body;
+  const { email, position, password, name, lastname, dni } = req.body;
 
   const user_id = generateId(12);
 
   const passwordEncrypted = await encryptPassword(password);
 
-  const [createUser] = await pool.query(
-    "INSERT INTO users (user_id, email, roles, password, market_id) VALUES (?, ?, ?, ?, ?)",
-    [user_id, email, roles, passwordEncrypted, market_id]
-  );
+  const [response] = await pool.query("CALL createEmployeeAccount(?, ?, ?, ?, ?, ?, ?, ?)", 
+  [user_id, market_id, email, name, lastname, dni, position, passwordEncrypted])
 
-  const [createEmploye] = await pool.query(
-    "INSERT INTO employees (employee_id, name, lastname, dni, position, market_id) VALUES (?, ?, ?, ?, ?, ?)",
-    [user_id, name, lastname, dni, roles, market_id]
-  );
-
-  res.json({ message: "Successfully created account" });
+  res.json(response);
 });
 
 export const deleteEmployeeAccount = tryCatch(async (req, res) => {
