@@ -50,7 +50,7 @@ export const createMainAccount = tryCatch(async (req, res) => {
   const market_id = generateId(12);
   const passwordEncrypted = await encryptPassword(password);
 
-  const [response] = await pool.query(
+  const [[[response]]] = await pool.query(
     "CALL createMainAccount(?, ?, ?, ?, ?, ?)",
     [market_id, name, adress, state, email, passwordEncrypted]
   );
@@ -66,7 +66,7 @@ export const createEmployeeAccount = tryCatch(async (req, res) => {
 
   const passwordEncrypted = await encryptPassword(password);
 
-  const [response] = await pool.query("CALL createEmployeeAccount(?, ?, ?, ?, ?, ?, ?, ?)", 
+  const [[[response]]] = await pool.query("CALL createEmployeeAccount(?, ?, ?, ?, ?, ?, ?, ?)", 
   [user_id, market_id, email, name, lastname, dni, position, passwordEncrypted])
 
   res.json(response);

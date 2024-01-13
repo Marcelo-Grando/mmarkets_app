@@ -18,17 +18,15 @@ export const validateUser = tryCatch(async (req, res, next) => {
 
   if (!passwordCompared) throw new ClientError("Incorrect Password", 401);
 
-  console.log("first")
-
   req.userQuerysData = {user_id, market_id, roles}
 
   next();
 });
 
 export const validateMainAccountData = tryCatch(async (req, res, next) => {
-  const { name, adress, state, email, roles, password } = req.body;
+  const { name, adress, state, email, password } = req.body;
 
-  if (!name || !adress || !state || !email || !roles || !password)
+  if (!name || !adress || !state || !email || !password)
     throw new ClientError("Incomplete Fiels");
 
   const [[mainAccount]] = await pool.query(
