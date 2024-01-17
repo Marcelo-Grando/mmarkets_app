@@ -1,6 +1,12 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL
+
+const instanceAxios = axios.create({
+    baseURL: API_URL
+})
+
 axios.defaults.withCredentials = true;
 
 export const login = async (user) => 
-    await axios.post("http://localhost:4000/api/auth", user)
+    await instanceAxios.post("auth", user)
