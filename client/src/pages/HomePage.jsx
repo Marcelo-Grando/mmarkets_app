@@ -14,7 +14,7 @@ export default function HomePage() {
       <nav>
         <h3>Mmarket'S</h3>
         <div className="buttons">
-          <button>registrarse</button>
+          <button onClick={() => navigate("/register")}>registrarse</button>
           <button onClick={() => navigate("/signin")}>iniciar sesion</button>
         </div>
       </nav>

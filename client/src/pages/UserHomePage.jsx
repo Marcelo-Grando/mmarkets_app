@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
+import { getUserId } from "../api/Accounts";
 
 import SellerHomePage from "./SellerHomePage";
 import MainHomePage from "./MainHomePage";
@@ -11,8 +12,14 @@ export default function UserHomePage() {
 
   const { roles } = state.userData;
 
-  console.log(state.userData)
+   async function pruebo () {
+    const response = await getUserId()
+    console.log(response)
+  }
 
+  useEffect(() => {
+   pruebo()
+  }, [])
 
   switch (roles) {
     case "seller":

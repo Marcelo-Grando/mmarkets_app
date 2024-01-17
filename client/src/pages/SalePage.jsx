@@ -19,7 +19,7 @@ export default function SalePage() {
 
   async function loadProducts() {
     const response = await getProducts(market_id);
-    setProducts(response.data);
+    setProducts(response);
   }
 
   const setUser = () => {

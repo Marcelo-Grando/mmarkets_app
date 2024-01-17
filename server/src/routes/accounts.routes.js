@@ -2,9 +2,11 @@ import { Router } from "express";
 
 import { validateMainAccountData, validateEmployeAccountData, validateSession } from "../middlewares/validations.js";
 
-import { createMainAccount, createEmployeeAccount, getEmployeesAccounts, getAdminsAccounts, getSellersAccounts, deleteEmployeeAccount } from "../controllers/accounts.controller.js";
+import { createMainAccount, createEmployeeAccount, getEmployeesAccounts, getAdminsAccounts, getSellersAccounts, deleteEmployeeAccount, getUserId } from "../controllers/accounts.controller.js";
 
 const router = Router()
+
+router.get("/accounts/userId", getUserId)
 
 router.post("/accounts", validateMainAccountData, createMainAccount)
 

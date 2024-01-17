@@ -17,6 +17,20 @@ export const getSellersAccounts = tryCatch(async (req, res) => {
   res.json(sellers);
 });
 
+export const getUserId = tryCatch(async (req, res) => {
+  const session_id = req.session.id
+
+  const [[{data}]] = await pool.query("SELECT data from sessions WHERE session_id = ?", [session_id])
+
+  const {userData} = JSON.parse(data)
+
+  const {user_id, market_id} = userData
+
+  console.log(user_id, market_id)
+
+  res.json({message: 'getUserId finished'})
+})
+
 export const getAdminsAccounts = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
