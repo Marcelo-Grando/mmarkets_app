@@ -12,18 +12,14 @@ export default function UserHomePage() {
 
   const { roles } = state.userData;
 
-   async function pruebo () {
-    const response = await getUserId()
-    console.log(response)
-  }
-
-  useEffect(() => {
-   pruebo()
-  }, [])
+  console.log(state)
 
   switch (roles) {
     case "seller":
       return <SellerHomePage userData={state.userData} />
+
+    case "admin": 
+      return <AdminHomePage userData={state.userData}/>
 
     default:
       return <p>404 NOT FOUND</p>

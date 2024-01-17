@@ -15,10 +15,13 @@ export default function SalePage() {
 
   const { state } = useLocation();
 
+  console.log('state', state)
+
   const { market_id, user_id } = state.userData;
 
   async function loadProducts() {
     const response = await getProducts(market_id);
+    console.log("response", response)
     setProducts(response);
   }
 

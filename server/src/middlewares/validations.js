@@ -9,6 +9,8 @@ export const validateUser = tryCatch(async (req, res, next) => {
 
   const userFound = await findUserByEmail(email);
 
+  console.log(userFound)
+
   if (!userFound)
     throw new ClientError("The email doesn't belong to an existing user");
 
@@ -93,20 +95,32 @@ export const validateProductData = tryCatch(async (req, res, next) => {
 export const validateSession = tryCatch(async (req, res, next) => {
   const session_id = req.session.id;
 
+  console.log("session_id", session_id)
+
+  console.log('req.session.id', req.session.id)
+
   const [[activeSession]] = await pool.query(
     "SELECT * from sessions WHERE session_id = ?",
     [session_id]
   );
+
+  console.log("activeSession",activeSession)
 
   if (!activeSession)
     throw new ClientError("The user doesn't have an active session", 401);
 
   const { data } = activeSession;
 
+  console.log("data", data)
+
   if (!data)
     throw new ClientError("The user doesn't have an active session", 401);
 
   const {userData: {user_id}} = JSON.parse(data);
+
+  console.log("user_id", user_id)
+
+  console.log("req.session.userData.user_id", req.session.userData.user_id)
 
   if (user_id !== req.session.userData.user_id)
     throw new ClientError("The user doesn't have an active session", 401);

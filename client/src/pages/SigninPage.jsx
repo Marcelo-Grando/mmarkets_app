@@ -28,6 +28,8 @@ export default function SigninPage() {
 
     const { data } = await login(user);
 
+    console.log(data)
+
     navigate("/user", { state: { userData: data } });
   };
 

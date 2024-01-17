@@ -1,19 +1,13 @@
+import { NavLink, Link } from "react-router-dom";
 
-export default function AdminHomePage(props) {
-
-    console.log(props)
+export default function AdminHomePage({userData}) {
   return (
-    <div>
-        <nav className="container-fluid border border-dark text-center">
-          <div className="row">
-            <div className="col btn-gr">
-              <NavLink className="nav-link">manage administrators</NavLink>
-            </div>
-            <div className="col btn-gr">
-              <NavLink className="nav-link">administrator reports</NavLink>
-            </div>
-          </div>
+    <nav className="nav-admin">
+      <NavLink>Reports</NavLink>
+      <NavLink>tickets</NavLink>
+      <NavLink>products</NavLink>
+      <NavLink>categorias</NavLink>
+      <Link to={"/reports"} state={{ userData: userData }}>config</Link>
     </nav>
-    </div>
-  )
+  );
 }

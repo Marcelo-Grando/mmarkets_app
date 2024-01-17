@@ -55,6 +55,15 @@
   align-items:center;
 }
 
+.nav-admin {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-admin nav {
+  display: flex;
+}
+
 .logo-container {
   display: inline;
 }
