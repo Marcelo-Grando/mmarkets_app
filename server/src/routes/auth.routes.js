@@ -1,10 +1,12 @@
 import { Router } from "express";
 
-import { login, logout } from "../controllers/auth.controller.js";
+import { login, logout, test } from "../controllers/auth.controller.js";
 
 import { validateUser } from "../middlewares/validations.js";
 
 const router = Router()
+
+router.get("/auth/test", test)
 
 router.post("/auth", validateUser, login)
 

@@ -4,8 +4,6 @@ import { FaList } from "react-icons/fa6";
 
 export default function SellerHomePage({ userData }) {
 
-  console.log(userData)
-
   return (
     <section>
       <div className="nav-bar">
