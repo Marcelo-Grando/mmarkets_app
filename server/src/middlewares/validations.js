@@ -9,8 +9,6 @@ export const validateUser = tryCatch(async (req, res, next) => {
 
   const userFound = await findUserByEmail(email);
 
-  console.log(userFound)
-
   if (!userFound)
     throw new ClientError("The email doesn't belong to an existing user");
 
@@ -109,10 +107,6 @@ export const validateSession = tryCatch(async (req, res, next) => {
     throw new ClientError("The user doesn't have an active session", 401);
 
   const {userData: {user_id}} = JSON.parse(data);
-
-  console.log("user_id", user_id)
-
-  console.log("req.session.userData.user_id", req.session.userData.user_id)
 
   if (user_id !== req.session.userData.user_id)
     throw new ClientError("The user doesn't have an active session", 401);

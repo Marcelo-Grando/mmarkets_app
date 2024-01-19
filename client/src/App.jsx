@@ -12,10 +12,6 @@ import ReportsPage from './pages/ReportsPage'
 
 function App() {
 
-  const userState = useSelector(state => state.user)
-
-  console.log('userSelector', userState)
-
   return (
     <Routes>
       <Route path="/" element={<HomePage/>}/>

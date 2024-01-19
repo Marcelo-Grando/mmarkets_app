@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import { getProducts } from "../api/Products";
 import { makeSale } from "../api/Sales";
+import { useQueryData } from "../hooks/useQueryData";
 
 export default function SalePage() {
-  const [userData, setUserData] = useState();
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedProductsView, setSelectedProductsView] = useState([]);
@@ -13,26 +12,18 @@ export default function SalePage() {
   const [amountSale, setAmountSale] = useState([0]);
   const [error, setError] = useState();
 
-  const { state } = useLocation();
-
-  console.log('state', state)
-
-  const { market_id, user_id } = state.userData;
+  const { userData } = useQueryData()
 
   async function loadProducts() {
-    const response = await getProducts(market_id);
-    console.log("response", response)
+    if(userData) {
+      const response = await getProducts(userData.market_id);
     setProducts(response);
+    }
   }
-
-  const setUser = () => {
-    setUserData({ market_id, user_id });
-  };
 
   useEffect(() => {
     loadProducts();
-    setUser();
-  }, []);
+  }, [userData]);
 
   const addProductsIdsToSale = (product_id) => {
     setSelectedProductsIds([...selectedProductsIds, product_id]);

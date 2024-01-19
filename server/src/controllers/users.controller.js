@@ -3,6 +3,16 @@ import { ClientError } from "../errors/Errors.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import { generateId } from "../utils/generateId.js";
 
+export const getUserRoles = tryCatch(async(req, res) => {
+  const [[{data}]] = await pool.query("SELECT * FROM sessions WHERE session_id = ?", req.session.id)
+
+  const {user_id} = JSON.parse(data).userData
+
+  const [[{roles}]] = await pool.query("SELECT roles FROM users WHERE user_id = ?", [user_id])
+
+  res.json({roles})
+}) 
+
 export const getUsers = tryCatch(
   async (req, res) => {
     const { market_id } = req.params;

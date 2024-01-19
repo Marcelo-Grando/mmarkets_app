@@ -1,14 +1,16 @@
-import { useLocation } from "react-router-dom";
+import { useQueryData } from "../hooks/useQueryData"
+import Button from '@mui/material/Button';
 
 export default function ReportsPage() {
 
-  const { state } = useLocation();
+  const {userData} = useQueryData()
 
-  const { market_id, user_id } = state.userData;
+  console.log(userData)
 
   return (
     <div>
         <button>Ventas por categoria</button>
+        <Button variant="contained" color="primary">vantas por producto</Button>
     </div>
   )
 }

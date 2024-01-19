@@ -1,8 +1,10 @@
 import { Router } from "express";
 
-import { getUsers, createUser, createMainUser, deleteUser } from "../controllers/users.controller.js";
+import { getUsers, createUser, createMainUser, deleteUser, getUserRoles } from "../controllers/users.controller.js";
 
 const router = Router()
+
+router.get("/users/roles", getUserRoles)
 
 router.get("/users/:market_id", getUsers)
 

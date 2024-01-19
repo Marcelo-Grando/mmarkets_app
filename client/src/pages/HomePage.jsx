@@ -1,5 +1,7 @@
 import { getProfile } from "../api/Profiles.js";
+import { ButtonAppBar } from "../components/ButtonAppBar.jsx"
 import { useNavigate } from "react-router-dom";
+import Form  from "../components/Form.jsx";
 
 export default function HomePage() {
   const profile = async () => {
@@ -7,17 +9,22 @@ export default function HomePage() {
     console.log(p.data);
   };
 
+  const inputsData = [{
+    type: "email",
+    name: "email",
+    label: "Email"
+  }, {
+    type: "password",
+    name: "password",
+    label: "Password"
+  }]
+
   const navigate = useNavigate()
 
   return (
-    <div className="nav">
-      <nav>
-        <h3>Mmarket'S</h3>
-        <div className="buttons">
-          <button onClick={() => navigate("/register")}>registrarse</button>
-          <button onClick={() => navigate("/signin")}>iniciar sesion</button>
-        </div>
-      </nav>
+    <div>
+      <ButtonAppBar/>
+      <Form title={"Titulo"}  inpustData={inputsData} btn_title={"CLICK"}/>
     </div>
   );
 }

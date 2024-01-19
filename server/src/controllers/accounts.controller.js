@@ -26,8 +26,6 @@ export const getUserId = tryCatch(async (req, res) => {
 
   const {user_id, market_id} = userData
 
-  console.log(user_id, market_id)
-
   res.json({message: 'getUserId finished'})
 })
 

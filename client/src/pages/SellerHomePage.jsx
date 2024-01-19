@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaList } from "react-icons/fa6";
 
 
-export default function SellerHomePage({ userData }) {
+export default function SellerHomePage() {
 
   return (
     <section>
@@ -12,7 +12,6 @@ export default function SellerHomePage({ userData }) {
           <div className="drop-content">
             <Link
               to="/sale"
-              state={{ userData: userData }}
               className="nav-link"
             >
               sell
