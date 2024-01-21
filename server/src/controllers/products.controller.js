@@ -11,9 +11,14 @@ export const getProducts = tryCatch(async (req, res) => {
     [market_id]
   );
 
+  const [productsFormat] = await pool.query(
+    "SELECT p.name, p.description, c.name AS category_name, p.price FROM products p INNER JOIN categories c ON p.category_id = c.category_id WHERE p.market_id = ?",
+    [market_id]
+  );
+
   if (!products.length) throw new ClientError("There are no products", 404);
 
-  res.json(products);
+  res.json({products, productsFormat});
 });
 
 export const getProduct = async (req, res) => {

@@ -1,43 +1,45 @@
-import { createMainAccount } from "../api/Accounts"
+import { createMainAccount } from "../api/Accounts";
+import Form from "../components/Form";
+
+const inpustData = [
+  {
+    name: "name",
+    type: "text",
+    label: "Name",
+  },
+  {
+    name: "adress",
+    type: "text",
+    label: "Adress",
+  },
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+  },
+];
+
+const initialState = {
+  name: "",
+  adress: "",
+  email: "",
+  password: "",
+  state: true,
+};
 
 export default function RegisterPage() {
   return (
-    <div>
-        <div className="nav">
-        <nav>
-          <h2>Mmarket'S</h2>
-          <div className="buttons">
-            <button>registrarse</button>
-            <button onClick={() => navigate("/signin")}>iniciar sesion</button>
-          </div>
-        </nav>
-      </div>
-      <div className="container">
-        <form className="form">
-          <h2>Login</h2>
-          <input
-            type="text"
-            name="name"
-            placeholder="name"
-          />
-          <input
-            type="text"
-            name="adress"
-            placeholder="adress"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-          />
-          <button>Register</button>
-        </form>
-        </div>
-    </div>
-  )
+    <Form
+      title={"Register"}
+      inpustData={inpustData}
+      btn_title={"Register"}
+      functionSubmit={createMainAccount}
+      initialState={initialState}
+    />
+  );
 }

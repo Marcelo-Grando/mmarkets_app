@@ -1,7 +1,6 @@
 import { getProfile } from "../api/Profiles.js";
 import { ButtonAppBar } from "../components/ButtonAppBar.jsx"
-import { useNavigate } from "react-router-dom";
-import Form  from "../components/Form.jsx";
+import { useNavigate, Outlet } from "react-router-dom";
 
 export default function HomePage() {
   const profile = async () => {
@@ -19,12 +18,10 @@ export default function HomePage() {
     label: "Password"
   }]
 
-  const navigate = useNavigate()
-
   return (
     <div>
       <ButtonAppBar/>
-      <Form title={"Titulo"}  inpustData={inputsData} btn_title={"CLICK"}/>
+      <Outlet/>
     </div>
   );
 }

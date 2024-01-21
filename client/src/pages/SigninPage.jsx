@@ -4,8 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
+import Form from "../components/Form";
+
 import { login } from "../api/Auth";
 import { getUserRoles } from "../api/Users";
+
+const inpustData = [ {
+  name: "email",
+  type: "email",
+  label: "Email",
+},
+{
+  name: "password",
+  type: "password",
+  label: "Password",
+}]
+
+const initialState = {
+  email: "",
+  password: ""
+};
 
 export default function SigninPage() {
   const navigate = useNavigate();
@@ -23,8 +41,7 @@ export default function SigninPage() {
     });
   };
 
-  const sendUser = async (e) => {
-    e.preventDefault();
+  const sendUser = async (user) => {
 
     const response = await login(user);
 
@@ -34,45 +51,7 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="form-container">
-      <Typography className="h6" variant="h6">
-        LOGIN
-      </Typography>
-      <Box component="form" onSubmit={sendUser}>
-        <TextField
-          size="small"
-          className="text-field"
-          id="email"
-          type="email"
-          name="email"
-          label="Email"
-          variant="outlined"
-          fullWidth
-          onChange={handleInputsChange}
-          placeholder="email"
-        />
-        <TextField
-          size="small"
-          className="text-field"
-          type="password"
-          name="password"
-          label="Password"
-          variant="outlined"
-          fullWidth
-          onChange={handleInputsChange}
-          placeholder="password"
-        />
-        <Button
-          className="btn-form"
-          fullWidth
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Login
-        </Button>
-      </Box>
-    </div>
+      <Form title={"Signin"} inpustData={inpustData} btn_title={"Signin"} functionSubmit={sendUser} initialState={initialState}/>
   );
 
   // return (

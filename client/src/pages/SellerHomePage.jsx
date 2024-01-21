@@ -1,30 +1,15 @@
-import { Link } from "react-router-dom";
-import { FaList } from "react-icons/fa6";
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
 
+const settings = [
+  { name: "Profile", path: "/profile" },
+  { name: "Account", path: "/account" },
+  { name: "Dashboard", path: "/dashboard" }
+];
 
-export default function SellerHomePage() {
-
+export default function SellerHomePage(props) {
   return (
-    <section>
-      <div className="nav-bar">
-        <div className="dropdown">
-          <FaList className="btn-des"></FaList>
-          <div className="drop-content">
-            <Link
-              to="/sale"
-              className="nav-link"
-            >
-              sell
-            </Link>
-            <Link className="nav-link">sales</Link>
-            <Link className="nav-link">categories</Link>
-            <Link className="nav-link">products</Link>
-          </div>
-        </div>
-        <div className="logo-container">
-          <h2 className="logo">Mmarkets'S</h2>
-        </div>
-      </div>
-    </section>
+    <>
+      <ResponsiveAppBar pages={props.pages} settings={settings} />
+    </>
   );
 }

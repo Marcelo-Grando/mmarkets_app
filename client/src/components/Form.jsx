@@ -2,12 +2,8 @@ import { Box, TextField, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-export default function Form({title, inpustData, btn_title}) {
-    const [formData, setformData] = useState()
-    const [user, setUser] = useState({
-        email: "",
-    password: "",
-    })
+export default function Form({title, inpustData, btn_title, functionSubmit, initialState}) {
+    const [user, setUser] = useState(initialState)
 
     const handleInputsChange = (e) => {
         const { name, value } = e.target;
@@ -17,12 +13,16 @@ export default function Form({title, inpustData, btn_title}) {
         });
       };
 
-      const handleSubmit = (e) => {
+
+      const handleSubmit = async (e) => {
         e.preventDefault()
-        setformData(user)
+        const response = await functionSubmit(user)
+        console.log(response.data)
+        setUser(initialState)
       }
 
-      console.log(formData)
+
+      console.log(user)
 
   return (
     <div className="form-container">
@@ -43,12 +43,14 @@ export default function Form({title, inpustData, btn_title}) {
                 fullWidth
                 onChange={handleInputsChange}
                 placeholder={element.name}
+                value={user[element.name]}
               />
             })
         }
 
       <Button
         className="btn-form"
+        onClick={handleSubmit}
         fullWidth
         type="submit"
         variant="contained"

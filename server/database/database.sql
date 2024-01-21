@@ -15,6 +15,19 @@ CREATE TABLE users (
     market_id VARCHAR(12) NOT NULL,
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
+CREATE TABLE pages_info (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    roles JSON
+);
+INSERT INTO pages_info (name, roles)
+VALUES
+('reports', '["main", "admin"]'),
+('accounts', '["main", "admin"]'),
+('tickets', '["main", "admin", "seller"]'),
+('categories', '["main", "admin", "seller"]'),
+('products', '["main", "admin", "seller"]'),
+('sale', '["seller"]');
 CREATE TABLE employees (
     employee_id VARCHAR(12) PRIMARY KEY,
     name VARCHAR(150) NOT NULL,

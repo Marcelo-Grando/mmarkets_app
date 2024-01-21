@@ -8,5 +8,8 @@ axios.defaults.withCredentials = true;
 export const login = async (user) => 
     await axios.post(`${API_URL}/auth`, user)
 
+export const logout = async () => 
+    await axios.delete(`${API_URL}/auth`)
+
 export const test = async () => 
     await instanceAxios.get("/auth/test")

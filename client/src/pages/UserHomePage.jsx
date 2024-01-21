@@ -4,20 +4,23 @@ import SellerHomePage from "./SellerHomePage";
 import MainHomePage from "./MainHomePage";
 import AdminHomePage from "./AdminHomePage";
 
+import { getPagesInfo } from "../api/Pages";
+import { useEffect, useState } from "react";
+
 export default function UserHomePage() {
   const { state } = useLocation();
+  const [pages, setPages] = useState([]);
 
   const { roles } = state.userData;
 
-  switch (roles) {
-    case "seller":
-      return <SellerHomePage />
+  const loadPages = async () => {
+    const response = await getPagesInfo(roles);
+    setPages(response.data);
+  };
 
-    case "admin": 
-      return <AdminHomePage />
+  useEffect(() => {
+    loadPages();
+  }, []);
 
-    default:
-      return <p>404 NOT FOUND</p>
-      break;
-  }
+  return <SellerHomePage pages={pages} />;
 }
