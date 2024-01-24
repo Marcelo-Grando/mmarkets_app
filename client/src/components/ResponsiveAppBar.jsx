@@ -32,7 +32,7 @@ export default function ResponsiveAppBar(props) {
 
   const handlePage = (path) => {
     handleCloseNavMenu()
-    navigate(`/${path}`)
+    navigate(`${path}`)
   }
 
   const handleCloseNavMenu = () => {
@@ -46,6 +46,7 @@ export default function ResponsiveAppBar(props) {
   const closeSession = async () => {
     const response = await logout()
     console.log(response.data)
+    handleCloseNavMenu()
     navigate("/")
   }
 
@@ -135,7 +136,7 @@ export default function ResponsiveAppBar(props) {
             {props.pages.map((page, index) => (
               <Button
                 key={index}
-                onClick={() => navigate(`/${page.name}`)}
+                onClick={() => navigate(`${page.name}`)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
@@ -170,7 +171,7 @@ export default function ResponsiveAppBar(props) {
                   <Typography onClick={() => navigate(setting.path)} textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={closeSession}>
                   <Typography onClick={closeSession} textAlign="center">Logout</Typography>
                 </MenuItem>
             </Menu>

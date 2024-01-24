@@ -10,7 +10,7 @@ CREATE TABLE markets (
 CREATE TABLE users (
     user_id VARCHAR(12) PRIMARY KEY,
     email VARCHAR(250) UNIQUE NOT NULL,
-    roles VARCHAR(250) NOT NULL,
+    roles JSON NOT NULL,
     password BLOB NOT NULL,
     market_id VARCHAR(12) NOT NULL,
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
@@ -33,7 +33,6 @@ CREATE TABLE employees (
     name VARCHAR(150) NOT NULL,
     lastname VARCHAR(150) NOT NULL,
     dni INT(10) UNSIGNED UNIQUE NOT NULL,
-    email VARCHAR(250) UNIQUE NOT NULL,
     position VARCHAR(50) NOT NULL,
     market_id VARCHAR(12) NOT NULL,
     FOREIGN KEY (market_id) REFERENCES markets(market_id),
@@ -57,7 +56,7 @@ CREATE TABLE products (
     FOREIGN KEY (category_id) REFERENCES categories(category_id),
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
-CREATE TABLE payment_type (
+CREATE TABLE payment_types (
     payment_type_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     tax_rate INT UNSIGNED,
@@ -74,7 +73,7 @@ CREATE TABLE sales (
     payment_type INT UNSIGNED,
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
     FOREIGN KEY (market_id) REFERENCES markets(market_id),
-    FOREIGN KEY (payment_type) REFERENCES payment_type(payment_type_id)
+    FOREIGN KEY (payment_type) REFERENCES payment_types(payment_type_id)
 );
 CREATE TABLE items_for_sales (
     item_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -92,6 +91,7 @@ CREATE TABLE tickets (
     amount DECIMAL(10, 2) NOT NULL,
     date DATE NOT NULL,
     time TIME NOT NULL,
+    payment_type INT UNSIGNED,
     sale_id VARCHAR(12) NOT NULL,
     employee_id VARCHAR(12) NOT NULL,
     employee_email VARCHAR(250),
@@ -100,7 +100,7 @@ CREATE TABLE tickets (
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
 );
 CREATE TABLE sold_products (
-    sold_product_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     product_id VARCHAR(12),
     name VARCHAR(100) NOT NULL,
     description VARCHAR(100) NOT NULL,
@@ -160,9 +160,9 @@ CREATE PROCEDURE createEmployeeAccount (
         INSERT INTO users (user_id, email, roles, password, market_id)
         VALUES
         (_employee_id, _email, _position, _password, _market_id);
-        INSERT INTO employees (employee_id, name, lastname, dni, email, position, market_id)
+        INSERT INTO employees (employee_id, name, lastname, dni, market_id)
         VALUES
-        (_employee_id, _name, _lastname, _dni, _email, _position, _market_id);
+        (_employee_id, _name, _lastname, _dni, _market_id);
     SELECT 'Account created successfully' AS message;
     COMMIT;
 END $
@@ -174,7 +174,8 @@ CREATE PROCEDURE make_sale (
      _employee_id VARCHAR(12),
      _products JSON,
      _amount DECIMAL(10, 2),
-     _sale_id VARCHAR(12)
+     _sale_id VARCHAR(12),
+     _payment_type INT UNSIGNED
  )
  BEGIN
      DECLARE date_now DATE;
@@ -191,12 +192,12 @@ CREATE PROCEDURE make_sale (
      SET market_name = (SELECT name FROM markets WHERE market_id = _market_id);
      SET date_now = (SELECT DATE(NOW()));
      SET time_now = (SELECT TIME(NOW()));
-     INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id)
+     INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id, payment_type)
      VALUES
-     (_sale_id, _amount, date_now, time_now, _market_id, _employee_id);
-     INSERT INTO tickets (ticket_id, products, amount, date, time, sale_id, employee_id, employee_email, market_id, market_name)
+     (_sale_id, _amount, date_now, time_now, _market_id, _employee_id, _payment_type);
+     INSERT INTO tickets (ticket_id, products, amount, date, time, payment_type, sale_id, employee_id, employee_email, market_id, market_name)
      VALUES
-     (_sale_id, _products, _amount, date_now, time_now, _sale_id, _employee_id, employee_email, _market_id, market_name);
+     (_sale_id, _products, _amount, date_now, time_now, _payment_type, _sale_id, _employee_id, employee_email, _market_id, market_name);
      SET @counter = 0;
      SET @product_id = '';
      WHILE @counter < json_length(_products) DO

@@ -17,7 +17,6 @@ export default function Form({title, inpustData, btn_title, functionSubmit, init
       const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await functionSubmit(user)
-        console.log(response.data)
         setUser(initialState)
       }
 

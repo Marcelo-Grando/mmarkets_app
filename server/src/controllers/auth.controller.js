@@ -16,8 +16,6 @@ export const logout = tryCatch(async (req, res) => {
 
 
 export const test = tryCatch(async(req, res) => {
-  console.log("test ",req.session.id)
-
   const [[{data}]] = await pool.query("SELECT * FROM sessions WHERE session_id = ?", req.session.id)
 
   const {user_id} = JSON.parse(data).userData

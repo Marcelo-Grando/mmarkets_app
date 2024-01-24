@@ -5,12 +5,11 @@ export default function ReportsPage() {
 
   const {userData} = useQueryData()
 
-  console.log(userData)
+  console.log("userData",userData)
 
   return (
     <div>
-        <button>Ventas por categoria</button>
-        <Button variant="contained" color="primary">vantas por producto</Button>
+        <Button variant="contained" color="success">ventas por producto</Button>
     </div>
   )
 }

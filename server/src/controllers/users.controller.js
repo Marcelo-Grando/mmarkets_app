@@ -10,7 +10,9 @@ export const getUserRoles = tryCatch(async(req, res) => {
 
   const [[{roles}]] = await pool.query("SELECT roles FROM users WHERE user_id = ?", [user_id])
 
-  res.json({roles})
+  console.log(roles)
+
+  res.json({roles: roles[0]})
 }) 
 
 export const getUsers = tryCatch(
