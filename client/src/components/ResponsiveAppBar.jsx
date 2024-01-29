@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
@@ -20,6 +20,11 @@ import { logout } from "../api/Auth";
 export default function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [state, setState] = useState()
+
+  useEffect(() => {
+    setState(props)
+  }, [])
 
   const navigate = useNavigate();
 

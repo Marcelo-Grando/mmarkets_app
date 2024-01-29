@@ -8,7 +8,7 @@ import SigninPage from "./pages/SigninPage";
 import UserHomePage from "./pages/UserHomePage";
 import SalePage from "./pages/SalePage";
 import RegisterPage from "./pages/RegisterPage";
-import ReportsPage from "./pages/ReportsPage";
+import AccountsPage from "./pages/AccountsPage";
 
 function App() {
   return (
@@ -18,11 +18,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
       <Route path="/user" element={<UserHomePage />}>
-      <Route path="sale" element={<SalePage />} />
-      <Route path="reports" element={<ReportsPage />} />
+        <Route path="sale" element={<SalePage />} />
+        <Route path="accounts" element={<AccountsPage/>}/>
       </Route>
       <Route path="/sale" element={<SalePage />} />
-      <Route path="/reports" element={<ReportsPage />} />
     </Routes>
   );
 }

@@ -2,7 +2,7 @@ import { Box, TextField, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-export default function Form({title, inpustData, btn_title, functionSubmit, initialState}) {
+export default function Form({title, inpustData, btn_title, functionSubmit, initialState, market_id}) {
     const [user, setUser] = useState(initialState)
 
     const handleInputsChange = (e) => {
@@ -16,9 +16,16 @@ export default function Form({title, inpustData, btn_title, functionSubmit, init
 
       const handleSubmit = async (e) => {
         e.preventDefault()
+        if(market_id) {
+          const response = await functionSubmit(market_id, user)
+          setUser(initialState)
+          return
+        }
         const response = await functionSubmit(user)
         setUser(initialState)
       }
+
+      console.log(initialState)
 
 
       console.log(user)

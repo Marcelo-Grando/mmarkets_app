@@ -74,6 +74,8 @@ export const createEmployeeAccount = tryCatch(async (req, res) => {
   const { market_id } = req.params;
   const { email, position, password, name, lastname, dni } = req.body;
 
+  console.log("create employee", market_id, email, position, password, name, lastname, dni)
+
   const user_id = generateId(12);
 
   const passwordEncrypted = await encryptPassword(password);

@@ -33,7 +33,6 @@ CREATE TABLE employees (
     name VARCHAR(150) NOT NULL,
     lastname VARCHAR(150) NOT NULL,
     dni INT(10) UNSIGNED UNIQUE NOT NULL,
-    position VARCHAR(50) NOT NULL,
     market_id VARCHAR(12) NOT NULL,
     FOREIGN KEY (market_id) REFERENCES markets(market_id),
     FOREIGN KEY (employee_id) REFERENCES users(user_id)
@@ -139,7 +138,7 @@ CREATE PROCEDURE createMainAccount (
         (_market_id, _name, _adress, _state, _email);
         INSERT INTO users (user_id, email, roles, password, market_id)
         VALUES
-        (_market_id, _email, 'main', _password, _market_id);
+        (_market_id, _email, '["main"]', _password, _market_id);
     SELECT 'Account created successfully' AS message;
     COMMIT;
 END $

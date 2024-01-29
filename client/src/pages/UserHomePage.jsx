@@ -2,12 +2,7 @@ import { useLocation, Outlet } from "react-router-dom";
 
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 
-import SellerHomePage from "./SellerHomePage";
-import MainHomePage from "./MainHomePage";
-import AdminHomePage from "./AdminHomePage";
-
-import { getPagesInfo } from "../api/Pages";
-import { useEffect, useState } from "react";
+import { useQueryData } from "../hooks/useQueryData";
 
 const settings = [
   { name: "Profile", path: "/profile" },
@@ -16,29 +11,17 @@ const settings = [
 ];
 
 export default function UserHomePage() {
-  const { state } = useLocation();
-  const [pages, setPages] = useState([]);
-  const [roles, setRoles] = useState()
-
-  const loadPages = async () => {
-    if (!roles) {
-    const response = await getPagesInfo(state.userData.roles);
-    setPages(response.data);
-    setRoles(state.userData.roles)
-    return
-    }
-    const response = await getPagesInfo(roles);
-    setPages(response.data);
-  };
-
-  useEffect(() => {
-    loadPages();
-  }, []);
+  const {userData, loading, pages} = useQueryData();
 
   return (
-    <>
-      <ResponsiveAppBar pages={pages} settings={settings} />
-      <Outlet />
-    </>
+    <div>
+      {loading && (<h3>loading...</h3>)}
+      {userData && (
+        <>
+          <ResponsiveAppBar pages={pages} settings={settings} />
+          <Outlet />
+        </>
+      )}
+    </div>
   );
 }

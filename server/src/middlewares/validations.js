@@ -41,12 +41,17 @@ export const validateMainAccountData = tryCatch(async (req, res, next) => {
 });
 
 export const validateEmployeAccountData = tryCatch(async (req, res, next) => {
-  const { email, roles, password, name, lastname, dni } = req.body;
+  const { email, position, password, name, lastname, dni } = req.body;
 
-  if (!email || !roles || !password || !name || !lastname || !dni)
+  console.log("params", req.body)
+
+  if (!email || !position || !password || !name || !lastname || !dni)
     throw new ClientError("Incomplete Fiels");
 
-  const [[user]] = pool.query("SELECT * FROM users WHERE email = ?", [email]);
+  const [[user]] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+
+  console.log(user)
+
 
   if (user)
     throw new ClientError(
