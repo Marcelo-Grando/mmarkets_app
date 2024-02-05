@@ -53,15 +53,18 @@ const sessionStore = new MySQLStore(
   pool
 );
 
+const localTime = new Date()
+localTime.setHours(localTime.getHours() - 3)
+
 app.use(
   session({
-    key: "user_session",
+    key: "sid",
     secret: "secret",
     resave: false,
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 8,
+      maxAge: (localTime.getMilliseconds() - 10800000) + 28800000,
     },
   })
 );

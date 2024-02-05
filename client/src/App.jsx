@@ -9,6 +9,8 @@ import UserHomePage from "./pages/UserHomePage";
 import SalePage from "./pages/SalePage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountsPage from "./pages/AccountsPage";
+import AccountsCards from "./pages/accounts/AccountsCards";
+import CreateAccounts from "./pages/accounts/CreateAccounts";
 
 function App() {
   return (
@@ -19,7 +21,10 @@ function App() {
       </Route>
       <Route path="/user" element={<UserHomePage />}>
         <Route path="sale" element={<SalePage />} />
-        <Route path="accounts" element={<AccountsPage/>}/>
+        <Route path="accounts" element={<AccountsPage/>}>
+          <Route path="accounts" element={<AccountsCards/>}/>
+          <Route path="create" element={<CreateAccounts/>}/>
+        </Route>
       </Route>
       <Route path="/sale" element={<SalePage />} />
     </Routes>

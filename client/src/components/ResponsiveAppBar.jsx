@@ -20,11 +20,11 @@ import { logout } from "../api/Auth";
 export default function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, setState] = useState()
+  const [state, setState] = useState();
 
   useEffect(() => {
-    setState(props)
-  }, [])
+    setState(props);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -36,9 +36,9 @@ export default function ResponsiveAppBar(props) {
   };
 
   const handlePage = (path) => {
-    handleCloseNavMenu()
-    navigate(`${path}`)
-  }
+    handleCloseNavMenu();
+    navigate(`${path}`);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -49,11 +49,11 @@ export default function ResponsiveAppBar(props) {
   };
 
   const closeSession = async () => {
-    const response = await logout()
-    console.log(response.data)
-    handleCloseNavMenu()
-    navigate("/")
-  }
+    const response = await logout();
+    console.log(response.data);
+    handleCloseNavMenu();
+    navigate("/");
+  };
 
   return (
     <AppBar position="static">
@@ -109,11 +109,7 @@ export default function ResponsiveAppBar(props) {
             >
               {props.pages.map((page, index) => (
                 <MenuItem key={index} onClick={() => handlePage(page.name)}>
-                  <Typography
-                    textAlign="center"
-                  >
-                    {page.name}
-                  </Typography>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -173,12 +169,19 @@ export default function ResponsiveAppBar(props) {
             >
               {props.settings.map((setting, index) => (
                 <MenuItem key={index} onClick={handleCloseUserMenu}>
-                  <Typography onClick={() => navigate(setting.path)} textAlign="center">{setting.name}</Typography>
+                  <Typography
+                    onClick={() => navigate(setting.path)}
+                    textAlign="center"
+                  >
+                    {setting.name}
+                  </Typography>
                 </MenuItem>
               ))}
               <MenuItem onClick={closeSession}>
-                  <Typography onClick={closeSession} textAlign="center">Logout</Typography>
-                </MenuItem>
+                <Typography onClick={closeSession} textAlign="center">
+                  Logout
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

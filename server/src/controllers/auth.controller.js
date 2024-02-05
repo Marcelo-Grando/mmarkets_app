@@ -3,13 +3,15 @@ import {pool} from "../db.js"
 
 export const login = tryCatch(async (req, res) => {
 
+  console.log(req.session.userData)
+
   req.session.userData = req.userQuerysData;
 
   res.json({auth: true});
 });
 
 export const logout = tryCatch(async (req, res) => {
-  req.session.destroy();
+  req.session.destroy()
 
   res.json({ message: "Session ended successfully" });
 });
@@ -17,6 +19,8 @@ export const logout = tryCatch(async (req, res) => {
 
 export const test = tryCatch(async(req, res) => {
   const [[{data}]] = await pool.query("SELECT * FROM sessions WHERE session_id = ?", req.session.id)
+
+  console.log("test", req.session.id)
 
   const {user_id} = JSON.parse(data).userData
 

@@ -220,3 +220,15 @@ CREATE PROCEDURE make_sale (
      COMMIT;
  END $
  DELIMITER ;
+
+ DELIMITER $
+ CREATE PROCEDURE dateNow ()
+ BEGIN
+  DECLARE date_time DATE;
+  DECLARE date_now DATE;
+  START TRANSACTION;
+SET date_time = (SELECT NOW());
+SET date_now = DATE_ADD(date_time, INTERVAL 8 HOUR);
+SELECT date_now;
+ END $
+ DELIMITER ;

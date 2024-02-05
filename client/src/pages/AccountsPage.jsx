@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { createEmployeeAccount } from "../api/Accounts";
 import Form from "../components/Form";
 import { useQueryData } from "../hooks/useQueryData";
+import BasicButtonGroup from "../components/BasicButtonGroup";
+import SwipeableTemporaryDrawer from "../components/SwipeableTemporaryDrawer";
+import LabelBottomNavigation from "../components/LabelButtonNavigation";
+import VerticalTabs from "../components/VerticalTabs";
+import TestTabs from "../components/TestTabs";
 
 const inpustData = [
   {
@@ -52,9 +57,14 @@ const initialState2 = {
 export default function AccountsPage() {
   const {market_id} = useQueryData()
 
+
   return (
     <div>
-      <Form
+      {
+       // components.map((component) => (component))
+       <TestTabs paths={[{path: "accounts", label: "accounts"}, {path: "create", label: "create"}]} />
+      }
+      {/* <Form
         title={"Create Seller Account"}
         inpustData={inpustData}
         btn_title={"Create Account"}
@@ -69,7 +79,7 @@ export default function AccountsPage() {
         functionSubmit={createEmployeeAccount}
         initialState={initialState2}
         market_id={market_id}
-      />
+      /> */}
     </div>
   );
 }

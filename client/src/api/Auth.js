@@ -6,10 +6,10 @@ const API_URL = import.meta.env.VITE_API_URL
 axios.defaults.withCredentials = true;
 
 export const login = async (user) => 
-    await axios.post(`${API_URL}/auth`, user)
+    await axios.post(`${API_URL}/auth/login`, user)
 
 export const logout = async () => 
-    await axios.delete(`${API_URL}/auth`)
+    await axios.delete(`${API_URL}/auth/logout`)
 
 export const test = async () => 
     await instanceAxios.get("/auth/test")

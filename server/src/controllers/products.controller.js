@@ -4,6 +4,8 @@ import { ClientError } from "../errors/Errors.js";
 import { generateId } from "../utils/generateId.js";
 
 export const getProducts = tryCatch(async (req, res) => {
+
+  console.log("req en getProducts", req)
   const { market_id } = req.params;
   
   const [products] = await pool.query(
