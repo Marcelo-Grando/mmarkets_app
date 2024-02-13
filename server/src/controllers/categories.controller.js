@@ -6,6 +6,10 @@ import { generateId } from "../utils/generateId.js";
 export const getCategories = tryCatch(async (req, res) => {
   const { market_id } = req.params;
 
+  const SECRET = process.env.SECRET;
+
+  console.log("secret", SECRET)
+
   const [categories] = await pool.query(
     "SELECT * FROM categories WHERE market_id = ?",
     [market_id]

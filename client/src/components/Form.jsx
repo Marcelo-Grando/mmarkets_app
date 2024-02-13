@@ -1,6 +1,12 @@
-import { Box, TextField, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  MenuItem,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import BasicSelect from "../components/BasicSelect"
 
 export default function Form({
   title,
@@ -9,8 +15,10 @@ export default function Form({
   functionSubmit,
   initialState,
   market_id,
+  currencies,
 }) {
   const [user, setUser] = useState(initialState);
+  const [selectValue, setSelectValue] = useState('')
 
   const handleInputsChange = (e) => {
     const { name, value } = e.target;
@@ -25,11 +33,16 @@ export default function Form({
     if (market_id) {
       const response = await functionSubmit(market_id, user);
       setUser(initialState);
+      setSelectValue("")
+      console.log(response)
       return;
     }
     const response = await functionSubmit(user);
     setUser(initialState);
+    console.log(response)
   };
+
+  console.log("user values", user)
 
   return (
     <div className="form-container">
@@ -38,21 +51,47 @@ export default function Form({
       </Typography>
       <Box component="form" onSubmit={handleSubmit}>
         {inpustData.map((element, index) => {
-          return (
-            <TextField
-              key={index}
-              size="small"
-              className="text-field"
-              type={element.type}
-              name={element.name}
-              label={element.label}
-              variant="outlined"
-              fullWidth
-              onChange={handleInputsChange}
-              placeholder={element.name}
-              value={user[element.name]}
-            />
-          );
+          if (element.type === "select") {
+            return <TextField
+            key={index}
+            size="small"
+            className="text-field"
+            variant="outlined"
+            fullWidth
+            select
+            label={element.name}
+            defaultValue={""}
+            onChange={(e) => {
+              setUser({...user, category_id: e.target.value})
+              setSelectValue(e.target.value)
+            }}
+            value={selectValue}
+            helperText="Please select your category"
+          >
+            {currencies.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          }
+           if(element.type != "select") {
+            return (
+              <TextField
+                key={index}
+                size="small"
+                className="text-field"
+                type={element.type}
+                name={element.name}
+                label={element.label}
+                variant="outlined"
+                fullWidth
+                onChange={handleInputsChange}
+                placeholder={element.name}
+                value={user[element.name]}
+              />
+            );
+           }
         })}
 
         <Button

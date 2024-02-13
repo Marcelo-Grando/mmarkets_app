@@ -7,6 +7,7 @@ import SwipeableTemporaryDrawer from "../components/SwipeableTemporaryDrawer";
 import LabelBottomNavigation from "../components/LabelButtonNavigation";
 import VerticalTabs from "../components/VerticalTabs";
 import TestTabs from "../components/TestTabs";
+import SelectedList from "../components/SelectedList"
 
 const inpustData = [
   {
@@ -42,7 +43,7 @@ const initialState = {
   email: "",
   dni: "",
   password: "",
-  position: `["seller"]`
+  position: `["seller"]`,
 };
 
 const initialState2 = {
@@ -51,35 +52,23 @@ const initialState2 = {
   email: "",
   dni: "",
   password: "",
-  position: `["admin"]`
+  position: `["admin"]`,
 };
 
 export default function AccountsPage() {
-  const {market_id} = useQueryData()
-
+  const { market_id, loading } = useQueryData();
 
   return (
-    <div>
-      {
-       // components.map((component) => (component))
-       <TestTabs paths={[{path: "accounts", label: "accounts"}, {path: "create", label: "create"}]} />
-      }
-      {/* <Form
-        title={"Create Seller Account"}
-        inpustData={inpustData}
-        btn_title={"Create Account"}
-        functionSubmit={createEmployeeAccount}
-        initialState={initialState}
-        market_id={market_id}
-      />
-      <Form
-        title={"Create Admin Account"}
-        inpustData={inpustData}
-        btn_title={"Create Account"}
-        functionSubmit={createEmployeeAccount}
-        initialState={initialState2}
-        market_id={market_id}
-      /> */}
-    </div>
+    <>
+      {loading && <h3>loading...</h3>}
+      {market_id && (
+        <SelectedList
+          paths={[
+            { path: "default", label: "accounts" },
+            { path: "create", label: "create" },
+          ]}
+        />
+      )}
+    </>
   );
 }

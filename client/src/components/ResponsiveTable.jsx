@@ -8,13 +8,16 @@ import Paper from "@mui/material/Paper";
 
 export default function ResponsiveTable(props) {
 
+  const rowsHeads = Object.keys(props.rows[0])
+
   return (
-    <Table sx={{ minWidth: 500 }} aria-label="simple table">
+    <TableContainer>
+      <Table aria-label="simple table">
       <TableHead>
         <TableRow className="titles">
             {
-                props.heads.map((head) => (
-                    <TableCell size="small">{head}</TableCell>
+                rowsHeads.map((head, index) => (
+                    <TableCell key={index} size="small">{head}</TableCell>
                 ))
             }
         </TableRow>
@@ -22,8 +25,8 @@ export default function ResponsiveTable(props) {
       <TableBody>
         {props.rows.map((row, index) => (
           <TableRow className="row" key={index} size="small">
-            {Object.values(row).map((elem) => (
-              <TableCell className="cell" size="small" component="th" scope="row">
+            {Object.values(row).map((elem, index) => (
+              <TableCell key={index} className="cell" size="small" component="th" scope="row">
                 {elem}
               </TableCell>
             ))}
@@ -31,5 +34,6 @@ export default function ResponsiveTable(props) {
         ))}
       </TableBody>
     </Table>
+    </TableContainer>
   );
 }

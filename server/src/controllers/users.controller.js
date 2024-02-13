@@ -51,6 +51,8 @@ export const createUser = async (req, res, next) => {
 export const createMainUser = async (req, res) => {
   const SECRET = process.env.SECRET;
 
+  console.log("secret", SECRET)
+
   const { email, roles, password } = req.body;
 
   const user_id = randomId(12);

@@ -55,27 +55,27 @@ export default function CreateAccounts() {
   const { market_id } = useQueryData();
 
   return (
-    <Box sx={{display: "flex", width: 3/4}}>
-      <Box sx={{p: 1}}>
-      <Form
-        title={"Create seller Account"}
-        inpustData={inpustData}
-        btn_title={"create"}
-        functionSubmit={createEmployeeAccount}
-        initialState={initialState}
-        market_id={market_id}
-      />
+    <Box sx={{ display: "flex", width: 3 / 4 }}>
+      <Box sx={{ p: 1 }}>
+        <Form
+          title={"Create seller Account"}
+          inpustData={inpustData}
+          btn_title={"create"}
+          functionSubmit={createEmployeeAccount}
+          initialState={initialState}
+          market_id={market_id}
+        />
       </Box>
 
-      <Box sx={{p:1}}>
-      <Form
-        title={"Create admin Account"}
-        inpustData={inpustData}
-        btn_title={"create"}
-        functionSubmit={createEmployeeAccount}
-        initialState={initialState2}
-        market_id={market_id}
-      />
+      <Box sx={{ p: 1 }}>
+        <Form
+          title={"Create admin Account"}
+          inpustData={inpustData}
+          btn_title={"create"}
+          functionSubmit={createEmployeeAccount}
+          initialState={initialState2}
+          market_id={market_id}
+        />
       </Box>
     </Box>
   );

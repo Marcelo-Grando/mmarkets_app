@@ -8,15 +8,41 @@ import { useSaleData } from "../hooks/useSaleData";
 import { Box } from "@mui/material";
 
 export default function SalePage() {
-  const {products} = useSaleData()
+  const {user_id, market_id} = useQueryData()
 
-  console.log(products)
+  const [products, setProducts] = useState(null)
+  const [productsFormat, setProductFormat] = useState(null)
+
+  const loadProducts = async () => {
+    const response = await getProducts(market_id)
+    setProducts(response.products)
+    setProductFormat(response.productsFormat)
+  }
+
+  useEffect(() => {
+    loadProducts()
+  }, [market_id])
+
+  console.log("products, formatProducts", products, productsFormat)
 
   return (
-    <p>SALE</p>
-    // <div className="container-products-table">
-    //   <ResponsiveTable rows={products} heads={["name", "description", "category_name", "price"]}/>
-    // </div>
+   market_id && (
+    <Box>
+      <Box sx={{width: "60%", height: 200, border: 5}}>
+    slae
+      </Box>
+      <Box sx={{width: "60%", border: 5}}>
+      <ResponsiveTable rows={productsFormat} rowsToSkip={['product_id', 'category_id', 'market_id']}/>
+    </Box>
+    </Box>
+   )
+  )
+
+  // return (
+  //  <>
+  //   <div className="container-products-table">
+  //     <ResponsiveTable rows={products} heads={["name", "description", "category_name", "price"]}/>
+  //   </div>
   //   <div className="sale-container">
   //     <section>
   //       <div className="sale-card">
@@ -90,5 +116,6 @@ export default function SalePage() {
   //       </div>
   //     </section>
   //   </div>
-  );
+  //  </>
+  // );
 }

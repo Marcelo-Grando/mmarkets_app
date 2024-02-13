@@ -66,7 +66,7 @@ export const validateCategoryData = tryCatch(async (req, res, next) => {
 
   if (!name) throw new ClientError("Incomplete Fiels");
 
-  const [[category]] = pool.query("SELECT * FROM categories WHERE name = ?", [
+  const [[category]] = await pool.query("SELECT * FROM categories WHERE name = ?", [
     name,
   ]);
 
@@ -78,6 +78,8 @@ export const validateCategoryData = tryCatch(async (req, res, next) => {
 export const validateProductData = tryCatch(async (req, res, next) => {
   const { market_id } = req.params;
   const { name, description, price, category_id } = req.body;
+
+  console.log(" name, description, price, category_id",  name, description, price, category_id)
 
   if (!name || !description || !price || !category_id)
     throw new ClientError("Incomplete Fiels");

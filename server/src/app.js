@@ -65,6 +65,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: (localTime.getMilliseconds() - 10800000) + 28800000,
+      expires: (localTime.getMilliseconds() - 10800000) + 28800000,
     },
   })
 );

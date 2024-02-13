@@ -38,13 +38,14 @@ export const getProduct = async (req, res) => {
 
 export const createProduct = tryCatch(async (req, res) => {
   const { market_id } = req.params;
+  console.log("first",req.body)
   const { name, description, price, expiration, category_id } = req.body;
 
   const product_id = generateId(12);
 
   const [response] = await pool.query(
     "INSERT INTO products (product_id, name, description, price, expiration, category_id, market_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [product_id, name, description, price, expiration, category_id, market_id]
+    [product_id, name, description, price, expiration || null, category_id, market_id]
   );
 
   res.status(201).json({ message: "Created product" });

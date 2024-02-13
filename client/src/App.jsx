@@ -1,7 +1,6 @@
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import HomePage from "./pages/HomePage";
 import SigninPage from "./pages/SigninPage";
@@ -11,6 +10,10 @@ import RegisterPage from "./pages/RegisterPage";
 import AccountsPage from "./pages/AccountsPage";
 import AccountsCards from "./pages/accounts/AccountsCards";
 import CreateAccounts from "./pages/accounts/CreateAccounts";
+import ProductsPage from "./pages/ProductsPage";
+import CategoriesPage from "./pages/products/CategoriesPage";
+import Products from "./pages/products/Products";
+import CreateProducts from "./pages/products/CreateProducts";
 
 function App() {
   return (
@@ -21,9 +24,14 @@ function App() {
       </Route>
       <Route path="/user" element={<UserHomePage />}>
         <Route path="sale" element={<SalePage />} />
-        <Route path="accounts" element={<AccountsPage/>}>
-          <Route path="accounts" element={<AccountsCards/>}/>
-          <Route path="create" element={<CreateAccounts/>}/>
+        <Route path="accounts" element={<AccountsPage />}>
+          <Route path="" element={<AccountsCards />} />
+          <Route path="create" element={<CreateAccounts />} />
+        </Route>
+        <Route path="products" element={<ProductsPage />}>
+          <Route path="" element={<CategoriesPage />} />
+          <Route path="list" element={<Products/>}/>
+          <Route path="create-products" element={<CreateProducts/>}/>
         </Route>
       </Route>
       <Route path="/sale" element={<SalePage />} />

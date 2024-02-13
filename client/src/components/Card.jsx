@@ -15,7 +15,7 @@ export default function Card() {
     <div>
         {loading && (<h3>loading...</h3>)}
         {
-          employeesData.map((elem) => (<Box sx={{}}>
+          employeesData.map((elem, index) => (<Box key={index} sx={{}}>
             <Typography variant="h6">{`${elem.name} ${elem.lastname}`}</Typography>
             <Typography variant="body2">{elem.dni}</Typography>
             <Typography></Typography>

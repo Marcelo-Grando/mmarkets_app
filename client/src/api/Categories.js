@@ -1,8 +1,8 @@
 import { instanceAxios } from "./axios";
 
-export const getProducts = async (market_id) =>
+export const getCategories = async (market_id) =>
   await instanceAxios
-    .get(`/products/${market_id}`)
+    .get(`/categories/${market_id}`)
     .then((response) => response.data)
     .catch((err) => {
       return {
@@ -11,9 +11,9 @@ export const getProducts = async (market_id) =>
       };
     });
 
-export const createProduct = async (market_id, product) =>
+export const createCategory = async (market_id, name) =>
   await instanceAxios
-    .post(`/products/${market_id}`, product)
+    .post(`/categories/${market_id}`, {name: name})
     .then((response) => response.data)
     .catch((err) => {
       return {

@@ -11,11 +11,11 @@ const settings = [
 ];
 
 export default function UserHomePage() {
-  const {userData, loading, pages} = useQueryData();
+  const { userData, loading, pages } = useQueryData();
 
   return (
     <div>
-      {loading && (<h3>loading...</h3>)}
+      {loading && <h3>loading...</h3>}
       {userData && (
         <>
           <ResponsiveAppBar pages={pages} settings={settings} />
