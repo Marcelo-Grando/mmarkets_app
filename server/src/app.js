@@ -37,6 +37,8 @@ app.use(cookieParser());
 
 app.use(morgan("dev"));
 
+app.set('trust proxy', true)
+
 const MySQLStore = MySQLStoreClassFactory(session);
 
 const sessionStore = new MySQLStore(

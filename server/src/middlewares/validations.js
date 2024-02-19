@@ -4,6 +4,8 @@ import { ClientError } from "../errors/Errors.js";
 import { comparePassword } from "../utils/encryptPassword.js";
 import { findUserByEmail } from "../helpers/searchEngines.js";
 
+import geoip from 'geoip-lite'
+
 export const validateUser = tryCatch(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -99,10 +101,6 @@ export const validateProductData = tryCatch(async (req, res, next) => {
 
 export const validateSession = tryCatch(async (req, res, next) => {
   const session_id = req.session.id;
-
-  console.log(req.session.id)
-  console.log(req.session)
-  console.log(req.session.cookie.expires)
 
   const [[activeSession]] = await pool.query(
     "SELECT * from sessions WHERE session_id = ?",

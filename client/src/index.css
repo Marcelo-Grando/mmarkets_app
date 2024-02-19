@@ -37,3 +37,7 @@
 .VerticalTabs {
   background-color: aqua;
 }
+
+.cell {
+  cursor: pointer;
+}
