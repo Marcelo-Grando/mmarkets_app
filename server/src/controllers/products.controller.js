@@ -14,7 +14,7 @@ export const getProducts = tryCatch(async (req, res) => {
   );
 
   const [productsFormat] = await pool.query(
-    "SELECT p.name, p.description, c.name AS category_name, p.price FROM products p INNER JOIN categories c ON p.category_id = c.category_id WHERE p.market_id = ?",
+    "SELECT p.product_id, p.name, p.description, c.name AS category_name, p.price FROM products p INNER JOIN categories c ON p.category_id = c.category_id WHERE p.market_id = ?",
     [market_id]
   );
 
