@@ -172,6 +172,7 @@ CREATE PROCEDURE make_sale (
      _market_id VARCHAR(12),
      _employee_id VARCHAR(12),
      _products JSON,
+     _productsDetaills JSON,
      _amount DECIMAL(10, 2),
      _sale_id VARCHAR(12),
      _payment_type INT UNSIGNED
@@ -186,17 +187,19 @@ CREATE PROCEDURE make_sale (
      DECLARE product_description VARCHAR(100);
      DECLARE category_name VARCHAR(100);
      DECLARE product_price DECIMAL(10, 2);
+     DECLARE payment_type_name VARCHAR(100);
  START TRANSACTION;
      SET employee_email = (SELECT email FROM users WHERE user_id = _employee_id);
      SET market_name = (SELECT name FROM markets WHERE market_id = _market_id);
      SET date_now = (SELECT DATE(NOW()));
      SET time_now = (SELECT TIME(NOW()));
+     SET payment_type_name = (SELECT name FROM payment_types WHERE market_id = _market_id);
      INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id, payment_type)
      VALUES
      (_sale_id, _amount, date_now, time_now, _market_id, _employee_id, _payment_type);
      INSERT INTO tickets (ticket_id, products, amount, date, time, payment_type, sale_id, employee_id, employee_email, market_id, market_name)
      VALUES
-     (_sale_id, _products, _amount, date_now, time_now, _payment_type, _sale_id, _employee_id, employee_email, _market_id, market_name);
+     (_sale_id, _productsDetaills, _amount, date_now, time_now, payment_type_name, _sale_id, _employee_id, employee_email, _market_id, market_name);
      SET @counter = 0;
      SET @product_id = '';
      WHILE @counter < json_length(_products) DO

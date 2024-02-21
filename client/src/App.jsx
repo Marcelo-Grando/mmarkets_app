@@ -14,6 +14,7 @@ import ProductsPage from "./pages/ProductsPage";
 import CategoriesPage from "./pages/products/CategoriesPage";
 import Products from "./pages/products/Products";
 import CreateProducts from "./pages/products/CreateProducts";
+import TicketsPage from "./pages/TicketsPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="list" element={<Products/>}/>
           <Route path="create-products" element={<CreateProducts/>}/>
         </Route>
+        <Route path="tickets" element={<TicketsPage/>}/>
       </Route>
       <Route path="/sale" element={<SalePage />} />
     </Routes>

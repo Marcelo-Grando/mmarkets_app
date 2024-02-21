@@ -6,9 +6,12 @@ export const getTickets = tryCatch(async (req, res) => {
 
   const [tickets] = await pool.query("SELECT * FROM tickets WHERE market_id = ? ORDER BY date DESC, time DESC", [market_id])
 
-  tickets.forEach(ticket => ticket.products = JSON.parse(ticket.products))
+  const allTickets = tickets.map(ticket => {
+    ticket.products = JSON.parse(ticket.products)
+    return ticket
+  })
 
-  res.json(tickets)
+  res.json(allTickets)
 }) 
 
 export const salesByProducts = tryCatch(async (req, res) => {

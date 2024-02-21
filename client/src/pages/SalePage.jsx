@@ -63,7 +63,7 @@ export default function SalePage() {
   }
 
   const saleSubmit = async () => {
-    const response = await makeSale(market_id, user_id, selectedProducts, 3)
+    const response = await makeSale(market_id, user_id, selectedProducts, 3, saleItems)
     console.log("TICKET", response.data)
     setSaleItems([])
     setSelectedProducts([])
