@@ -37,6 +37,9 @@ export const createCategory = tryCatch(async (req, res) => {
   const { market_id } = req.params;
   const { name } = req.body;
 
+  console.log("name", name)
+  console.log("market_id", market_id)
+
   const category_id = generateId(12);
 
   const [response] = await pool.query(

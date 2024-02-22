@@ -19,8 +19,10 @@ export default function Products() {
   useEffect(() => {
     loadProducts()
   }, [market_id])
+
+  console.log("products", products)
   
   return (
-      products && <ResponsiveTable rows={productsFormat} rowsToSkip={['product_id', 'category_id', 'market_id']}/>
+      products && <ResponsiveTable rows={products} rowsToSkip={['product_id', 'category_id', 'market_id']}/>
   )
 }

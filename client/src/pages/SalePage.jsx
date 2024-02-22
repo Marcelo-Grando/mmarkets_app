@@ -76,7 +76,7 @@ export default function SalePage() {
         <Box>
           <Box sx={{ width: "60%", height: 200, border: 5 }}>
             {
-              saleItems.map((product, index) => <p key={index}> {product.name} {product.description} $ {product.price} x{product.quantify}</p>)
+              saleItems && saleItems.map((product, index) => <p key={index}> {product.name} {product.description} $ {product.price} x{product.quantify}</p>)
             }
             <Button onClick={saleSubmit}>MAKE SELL</Button>
           </Box>

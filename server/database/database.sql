@@ -235,3 +235,21 @@ SET date_now = DATE_ADD(date_time, INTERVAL 8 HOUR);
 SELECT date_now;
  END $
  DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE getReports2 (
+    _market_id VARCHAR(12)
+)
+BEGIN
+START TRANSACTION;
+DROP TABLE IF EXISTS sales_by_products;
+DROP TABLE IF EXISTS sales_by_categories;
+DROP TABLE IF EXISTS sales_by_sellers;
+CREATE TEMPORARY TABLE sales_by_products AS (SELECT product_id, name, description, category_name, sum(price * quantify) AS amount, SUM(quantify) AS quantify FROM sold_products WHERE market_id = _market_id GROUP BY product_id, name, description, category_name);
+CREATE TEMPORARY TABLE sales_by_categories AS (SELECT category_name, sum(price * quantify) AS amount, SUM(quantify) AS quantify FROM sold_products WHERE market_id = _market_id GROUP BY category_name);
+CREATE TEMPORARY TABLE sales_by_sellers__market_id AS (SELECT employee_id, sum(price * quantify) AS amount FROM sold_products WHERE market_id = _market_id GROUP BY employee_id);
+SELECT * FROM sales_by_products;
+SELECT * FROM sales_by_categories;
+SELECT * FROM sales_by_sellers;
+END $
+DELIMITER ;

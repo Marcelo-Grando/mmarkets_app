@@ -52,9 +52,6 @@ export const validateEmployeAccountData = tryCatch(async (req, res, next) => {
 
   const [[user]] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
 
-  console.log(user)
-
-
   if (user)
     throw new ClientError(
       `There is already a account with the email: ${email}`
@@ -64,12 +61,13 @@ export const validateEmployeAccountData = tryCatch(async (req, res, next) => {
 });
 
 export const validateCategoryData = tryCatch(async (req, res, next) => {
+  const {market_id} = req.params
   const { name } = req.body;
 
   if (!name) throw new ClientError("Incomplete Fiels");
 
-  const [[category]] = await pool.query("SELECT * FROM categories WHERE name = ?", [
-    name,
+  const [[category]] = await pool.query("SELECT * FROM categories WHERE name = ? AND market_id = ?", [
+    name, market_id
   ]);
 
   if (category) throw new ClientError(`The ${name} category already existe`);

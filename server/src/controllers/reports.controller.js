@@ -22,6 +22,10 @@ export const salesByProducts = tryCatch(async (req, res) => {
     [market_id]
   );
 
+  const [reports] = await pool.query("CALL getReports2(?)", [market_id])
+
+  console.log("reports", reports)
+
   res.json(salesByProducts);
 });
 

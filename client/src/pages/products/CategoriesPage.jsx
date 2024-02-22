@@ -26,9 +26,12 @@ export default function CategoriesPage() {
     return format
   } 
 
+  console.log("name", name)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const response = await createCategory(market_id, name)
+    console.log("response handleSubmit", response)
     setName('')
     loadCategories()
   }
@@ -41,6 +44,8 @@ export default function CategoriesPage() {
     setCategoriesView(format)
     }
   }
+
+  console.log("mar", market_id)
 
   useEffect(() => {
     loadCategories()
@@ -64,7 +69,7 @@ export default function CategoriesPage() {
         <Button type="submit" variant="filledTonal" startIcon={<AddIcon />}/>
       </Box>
       {
-        categories && <ResponsiveTable rows={categoriesView}/>
+        categories && <ResponsiveTable rows={categories} rowsToSkip={['category_id', "market_id"]}/>
       }
     </Box>
   );

@@ -10,6 +10,8 @@ import { useState } from "react";
 export default function ResponsiveTable(props) {
   const { rows, rowsToSkip, onClick } = props;
 
+  console.log("rows", rows)
+
   const filteredRows = rows.map((row) => {
     const rowCopy = { ...row };
     rowsToSkip.forEach((elem) => {
