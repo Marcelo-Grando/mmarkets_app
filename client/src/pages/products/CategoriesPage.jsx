@@ -19,14 +19,11 @@ export default function CategoriesPage() {
   }
 
   const categoriesFormat = (arr) => {
-    console.log("arr", arr)
     const format = arr.map((elem) => (
       {name: elem.name, created: `${elem.created.slice(0, 10).replaceAll("-", "/")} -  ${elem.created.slice(11,19)}`}
     ))
     return format
   } 
-
-  console.log("name", name)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -45,10 +42,8 @@ export default function CategoriesPage() {
     }
   }
 
-  console.log("mar", market_id)
-
   useEffect(() => {
-    loadCategories()
+    market_id && loadCategories()
   },[market_id])
 
   return (

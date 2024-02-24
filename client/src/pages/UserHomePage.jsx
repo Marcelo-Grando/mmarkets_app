@@ -4,6 +4,8 @@ import ResponsiveAppBar from "../components/ResponsiveAppBar";
 
 import { useQueryData } from "../hooks/useQueryData";
 
+import { Box } from "@mui/material";
+
 const settings = [
   { name: "Profile", path: "/profile" },
   { name: "Account", path: "/account" },

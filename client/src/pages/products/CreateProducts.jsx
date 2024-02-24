@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import { useQueryData } from "../../hooks/useQueryData"
-import Form from "../../components/Form"
+import { useEffect, useState } from "react";
+import { useQueryData } from "../../hooks/useQueryData";
+import Form from "../../components/Form";
 import { createProduct } from "../../api/Products";
 import { getCategories } from "../../api/Categories";
 
@@ -37,28 +37,39 @@ const initialState = {
   description: "",
   price: "",
   expiration: "",
-  category_id: ""
+  category_id: "",
 };
 
 export default function CreateProducts() {
-  const {market_id} = useQueryData()
-  const [categories, setCategories] = useState(null)
-  const [currencies, setCurrencies] = useState(null)
+  const { market_id } = useQueryData();
+  const [categories, setCategories] = useState(null);
+  const [currencies, setCurrencies] = useState(null);
 
   const loadCategories = async () => {
-    const response = await getCategories(market_id)
-      const curr = response.map((elem) => ({value: elem.category_id, label: elem.name}))
-    setCurrencies(curr)
-    setCategories(response)
-  }
+    const response = await getCategories(market_id);
+    const curr = response.map((elem) => ({
+      value: elem.category_id,
+      label: elem.name,
+    }));
+    setCurrencies(curr);
+    setCategories(response);
+  };
 
   useEffect(() => {
-    market_id && loadCategories()
-  }, [market_id])
-
-  console.log(currencies)
+    market_id && loadCategories();
+  }, [market_id]);
 
   return (
-    currencies && <Form title="Craete Product" inpustData={inpustData} btn_title="create" functionSubmit={createProduct} initialState={initialState} market_id={market_id} currencies={currencies}/>
-  )
+    currencies && (
+      <Form
+        title="Craete Product"
+        inpustData={inpustData}
+        btn_title="create"
+        functionSubmit={createProduct}
+        initialState={initialState}
+        market_id={market_id}
+        currencies={currencies}
+      />
+    )
+  );
 }

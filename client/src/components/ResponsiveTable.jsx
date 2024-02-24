@@ -8,9 +8,7 @@ import Paper from "@mui/material/Paper";
 import { useState } from "react";
 
 export default function ResponsiveTable(props) {
-  const { rows, rowsToSkip, onClick } = props;
-
-  console.log("rows", rows)
+  const { rows, rowsToSkip = [], onClick, head } = props;
 
   const filteredRows = rows.map((row) => {
     const rowCopy = { ...row };
@@ -20,21 +18,13 @@ export default function ResponsiveTable(props) {
     return rowCopy;
   });
 
-  const filterRow = (row) => {
-    const rowCopy = { ...row };
-    rowsToSkip.forEach((elem) => {
-      delete rowCopy[elem];
-    });
-    return rowCopy;
-  }
-
-
   const rowsHeads = Object.keys(filteredRows[0]);
-
+  
   return (
     <TableContainer>
       <Table aria-label="simple table">
-        <TableHead>
+        {
+          head && <TableHead>
           <TableRow className="titles">
             {rowsHeads.map((head, index) => (
               <TableCell key={index} size="small">
@@ -43,26 +33,21 @@ export default function ResponsiveTable(props) {
             ))}
           </TableRow>
         </TableHead>
+        }
         <TableBody>
-          {rows.map((row, index) => {
-            const filteredRow = filterRow(row)
-            return (
-              <TableRow className="row" key={index} size="small">
-                {Object.values(filteredRow).map((elem, index) => (
-                  <TableCell
-                    onClick={() => onClick(row)}
-                    key={index}
-                    className="cell"
-                    size="small"
-                    component="th"
-                    scope="row"
-                  >
-                    {elem}
-                  </TableCell>
-                ))}
+          {
+            rows.map((row, index) => (
+              <TableRow key={index}>
+               {
+                 Object.keys(row).map((key, index) => {
+                  if(!rowsToSkip.includes(key)) {
+                    return <TableCell onClick={() => onClick(row)} key={index}>{row[key]}</TableCell>
+                  }
+                 })
+               }
               </TableRow>
-            );
-          })}
+            ))
+          }
         </TableBody>
       </Table>
     </TableContainer>

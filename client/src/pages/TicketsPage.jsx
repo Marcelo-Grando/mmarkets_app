@@ -16,8 +16,6 @@ export default function TicketsPage() {
         market_id && loadTickets()
     }, [market_id])
 
-    console.log("tickets", tickets)
-
   return (
     <Box sx={{display: "flex", flexWrap:"wrap", paddingInline: 1, justifyContent: "space-between"}}>
         {

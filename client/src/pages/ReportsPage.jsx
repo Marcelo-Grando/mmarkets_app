@@ -1,4 +1,6 @@
 import { Box } from "@mui/material";
+import ResponsiveTable from "../components/ResponsiveTable"
+import LateralMenu from "../components/LateralMenu";
 
 import {useQueryData} from "../hooks/useQueryData"
 
@@ -7,30 +9,38 @@ import { useEffect, useState } from "react";
 
 export default function ReportsPage() {
   const {market_id} = useQueryData()
-  const [salesByProducts, setSalesByProducts] = useState()
+  const [salesByProducts, setSalesByProducts] = useState(null)
+  const [salesByCategories, setSalesByCategories] = useState(null)
+  const [salesBySellers, setSalesBySellers] = useState(null)
 
-  const loadSalesByProducts = async () => {
+  const loadReports = async () => {
     const response = await getSalesByProducts(market_id)
-    setSalesByProducts(response)
+    setSalesByProducts(response.salesByProducts)
+    setSalesByCategories(response.salesByCategories)
+    setSalesBySellers(response.salesBySellers)
   }
 
   useEffect(() => {
-    market_id && loadSalesByProducts()
+    market_id && loadReports()
   }, [market_id])
 
   console.log("SalesByProducts", salesByProducts)
 
   return (
-    <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
-        {
-          salesByProducts && salesByProducts.map((elem, index) => {
-            return <Box sx={{minWidth: "15%",border: 1, p: 1, m: 1}}>
-              <p>{elem.name} {elem.description}</p>
-              <h5>sold unitis: {elem.quantify}</h5>
-              <p>Total: ${elem.amount}</p>
-            </Box>
-          })
-        }
-    </Box>
+    <LateralMenu />
+    // <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
+    //   <h3>SALES BY PRODUCTS</h3>
+    //     {
+    //       salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
+    //     }
+    //     <h3>SALES BY CATEGORIES</h3>
+    //     {
+    //       salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
+    //     }
+    //      <h3>SALES BY SELLERS</h3>
+    //     {
+    //       salesBySellers && <ResponsiveTable rows={salesBySellers} />
+    //     }
+    // </Box>
   )
 }

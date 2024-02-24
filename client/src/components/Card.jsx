@@ -9,20 +9,26 @@ import { useState } from "react";
 export default function Card() {
     const {loading, employeesData} = useEmployeeData()
 
-    console.log("employeesdata", employeesData)
+    const except = ['user_id', 'market_id']
 
   return (
-    <div>
+    <Box sx={{p: 1, display: "flex", justifyContent: "space-evenly"}}>
         {loading && (<h3>loading...</h3>)}
         {
-          employeesData.map((elem, index) => (<Box key={index} sx={{}}>
-            <Typography variant="h6">{`${elem.name} ${elem.lastname}`}</Typography>
+          employeesData.map((elem, index) => (<Box key={index} sx={{border: 1, p:1, width:"max-content"}}> {
+             Object.keys(elem).map(e => {
+              if (!except.includes(e)) {
+                return <Typography variant="body2">{e[0].toUpperCase() + e.slice(1)}: {elem[e]}</Typography>
+              }
+             })
+          }
+            {/* <Typography variant="h6">{`${elem.name} ${elem.lastname}`}</Typography>
             <Typography variant="body2">{elem.dni}</Typography>
             <Typography></Typography>
             <Typography></Typography>
-            <Typography></Typography>
+            <Typography></Typography> */}
           </Box>))
         }
-    </div>
+    </Box>
   )
 }

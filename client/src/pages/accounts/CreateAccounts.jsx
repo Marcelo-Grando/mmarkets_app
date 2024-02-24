@@ -55,7 +55,7 @@ export default function CreateAccounts() {
   const { market_id } = useQueryData();
 
   return (
-    <Box sx={{ display: "flex", width: 3 / 4 }}>
+    <Box sx={{ display: "flex"}}>
       <Box sx={{ p: 1 }}>
         <Form
           title={"Create seller Account"}

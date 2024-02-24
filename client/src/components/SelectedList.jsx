@@ -27,8 +27,8 @@ export default function SelectedList({ paths }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Box sx={{ width: "20%", borderRight: 1, borderColor: "text.disabled" }}>
-        <List>
+      <Box sx={{width: "19%", borderColor: "text.disabled" }}>
+        <List sx={{width: "100%", borderRight: 1}}>
           {paths.map((path, index) => (
             <ListItem key={index} disablePadding>
               <ListItemButton

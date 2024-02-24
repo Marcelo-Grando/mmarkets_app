@@ -4,8 +4,6 @@ import { ClientError } from "../errors/Errors.js";
 import { comparePassword } from "../utils/encryptPassword.js";
 import { findUserByEmail } from "../helpers/searchEngines.js";
 
-import geoip from 'geoip-lite'
-
 export const validateUser = tryCatch(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -44,8 +42,6 @@ export const validateMainAccountData = tryCatch(async (req, res, next) => {
 
 export const validateEmployeAccountData = tryCatch(async (req, res, next) => {
   const { email, position, password, name, lastname, dni } = req.body;
-
-  console.log("params", req.body)
 
   if (!email || !position || !password || !name || !lastname || !dni)
     throw new ClientError("Incomplete Fiels");
@@ -101,21 +97,17 @@ export const validateSession = tryCatch(async (req, res, next) => {
   const session_id = req.session.id;
 
   const [[activeSession]] = await pool.query(
-    "SELECT * from sessions WHERE session_id = ?",
+    "SELECT session_id, JSON_EXTRACT(data, '$[0].userData.user_id') AS user_id, JSON_EXTRACT(data, '$[0].cookie.expires') AS expires from sessions WHERE session_id = ?",
     [session_id]
   );
 
   if (!activeSession)
     throw new ClientError("The user doesn't have an active session", 401);
 
-  const { data } = activeSession;
-
-  if (!data)
+  if (!activeSession.user_id)
     throw new ClientError("The user doesn't have an active session", 401);
 
-  const {userData: {user_id}} = JSON.parse(data);
-
-  if (user_id !== req.session.userData.user_id)
+  if (activeSession.user_id !== req.session.userData.user_id)
     throw new ClientError("The user doesn't have an active session", 401);
 
   next();

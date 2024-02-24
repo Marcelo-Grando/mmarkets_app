@@ -4,14 +4,9 @@ import { tryCatch } from "../utils/tryCatch.js";
 export const getTickets = tryCatch(async (req, res) => {
   const {market_id} = req.params
 
-  const [tickets] = await pool.query("SELECT * FROM tickets WHERE market_id = ? ORDER BY date DESC, time DESC", [market_id])
+  const [tickets] = await pool.query("SELECT ticket_id, JSON_EXTRACT(products, '$') AS products, amount, date, time, payment_type, employee_id, employee_email, market_id, market_name FROM tickets WHERE market_id = ? ORDER BY date DESC, time DESC", [market_id])
 
-  const allTickets = tickets.map(ticket => {
-    ticket.products = JSON.parse(ticket.products)
-    return ticket
-  })
-
-  res.json(allTickets)
+  res.json(tickets)
 }) 
 
 export const salesByProducts = tryCatch(async (req, res) => {
@@ -24,9 +19,7 @@ export const salesByProducts = tryCatch(async (req, res) => {
 
   const [reports] = await pool.query("CALL getReports2(?)", [market_id])
 
-  console.log("reports", reports)
-
-  res.json(salesByProducts);
+  res.json({salesByProducts: reports[0], salesByCategories: reports[1], salesBySellers: reports[2]});
 });
 
 export const salesByCategories = tryCatch(async (req, res) => {

@@ -114,11 +114,11 @@ CREATE TABLE sold_products (
 );
 CREATE VIEW accounts_employees_view AS
 SELECT u.user_id,
-    u.email,
-    u.roles,
     e.name,
     e.lastname,
+    u.email,
     e.dni,
+    u.roles,
     e.market_id
 FROM users u
     INNER JOIN employees e ON u.user_id = e.employee_id;

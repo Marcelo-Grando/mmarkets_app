@@ -42,8 +42,6 @@ export default function Form({
     console.log(response)
   };
 
-  console.log("user values", user)
-
   return (
     <div className="form-container">
       <Typography className="h6" variant="h6">
