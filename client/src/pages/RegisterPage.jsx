@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { createMainAccount } from "../api/Accounts";
 import Form from "../components/Form";
 
@@ -34,12 +35,14 @@ const initialState = {
 
 export default function RegisterPage() {
   return (
-    <Form
+    <Box sx={{p: 1}}>
+      <Form
       title={"Register"}
       inpustData={inpustData}
       btn_title={"Register"}
       functionSubmit={createMainAccount}
       initialState={initialState}
     />
+    </Box>
   );
 }

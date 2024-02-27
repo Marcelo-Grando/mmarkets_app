@@ -93,7 +93,7 @@ CREATE TABLE tickets (
     payment_type INT UNSIGNED,
     sale_id VARCHAR(12) NOT NULL,
     employee_id VARCHAR(12) NOT NULL,
-    employee_email VARCHAR(250),
+    employee_name VARCHAR(250),
     market_id VARCHAR(12) NOT NULL,
     market_name VARCHAR(100),
     FOREIGN KEY (market_id) REFERENCES markets(market_id)
@@ -180,7 +180,7 @@ CREATE PROCEDURE make_sale (
  BEGIN
      DECLARE date_now DATE;
      DECLARE time_now TIME;
-     DECLARE employee_email VARCHAR(250);
+     DECLARE employee_name VARCHAR(250);
      DECLARE market_name VARCHAR(100);
      DECLARE product_id VARCHAR(100);
      DECLARE product_name VARCHAR(100);
@@ -189,7 +189,7 @@ CREATE PROCEDURE make_sale (
      DECLARE product_price DECIMAL(10, 2);
      DECLARE payment_type_name VARCHAR(100);
  START TRANSACTION;
-     SET employee_email = (SELECT email FROM users WHERE user_id = _employee_id);
+     SET employee_name = (SELECT CONCAT(name, ' ', lastname) AS employee_name FROM employees WHERE employee_id = _employee_id);
      SET market_name = (SELECT name FROM markets WHERE market_id = _market_id);
      SET date_now = (SELECT DATE(NOW()));
      SET time_now = (SELECT TIME(NOW()));
@@ -197,9 +197,9 @@ CREATE PROCEDURE make_sale (
      INSERT INTO sales (sale_id, amount, date, time, market_id, employee_id, payment_type)
      VALUES
      (_sale_id, _amount, date_now, time_now, _market_id, _employee_id, _payment_type);
-     INSERT INTO tickets (ticket_id, products, amount, date, time, payment_type, sale_id, employee_id, employee_email, market_id, market_name)
+     INSERT INTO tickets (ticket_id, products, amount, date, time, payment_type, sale_id, employee_id, employee_name, market_id, market_name)
      VALUES
-     (_sale_id, _productsDetaills, _amount, date_now, time_now, payment_type_name, _sale_id, _employee_id, employee_email, _market_id, market_name);
+     (_sale_id, _productsDetaills, _amount, date_now, time_now, payment_type_name, _sale_id, _employee_id, employee_name, _market_id, market_name);
      SET @counter = 0;
      SET @product_id = '';
      WHILE @counter < json_length(_products) DO
@@ -237,7 +237,7 @@ SELECT date_now;
  DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE getReports2 (
+CREATE PROCEDURE get_reports (
     _market_id VARCHAR(12)
 )
 BEGIN
@@ -245,9 +245,9 @@ START TRANSACTION;
 DROP TABLE IF EXISTS sales_by_products;
 DROP TABLE IF EXISTS sales_by_categories;
 DROP TABLE IF EXISTS sales_by_sellers;
-CREATE TEMPORARY TABLE sales_by_products AS (SELECT product_id, name, description, category_name, sum(price * quantify) AS amount, SUM(quantify) AS quantify FROM sold_products WHERE market_id = _market_id GROUP BY product_id, name, description, category_name);
-CREATE TEMPORARY TABLE sales_by_categories AS (SELECT category_name, sum(price * quantify) AS amount, SUM(quantify) AS quantify FROM sold_products WHERE market_id = _market_id GROUP BY category_name);
-CREATE TEMPORARY TABLE sales_by_sellers__market_id AS (SELECT employee_id, sum(price * quantify) AS amount FROM sold_products WHERE market_id = _market_id GROUP BY employee_id);
+CREATE TEMPORARY TABLE sales_by_products AS (SELECT product_id, name, description, category_name, SUM(quantify) AS quantify, sum(price * quantify) AS amount FROM sold_products WHERE market_id = _market_id GROUP BY product_id, name, description, category_name ORDER BY  SUM(quantify) DESC);
+CREATE TEMPORARY TABLE sales_by_categories AS (SELECT category_name, SUM(quantify) AS quantify, sum(price * quantify) AS amount FROM sold_products WHERE market_id = _market_id GROUP BY category_name ORDER BY SUM(quantify) DESC);
+CREATE TEMPORARY TABLE sales_by_sellers (SELECT employee_id, employee_name, sum(amount) AS amount FROM tickets WHERE market_id = _market_id GROUP BY employee_id, employee_name);
 SELECT * FROM sales_by_products;
 SELECT * FROM sales_by_categories;
 SELECT * FROM sales_by_sellers;

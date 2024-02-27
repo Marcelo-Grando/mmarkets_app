@@ -37,11 +37,11 @@ export default function ResponsiveTable(props) {
         <TableBody>
           {
             rows.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{size: "small"}}>
                {
                  Object.keys(row).map((key, index) => {
                   if(!rowsToSkip.includes(key)) {
-                    return <TableCell onClick={() => onClick(row)} key={index}>{row[key]}</TableCell>
+                    return <TableCell sx={{paddingY: 0.7}} onClick={() => onClick(row)} key={index}>{row[key]}</TableCell>
                   }
                  })
                }

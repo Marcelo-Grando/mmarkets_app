@@ -62,7 +62,7 @@ export default function CreateProducts() {
   return (
     currencies && (
       <Form
-        title="Craete Product"
+        title="Create Product"
         inpustData={inpustData}
         btn_title="create"
         functionSubmit={createProduct}

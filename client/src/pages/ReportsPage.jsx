@@ -25,22 +25,23 @@ export default function ReportsPage() {
   }, [market_id])
 
   console.log("SalesByProducts", salesByProducts)
+  console.log("salesByCategories", salesByCategories)
+  console.log("salesBySellers", salesBySellers)
 
   return (
-    <LateralMenu />
-    // <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
-    //   <h3>SALES BY PRODUCTS</h3>
-    //     {
-    //       salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
-    //     }
-    //     <h3>SALES BY CATEGORIES</h3>
-    //     {
-    //       salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
-    //     }
-    //      <h3>SALES BY SELLERS</h3>
-    //     {
-    //       salesBySellers && <ResponsiveTable rows={salesBySellers} />
-    //     }
-    // </Box>
+    <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
+      <h3>SALES BY PRODUCTS</h3>
+        {
+          salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
+        }
+        <h3>SALES BY CATEGORIES</h3>
+        {
+          salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
+        }
+         <h3>SALES BY SELLERS</h3>
+        {
+          salesBySellers && <ResponsiveTable rows={salesBySellers} rowsToSkip={['employee_id']}/>
+        }
+    </Box>
   )
 }

@@ -5,6 +5,7 @@ import Form from "../components/Form";
 
 import { login } from "../api/Auth";
 import { getUserRoles } from "../api/Users";
+import { Box } from "@mui/material";
 
 const inpustData = [
   {
@@ -36,12 +37,14 @@ export default function SigninPage() {
   };
 
   return (
-    <Form
+    <Box sx={{p: 1}}>
+      <Form
       title={"Signin"}
       inpustData={inpustData}
       btn_title={"Signin"}
       functionSubmit={sendUser}
       initialState={initialState}
     />
+    </Box>
   );
 }

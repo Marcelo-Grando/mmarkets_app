@@ -26,9 +26,9 @@ export default function SelectedList({ paths }) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", width: "100%" }}>
       <Box sx={{width: "19%", borderColor: "text.disabled" }}>
-        <List sx={{width: "100%", borderRight: 1}}>
+        <List sx={{width: "100%", minWidth:'19%', borderRight: 1}}>
           {paths.map((path, index) => (
             <ListItem key={index} disablePadding>
               <ListItemButton

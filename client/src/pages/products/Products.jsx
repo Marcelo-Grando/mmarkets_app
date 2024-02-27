@@ -10,6 +10,9 @@ export default function Products() {
   const [products, setProducts] = useState(null)
   const [productsFormat, setProductFormat] = useState(null)
 
+  const anchuraViewport = window.innerWidth;
+  const alturaViewport = window.innerHeight; 
+
   const loadProducts = async () => {
     const response = await getProducts(market_id)
     setProducts(response.products)
@@ -19,8 +22,21 @@ export default function Products() {
   useEffect(() => {
     market_id && loadProducts()
   }, [market_id])
+
+  console.log("pro", products)
   
   return (
-      products && <ResponsiveTable rows={products} rowsToSkip={['product_id', 'category_id', 'market_id']}/>
+      products && <Box sx={{height: alturaViewport - 70,overflowY: "scroll",
+      "&::-webkit-scrollbar": {
+        width: "0.5em",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "rgba(0,0,0,.5)",
+      },
+      "&::-webkit-scrollbar-corner": {
+        backgroundColor: "#fff",
+      },}}>
+        <ResponsiveTable rows={products} rowsToSkip={['product_id', 'category_id', 'market_id']}/>
+      </Box>
   )
 }
