@@ -31,7 +31,7 @@ export default function SigninPage() {
   const sendUser = async (user) => {
     const response = await login(user);
 
-    const { data } = await getUserRoles();
+    const data  = await getUserRoles();
 
     navigate("/user", { state: { userData: data } });
   };

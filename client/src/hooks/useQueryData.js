@@ -12,17 +12,17 @@ export const useQueryData = () => {
 
   const loadData = async () => {
     const response = await test();
-    setUserData(response.data);
-    setUserId(response.data.user_id);
-    setMarketId(response.data.market_id)
-    setRoles(response.data.roles[0]);
+    setUserData(response);
+    setUserId(response.user_id);
+    setMarketId(response.market_id)
+    setRoles(response.roles[0]);
     setLoading(null);
   };
 
   const loadPages = async () => {
     if (userId) {
       const response = await getPagesInfo(roles);
-      setPages(response.data);
+      setPages(response);
     }
   };
 

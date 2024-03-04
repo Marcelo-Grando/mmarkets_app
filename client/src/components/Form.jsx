@@ -32,7 +32,10 @@ export default function Form({
     e.preventDefault();
     if (market_id) {
       const response = await functionSubmit(market_id, user);
-      setUser(initialState);
+      if (response.status != 400) {
+        setUser(initialState);
+        return
+      }
       setSelectValue("")
       console.log(response)
       return;

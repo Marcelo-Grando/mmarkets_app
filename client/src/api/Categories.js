@@ -1,4 +1,4 @@
-import { instanceAxios } from "./axios";
+import { instanceAxios } from "./InstanceAxios";
 
 export const getCategories = async (market_id) =>
   await instanceAxios

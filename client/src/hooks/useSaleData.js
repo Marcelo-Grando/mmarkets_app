@@ -11,8 +11,7 @@ export const useSaleData =  () => {
 
     const loadProducts = async (market_id) => {
             const response = await getProducts(market_id)
-            console.log("response", response)
-        setProducts(response.data)
+        setProducts(response)
     }
 
     console.log("useSaleData",market_id, loading, products)

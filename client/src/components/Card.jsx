@@ -16,9 +16,9 @@ export default function Card() {
         {loading && (<h3>loading...</h3>)}
         {
           employeesData.map((elem, index) => (<Box key={index} sx={{border: 1, p:1, width:"max-content"}}> {
-             Object.keys(elem).map(e => {
+             Object.keys(elem).map((e, i) => {
               if (!except.includes(e)) {
-                return <Typography variant="body2">{e[0].toUpperCase() + e.slice(1)}: {elem[e]}</Typography>
+                return <Typography key={i} variant="body2">{e[0].toUpperCase() + e.slice(1)}: {elem[e]}</Typography>
               }
              })
           }
