@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Logo from "../../public/Logo2.png"
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -59,24 +61,7 @@ export default function ResponsiveAppBar(props) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            onClick={() => navigate("/user")}
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Mmarkets'S
-          </Typography>
+          <img onClick={() => navigate("/user")} src={Logo} className="logo-app"/>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -133,7 +118,7 @@ export default function ResponsiveAppBar(props) {
           >
             Mmarkets'S
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 0.9, display: { xs: "none", md: "flex" }, marginLeft: "auto" }}>
             {props.pages.map((page, index) => (
               <Button
                 key={index}

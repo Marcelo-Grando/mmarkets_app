@@ -41,3 +41,13 @@
 .cell {
   cursor: pointer;
 }
+
+.logo-app {
+  width: 120px;
+  height: min-content;
+  cursor: pointer;
+}
+
+.btn-group-nav {
+  margin-left: auto;
+}
