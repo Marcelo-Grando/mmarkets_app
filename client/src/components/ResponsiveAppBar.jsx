@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Logo from "../../public/Logo2.png"
+import Logo from "/Logo2.png"
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
