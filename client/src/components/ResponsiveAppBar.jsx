@@ -59,8 +59,8 @@ export default function ResponsiveAppBar(props) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Container maxWidth="xl" className="app-bar">
+        <Toolbar disableGutters style={{minHeight: '50px'}}>
           <img onClick={() => navigate("/user")} src={Logo} className="logo-app"/>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -94,7 +94,7 @@ export default function ResponsiveAppBar(props) {
             >
               {props.pages.map((page, index) => (
                 <MenuItem key={index} onClick={() => handlePage(page.name)}>
-                  <Typography textAlign="center">{page.name}</Typography>
+                  <Typography className="nav-link" textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>

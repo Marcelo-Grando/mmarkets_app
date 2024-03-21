@@ -2,10 +2,14 @@ import { Box } from "@mui/material";
 import ResponsiveTable from "../components/ResponsiveTable"
 import LateralMenu from "../components/LateralMenu";
 
+import ScrollBox from "../components/ScrollBox";
+
 import {useQueryData} from "../hooks/useQueryData"
 
 import { getSalesByProducts } from "../api/Reports";
 import { useEffect, useState } from "react";
+
+const alturaViewport = window.innerHeight; 
 
 export default function ReportsPage() {
   const {market_id} = useQueryData()
@@ -29,19 +33,33 @@ export default function ReportsPage() {
   console.log("salesBySellers", salesBySellers)
 
   return (
-    <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
-      <h3>SALES BY PRODUCTS</h3>
-        {
-          salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
-        }
-        <h3>SALES BY CATEGORIES</h3>
-        {
-          salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
-        }
-         <h3>SALES BY SELLERS</h3>
-        {
-          salesBySellers && <ResponsiveTable rows={salesBySellers} rowsToSkip={['employee_id']}/>
-        }
-    </Box>
+    // <Box sx={{display: "flex", justifyContent: "space-around", flexWrap: "wrap"}}>
+    //   <h3>SALES BY PRODUCTS</h3>
+    //     {
+    //       salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
+    //     }
+    //     <h3>SALES BY CATEGORIES</h3>
+    //     {
+    //       salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
+    //     }
+    //      <h3>SALES BY SELLERS</h3>
+    //     {
+    //       salesBySellers && <ResponsiveTable rows={salesBySellers} rowsToSkip={['employee_id']}/>
+    //     }
+    // </Box>
+  <ScrollBox>
+    <><h3>SALES BY PRODUCTS</h3>
+  {
+     salesByProducts && <ResponsiveTable rows={salesByProducts} rowsToSkip={['product_id']} head={false}/>
+   }
+   <h3>SALES BY CATEGORIES</h3>
+   {
+     salesByCategories && <ResponsiveTable rows={salesByCategories} rowsToSkip={['category_id']}/>
+   }
+    <h3>SALES BY SELLERS</h3>
+   {
+     salesBySellers && <ResponsiveTable rows={salesBySellers} rowsToSkip={['employee_id']}/>
+   }</>
+  </ScrollBox>
   )
 }

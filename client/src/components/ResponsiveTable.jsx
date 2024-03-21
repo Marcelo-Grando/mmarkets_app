@@ -41,7 +41,7 @@ export default function ResponsiveTable(props) {
                {
                  Object.keys(row).map((key, index) => {
                   if(!rowsToSkip.includes(key)) {
-                    return <TableCell sx={{paddingY: 0.7}} onClick={() => onClick(row)} key={index}>{row[key]}</TableCell>
+                    return <TableCell sx={{paddingY: 0.7, fontFamily: "'Commissioner', sans-serif"}} onClick={() => onClick(row)} key={index}>{row[key]}</TableCell>
                   }
                  })
                }

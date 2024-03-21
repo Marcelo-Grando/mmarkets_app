@@ -25,26 +25,31 @@ const initialState = {
   password: "",
 };
 
-export default function SigninPage() {
+export default function SigninPage({ togleForm }) {
   const navigate = useNavigate();
 
   const sendUser = async (user) => {
     const response = await login(user);
 
-    const data  = await getUserRoles();
+    const data = await getUserRoles();
 
     navigate("/user", { state: { userData: data } });
   };
 
   return (
-    <Box sx={{p: 1}}>
+    <Box sx={{ p: 1, borderRadius: "10px"}}>
+      <h3 className="form-text">
+        If you are already a Mmarket user you can log in below:
+      </h3>
       <Form
-      title={"Signin"}
-      inpustData={inpustData}
-      btn_title={"Signin"}
-      functionSubmit={sendUser}
-      initialState={initialState}
-    />
+        inpustData={inpustData}
+        btn_title={"Signin"}
+        functionSubmit={sendUser}
+        initialState={initialState}
+      />
+      <h3 className="form-link" onClick={togleForm}>
+        You still don't have an account? sign up here
+      </h3>
     </Box>
   );
 }

@@ -9,9 +9,8 @@ import { useState } from "react";
 import BasicSelect from "../components/BasicSelect"
 
 export default function Form({
-  title,
-  inpustData,
   btn_title,
+  inpustData,
   functionSubmit,
   initialState,
   market_id,
@@ -47,9 +46,6 @@ export default function Form({
 
   return (
     <div className="form-container">
-      <Typography className="h6" variant="h6">
-        {title}
-      </Typography>
       <Box component="form" onSubmit={handleSubmit}>
         {inpustData.map((element, index) => {
           if (element.type === "select") {
@@ -76,6 +72,24 @@ export default function Form({
             ))}
           </TextField>
           }
+          if (index === 0) {
+              return (
+                <TextField
+                autoFocus
+                  key={index}
+                  size="small"
+                  className="text-field"
+                  type={element.type}
+                  name={element.name}
+                  label={element.label}
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleInputsChange}
+                  placeholder={element.name}
+                  value={user[element.name]}
+                />
+            )
+          }
            if(element.type != "select") {
             return (
               <TextField
@@ -101,7 +115,6 @@ export default function Form({
           fullWidth
           type="submit"
           variant="contained"
-          color="primary"
         >
           {btn_title}
         </Button>
