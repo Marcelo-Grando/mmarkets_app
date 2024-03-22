@@ -1,6 +1,10 @@
 import { useLocation, Outlet } from "react-router-dom";
 
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import {BasicAppBar}  from "../components/BasicAppBar";
+import PermanentDrawerLeft from "../components/PermanentDrawerLeft";
+import PersistentDrawerLeft from "../components/PersistentDrawerLeft"
+import DrawerPrueba from "../components/DrawerPrueba";
 
 import { useQueryData } from "../hooks/useQueryData";
 
@@ -20,8 +24,10 @@ export default function UserHomePage() {
       {loading && <h3>loading...</h3>}
       {userData && (
         <>
-          <ResponsiveAppBar pages={pages} settings={settings} />
-          <Outlet />
+          {/* <BasicAppBar pages={pages}/>
+          <Outlet /> */}
+          {/* <PersistentDrawerLeft/> */}
+          <DrawerPrueba/>
         </>
       )}
     </div>

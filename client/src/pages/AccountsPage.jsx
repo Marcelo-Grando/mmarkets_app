@@ -63,10 +63,7 @@ export default function AccountsPage() {
       {loading && <h3>loading...</h3>}
       {market_id && (
         <SelectedList
-          paths={[
-            { path: "default", label: "accounts" },
-            { path: "create", label: "create" },
-          ]}
+          paths={[{ "path": "default", "label": "accounts" },{ "path": "create", "label": "create" }]}
         />
       )}
     </>

@@ -54,8 +54,9 @@ export default function CategoriesPage() {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ p: 1, display: "flex" }}
+        sx={{ p: 1, display: "flex", alignItems: 'center', border: "1px solid gray", width: "max-content" }}
       >
+        <h4 style={{marginRight: 6}}>Create category</h4>
         <TextField
           onChange={handleChange}
           value={name}
@@ -64,7 +65,7 @@ export default function CategoriesPage() {
           label="Category Name"
           variant="outlined"
         />
-        <Button type="submit" variant="filledTonal" startIcon={<AddIcon />} />
+        <Button type="submit">Create</Button>
       </Box>
       {categories && (
         <ResponsiveTable

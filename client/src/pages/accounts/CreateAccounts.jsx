@@ -57,8 +57,8 @@ export default function CreateAccounts() {
   return (
     <Box sx={{ display: "flex"}}>
       <Box sx={{ p: 1 }}>
+        <h3>Create seller account</h3>
         <Form
-          title={"Create seller Account"}
           inpustData={inpustData}
           btn_title={"create"}
           functionSubmit={createEmployeeAccount}
@@ -68,8 +68,8 @@ export default function CreateAccounts() {
       </Box>
 
       <Box sx={{ p: 1 }}>
+        <h3>Create admin account</h3>
         <Form
-          title={"Create admin Account"}
           inpustData={inpustData}
           btn_title={"create"}
           functionSubmit={createEmployeeAccount}

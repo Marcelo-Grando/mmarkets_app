@@ -4,6 +4,8 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
+  ButtonGroup,
+  Button,
 } from "@mui/material";
 
 import { Outlet, useNavigate } from "react-router-dom";
@@ -26,24 +28,8 @@ export default function SelectedList({ paths }) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: "flex", width: "100%" }}>
-      <Box sx={{width: "19%", borderColor: "text.disabled" }}>
-        <List sx={{width: "100%", minWidth:'19%', borderRight: 1}}>
-          {paths.map((path, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                selected={selectedIndex === index}
-                onClick={() => handleClick(`${path.path}`, index)}
-              >
-                <ListItemText primary={`${path.label}`} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-      <Box sx={{ width: "80%", paddingInline: 1 }}>
+    <Box sx={{width: "100%" }}>
         <Outlet />
-      </Box>
     </Box>
   );
 }

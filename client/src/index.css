@@ -66,12 +66,7 @@ background-color:white;
   cursor: pointer;
 }
 
-.btn-group-nav {
-  margin-left: auto;
-}
-
 .btn-nav:hover {
-  border: 1px solid  rgb(238, 215, 9);
   text-shadow: 1px 1px 1px rgb(238, 215, 9);
 }
 
