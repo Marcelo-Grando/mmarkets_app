@@ -1,7 +1,5 @@
 import { ButtonAppBar } from "../components/ButtonAppBar.jsx";
-import { Outlet } from "react-router-dom";
 
-import Fondo from "/Fondo.png";
 import HomeBackground from "/Home-background.png";
 
 import Logo_bg from "/Logo_bg.png";

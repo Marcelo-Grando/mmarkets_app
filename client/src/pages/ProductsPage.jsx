@@ -1,4 +1,3 @@
-import TestTabs from "../components/TestTabs"
 import SelectedList from "../components/SelectedList"
 
 export default function ProductsPage() {

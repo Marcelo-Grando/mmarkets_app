@@ -19,10 +19,11 @@ CREATE TABLE pages_info (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     roles JSON
+    paths JSON
 );
-INSERT INTO pages_info (name, roles)
+INSERT INTO pages_info (name, roles, paths)
 VALUES
-('reports', '["main", "admin"]'),
+('reports', '["main", "admin"]', '[]'),
 ('accounts', '["main", "admin"]'),
 ('tickets', '["main", "admin", "seller"]'),
 ('categories', '["main", "admin", "seller"]'),

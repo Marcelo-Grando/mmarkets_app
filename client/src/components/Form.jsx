@@ -4,9 +4,7 @@ import {
   Button,
   MenuItem,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import BasicSelect from "../components/BasicSelect"
 
 export default function Form({
   btn_title,

@@ -14,8 +14,6 @@ export const useSaleData =  () => {
         setProducts(response)
     }
 
-    console.log("useSaleData",market_id, loading, products)
-
     useEffect(() => {
         market_id && loadProducts(market_id)
     }, [market_id])

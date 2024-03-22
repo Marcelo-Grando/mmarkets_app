@@ -4,8 +4,7 @@ import { getProducts } from "../api/Products";
 import { makeSale } from "../api/Sales";
 import { useQueryData } from "../hooks/useQueryData";
 import ResponsiveTable from "../components/ResponsiveTable";
-import { useSaleData } from "../hooks/useSaleData";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 let anchuraViewport = window.innerWidth;
 let alturaViewport = window.innerHeight;
@@ -104,8 +103,6 @@ export default function SalePage() {
     return allPrices.reduce((a, b) => a + b, 0);
   };
 
-  console.log("first", saleItems);
-
   return (
     <>
       {loading && <h3>loading...</h3>}
@@ -170,15 +167,6 @@ export default function SalePage() {
               rowsToSkip={["product_id", "category_id", "market_id"]}
               onClick={addProductsForSale}
             />
-          </Box>
-          <Box>
-            {
-              // ticket && Object.keys(ticket).map((elem, index) => {
-              //   if(elem != '_products') {
-              //     return <Box>{elem}: {ticket[elem]}</Box>
-              //   }
-              // })
-            }
           </Box>
         </Box>
       )}

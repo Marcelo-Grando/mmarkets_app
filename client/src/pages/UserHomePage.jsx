@@ -1,14 +1,6 @@
-import { useLocation, Outlet } from "react-router-dom";
-
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import {BasicAppBar}  from "../components/BasicAppBar";
-import PermanentDrawerLeft from "../components/PermanentDrawerLeft";
-import PersistentDrawerLeft from "../components/PersistentDrawerLeft"
 import DrawerPrueba from "../components/DrawerPrueba";
 
 import { useQueryData } from "../hooks/useQueryData";
-
-import { Box } from "@mui/material";
 
 const settings = [
   { name: "Profile", path: "/profile" },
@@ -22,14 +14,7 @@ export default function UserHomePage() {
   return (
     <div>
       {loading && <h3>loading...</h3>}
-      {userData && (
-        <>
-          {/* <BasicAppBar pages={pages}/>
-          <Outlet /> */}
-          {/* <PersistentDrawerLeft/> */}
-          <DrawerPrueba/>
-        </>
-      )}
+      {userData && <DrawerPrueba />}
     </div>
   );
 }
