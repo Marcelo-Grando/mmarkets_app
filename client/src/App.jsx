@@ -16,6 +16,7 @@ import Products from "./pages/products/Products";
 import CreateProducts from "./pages/products/CreateProducts";
 import TicketsPage from "./pages/TicketsPage";
 import ReportsPage from "./pages/ReportsPage";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
       <Route path="/user" element={<UserHomePage />}>
+        <Route path="" element={<MainPage/>}/>
         <Route path="sale" element={<SalePage />} />
         <Route path="accounts" element={<AccountsPage />}>
           <Route path="" element={<AccountsCards />} />

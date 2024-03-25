@@ -12,10 +12,11 @@ export const useQueryData = () => {
 
   const loadData = async () => {
     const response = await test();
+    console.log("res", response)
     setUserData(response);
     setUserId(response.user_id);
     setMarketId(response.market_id)
-    setRoles(response.roles[0]);
+    setRoles(response.roles);
     setLoading(null);
   };
 

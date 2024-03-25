@@ -52,7 +52,7 @@ export default function ResponsiveAppBar(props) {
 
   const closeSession = async () => {
     const response = await logout();
-    console.log(response.data);
+    console.log(response);
     handleCloseNavMenu();
     navigate("/");
   };

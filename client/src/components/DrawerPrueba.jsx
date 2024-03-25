@@ -30,6 +30,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import LabelIcon from "@mui/icons-material/Label";
 
+import AvatarMenu from "./AvatarMenu";
+
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -80,6 +82,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function DrawerPrueba() {
   const { userData, loading, pages } = useQueryData();
 
+  console.log("userData", userData.name)
+  const [initialLetter, setInitialLetter] = useState(null)
+
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -93,8 +98,6 @@ export default function DrawerPrueba() {
   };
 
   const navigateTo = (childrenPath, path) => {
-    console.log("path", path)
-    console.log("child", childrenPath)
     if (childrenPath === "default") {
       navigate(path);
       return;
@@ -111,8 +114,13 @@ export default function DrawerPrueba() {
     setOpenSub(state);
   };
 
+  const AvatarContent = () => {
+    setInitialLetter(userData.name?.charAt(0).toUpperCase())
+  }
+
   useEffect(() => {
     listSubItems();
+    AvatarContent()
   }, [pages]);
 
   const handleDrawerOpen = () => {
@@ -138,11 +146,12 @@ export default function DrawerPrueba() {
             <MenuIcon />
           </IconButton>
           <img
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/user")}
             className="logo-app"
             src={Logo}
             alt="Logo"
           />
+          <AvatarMenu avatarContent={initialLetter}/>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -172,7 +181,7 @@ export default function DrawerPrueba() {
           {pages.map((row, index) => {
             if (row.paths) {
               return (
-                <List>
+                <List key={index}>
                   <ListItemButton onClick={() => expandItems(row.name)}>
                     <ListItemIcon>
                       {index === 1 && <GroupsIcon />}
@@ -185,6 +194,7 @@ export default function DrawerPrueba() {
                     <List component="div" disablePadding>
                       {row.paths.map((path) => (
                         <ListItemButton
+                        key={index}
                           sx={{ pl: 4 }}
                           onClick={() => navigateTo(path.path, row.name)}
                         >

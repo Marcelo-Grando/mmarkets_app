@@ -254,3 +254,33 @@ SELECT * FROM sales_by_categories;
 SELECT * FROM sales_by_sellers;
 END $
 DELIMITER ;
+
+DELIMITER $ 
+CREATE PROCEDURE getUserInfo (
+    _session_id VARCHAR(255)
+)
+BEGIN 
+DECLARE user_id VARCHAR(12);
+DECLARE roles VARCHAR(100);
+START TRANSACTION;
+DROP TABLE IF EXISTS user_info;
+CREATE TEMPORARY TABLE user_info (
+    user_id VARCHAR(12) NOT NULL,
+    market_id VARCHAR(12),
+    roles VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+SET user_id = (SELECT REPLACE(JSON_EXTRACT(data, '$[0].userData.user_id'), '"', '') AS user_id FROM sessions WHERE session_id = _session_id);
+SET roles = (SELECT REPLACE(JSON_EXTRACT(data, '$[0].userData.roles[0]'), '"', '') AS roles FROM sessions WHERE session_id = _session_id);
+SET @market_id = '';
+SET @name = '';
+SET @market_id = (SELECT u.market_id FROM users u WHERE u.user_id = user_id);
+IF roles = 'main' THEN 
+    SET @name = (SELECT name FROM markets m WHERE m.market_id = user_id);
+ELSE 
+    SET @name = (SELECT name FROM employees WHERE employee_id = user_id);
+END IF;
+INSERT INTO user_info (user_id, market_id, roles, name) VALUES (user_id, @market_id, roles, @name);
+SELECT * FROM user_info;
+END $ 
+DELIMITER ;
