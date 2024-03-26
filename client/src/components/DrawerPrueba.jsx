@@ -226,7 +226,7 @@ export default function DrawerPrueba() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Outlet />
+        <Outlet context={[open]} />
       </Main>
     </Box>
   );

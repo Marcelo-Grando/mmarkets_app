@@ -115,3 +115,13 @@ background-color:white;
   box-shadow: 1px 1px 1px  rgb(96, 163, 246);
   background-color:  rgb(84, 119, 161);
 }
+
+.date-picker {
+  border-radius: 3px;
+  background-color: rgb(207, 211, 216);;
+}
+
+.input-form {
+  border-radius: 5;
+background-color: #f9f9fe;
+}

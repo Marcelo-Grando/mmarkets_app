@@ -1,7 +1,13 @@
-import SelectedList from "../components/SelectedList"
+import { Box } from "@mui/material";
+import { Outlet, useOutletContext } from "react-router-dom";
 
 export default function ProductsPage() {
+
+  const [open] = useOutletContext();
+
   return (
-    <SelectedList paths={[{"path": "default", "label": "products"}, {"path": "categories", "label": "categories"}, {"path": "create-products", "label": "create products"}]}/>
-  )
+    <Box sx={{ width: "100%" }}>
+      <Outlet context={[open]} />
+    </Box>
+  );
 }
